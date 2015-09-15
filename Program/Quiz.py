@@ -10,7 +10,7 @@
 # Import the math library
 
 #-------------------------------------------------------------------------------
-
+# förändring
 from math import *
 
 print("Welcome")
