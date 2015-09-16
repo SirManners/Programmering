@@ -68,17 +68,18 @@ pygame.init()
 
 size = (700, 500)
 screen = pygame.display.set_mode(size)
-pygame.display.set_caption("Kapitel 5")
+pygame.display.set_mode((1366,768),pygame.FULLSCREEN)
+# pygame.display.set_caption("Namn på fönster")
 done = False
 clock = pygame.time.Clock()
 
 while not done:
     for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            done = True
         if event.type == pygame.QUIT:
             print("User has asked to quit.")
             done = True
-        elif event.type == pygame.KEYDOWN:
-            print("User pressed a key.")
         elif event.type == pygame.KEYUP:
             print("User let go of a key.")
         elif event.type == pygame.MOUSEBUTTONDOWN:
