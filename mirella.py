@@ -27,7 +27,7 @@ while not done:
     # Färgen som fyller hela fönstret
     screen.fill(ROSA)
 
-    # Själva texten, siffran efter typsnittet är storleken
+    # Själva texten, siffran efter typsnittet är storleken.
     font = pygame.font.SysFont('Courier New', 300, True, False)
     text = font.render("QUIZ!", True, BLACK)
     # Var på skärmen texten läggs ut
