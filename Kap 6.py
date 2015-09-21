@@ -25,4 +25,7 @@ for row in range(9):
     for column in range(row+1):
         print(column+1, end=" ")
 
+    for row2 in range(1, 9, 2):
+        print(row, end=" ")
+
     print()
