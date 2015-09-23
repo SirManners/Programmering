@@ -28,6 +28,12 @@ pygame.init()
 size = (700, 500)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Kapitel 5")
+
+# alt. fullscreen, bilden är dock ritad i fönsterstorleken ovan
+# size = (700, 500)
+# screen = pygame.display.set_mode(size)
+# pygame.display.set_mode((1366,768),pygame.FULLSCREEN)
+
 done = False
 clock = pygame.time.Clock()
 
