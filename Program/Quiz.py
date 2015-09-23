@@ -36,7 +36,7 @@ answer_2 = input("Question two: What are my middle names?")
 if answer_2.lower() == "martin joel":
     print("Correct! You know me too well")
     score += 1
-elif answer_2.lower() == "martin" or "joel":
+elif answer_2.lower() == "martin" or answer_2.lower() == "joel":
     print("Almost, half a point.")
     score += 0.5
 else:
@@ -55,7 +55,7 @@ else:
 print()
 
 score_procent = score / questions * 100
-print("You have scored" , score , "points," , score_procent , "% of the total.")
+print("You have scored", score , "points," , score_procent , "% of the total.")
 
 if score_procent == 100:
     print("You are winner!")
@@ -68,4 +68,3 @@ elif score_procent < 20:
 
 elif score_procent < 0:
     print("You are awful")
-
