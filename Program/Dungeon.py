@@ -14,23 +14,28 @@ inventory_list = []
 item = ["Key"]
 
 room_list = []
-room = ["\nYou wake up in a dark dungeon. You see the light of flickering torches in the north." , 1, None, None, None, item]
+room = ["\nYou see a light down a narrow tunnel to the north." , 1, None, None, None, item]
 room_list.append(room)
 
-room = ["The light came from a nearly burned out torch. You can see the line of torches continuing further down in the dungeon", 2, None, 0, None, None]
+room = ["You can see the line of torches continuing further to the north", 2, None, 0, None, None]
 room_list.append(room)
 
-room = ["The torches lead up to a great iron door.", 2, None, 1, None, None]
+room = ["You see a great iron door. It has no doorknob, only one large keyhole", 4, None, 1, None, None]
 room_list.append(room)
 
 room = ["You unlocked the iron door with your key. \n Beyond the door lies endless treasures. Your adventure has been very fruitful and you retire to a castle by the sea.", None, None, None, None]
 room_list.append(room)
 
+room = ["You fail to open the door, it appears to be locked", 2, None, 1, None, None]
+room_list.append(room)
 
 current_room = 0
 
 done = False
 
+winds = ("north", "east", "west", "south")
+
+print("You wake up in a dark dungeon.")
 while not done:
     print(room_list[current_room][0])
     if current_room == 3:
@@ -71,7 +76,8 @@ while not done:
 
     elif answer == "inventory":
         if inventory_list is None:
-            print("")
+            print("Your inventory is empty")
+            continue
         print(inventory_list, )
 
     elif answer == "take":
@@ -82,22 +88,29 @@ while not done:
         inventory_list.append(room_list[current_room][5])
         print("You picked up a", room_list[current_room][5])
         room_list[2][1] = 3
+        # Öppnar dörren
         room_list[current_room][5] = None
 
 
     elif answer == "look":
         if room_list[current_room][5] is not None:
             print("There is a", room_list[current_room][5], "on the ground")
-        # current room är en siffra i en lista
         else:
             print("There's nothing here")
+
+    # elif answer in winds:
+    # kan förenkla skrivsättet för gång
+    # vill kunna kolla åt olika håll och se vad det ser ut att finnas där?
+
+
 
     if answer == "help":
         print("\nYou can go in 4 different directions: North, East, South and West")
         print("If you want to pick up something write take")
         print("To quit press q")
         print("To check inventory type inventory")
-        print("Type look to see what's in the room.")
+        print("Type look to see if there's a object in the room.")
+        print("Win by finding the treasure")
 
 
 
