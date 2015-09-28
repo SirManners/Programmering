@@ -17,16 +17,16 @@ room_list = []
 room = ["\nYou see a light down a narrow tunnel to the north." , 1, None, None, None, item]
 room_list.append(room)
 
-room = ["You can see the line of torches continuing further to the north", 2, None, 0, None, None]
+room = ["\nYou can see the line of torches continuing further to the north", 2, None, 0, None, None]
 room_list.append(room)
 
-room = ["You see a great iron door. It has no doorknob, only one large keyhole", 4, None, 1, None, None]
+room = ["\nYou see a great iron door. It has no doorknob, only one large keyhole", 4, None, 1, None, None]
 room_list.append(room)
 
-room = ["You unlocked the iron door with your key. \n Beyond the door lies endless treasures. Your adventure has been very fruitful and you retire to a castle by the sea.", None, None, None, None]
+room = ["\nYou unlocked the iron door with your key. \nBeyond the door lies endless treasures. Your adventure has been very fruitful and you retire to a castle by the sea.", None, None, None, None]
 room_list.append(room)
 
-room = ["You fail to open the door, it appears to be locked", 2, None, 1, None, None]
+room = ["\nYou fail to open the door, it appears to be locked", 2, None, 1, None, None]
 room_list.append(room)
 
 current_room = 0
