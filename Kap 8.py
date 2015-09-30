@@ -37,6 +37,8 @@ rekt_x = 50
 rekt_y = 50
 rekt_change_x = 5
 rekt_change_y = 5
+y_mouse =
+x_mouse =
 while not done:
     for event in pygame.event.get():
         # Gör att programet stängs när man trycker på en knapp
@@ -50,6 +52,12 @@ while not done:
             print("User has asked to quit.")
             done = True
 
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+
+    pos = pygame.mouse.get_pos()
+    x = pos[0]
+    y = pos[1]
+
     screen.fill(NIGHTBLUE)
 
     """pygame.draw.rect(screen, WHITE, [rekt_x, rekt_y, 50, 50])
@@ -61,7 +69,7 @@ while not done:
     if rekt_y >718 or rekt_y < 0:
         rekt_change_y *= -1"""
 
-    for i in range(len(snow_list)):
+    """for i in range(len(snow_list)):
         pygame.draw.circle(screen, WHITE, snow_list[i], 2)
         snow_list[i][1] += 1
         if snow_list[i][1] > 768:
@@ -69,6 +77,13 @@ while not done:
             snow_list[i][1] = y
             x = random.randrange(0, 1366)
             snow_list[i][0] = x
+
+"""
+
+    text_2 = "x=", x_mouse, "\ny=", y_mouse
+    font = pygame.font.SysFont('Courier New', 300, True, False)
+    text = font.render(text_2, True, BLACK)
+    screen.blit(text, [x_mouse, y_mouse])
 
     pygame.display.flip()
 
