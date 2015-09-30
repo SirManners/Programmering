@@ -12,12 +12,13 @@
 # -------------------------------------------------------------------------------
 # förändring
 
+yes = "ja", "yes", "jo", "y", "ye"
 print("Welcome")
 print()
 score = 0
 questions = 0
 answer_0 = input("Hello. Do you want to play a quiz?")
-if answer_0.lower() == "yes":
+if answer_0.lower() in yes:
     print("Excellent")
 else:
     print("This is not a democracy")
@@ -32,30 +33,36 @@ else:
 print()
 
 questions += 1
-answer_2 = input("Question two: What are my middle names?")
-if answer_2.lower() == "martin joel":
+answer_2 = input("Question two: How fast is the speed of light? A) 300 000 000 m/s B) 300 000 km/h C) 300 000 m/s")
+if answer_2.lower() == "a":
     print("Correct! You know me too well")
     score += 1
-elif answer_2.lower() == "martin" or answer_2.lower() == "joel":
-    print("Almost, half a point.")
-    score += 0.5
 else:
-    print("You should have come prepared")
+    print("Not a man of science eh? No points for you")
 print()
 
 questions += 1
+answer_4 = input("Question three: How many decimals does pi have? A) 912831298318 B) 314 C) 3.14")
+if answer_4 == "a" or answer_4 == "b" or answer_4 == "c":
+    print("Trick question! Pi has an infinite amount of decimals.")
+else:
+    print("Since none of the above were correct, and you didn't type one of them, you get a point")
+    score += 1
+
+
+questions += 1
 answer_3 = input("Last question: Is the last question?")
-if answer_3.lower() == "yes":
+if answer_3.lower() in yes:
     print("Clever boy")
     score += 1
 else:
-    print("You suck balls")
+    print("Trick question you lose")
     score -= 500
 
 print()
 
 score_procent = score / questions * 100
-print("You have scored", score , "points," , score_procent , "% of the total.")
+print("You have scored", score, "points,", score_procent, "% of the total.")
 
 if score_procent == 100:
     print("You are winner!")
