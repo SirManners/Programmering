@@ -39,10 +39,10 @@ rekt_y1 = 300
 rekt_x2 = 50
 rekt_y2 = 50
 
-rekt_change_x1 = 10
-rekt_change_y1 = 30
+rekt_change_x1 = 0
+rekt_change_y1 = 0
 
-rekt_change_x2 = 5
+rekt_change_x2 = 10
 rekt_change_y2 = 5
 
 x_mouse = 0
@@ -60,20 +60,9 @@ time_down = pygame.time.get_ticks()
 acc = 0
 keydown = [None, False, False, False, False]
 
+death = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30)
 
 while not done:
-    if keydown[1] or keydown[2] or keydown[3] or keydown[4]:
-        time2 = pygame.time.get_ticks() - time1
-        print(time2/1000)
-        acc = 0.5 * time2/1000
-        if keydown[1]:
-            y_speed -= acc
-        if keydown[2]:
-            y_speed += acc
-        if keydown[3]:
-            x_speed -= acc
-        if keydown[4]:
-            x_speed += acc
 
     for event in pygame.event.get():
 
@@ -81,16 +70,16 @@ while not done:
 
             time1 = pygame.time.get_ticks()
             if event.key == pygame.K_w:
-                y_speed = -5
+                y_speed = -2
                 keydown[1] = True
             if event.key == pygame.K_s:
-                y_speed = 5
+                y_speed = 2
                 keydown[2] = True
             if event.key == pygame.K_a:
-                x_speed = -5
+                x_speed = -2
                 keydown[3] = True
             if event.key == pygame.K_d:
-                x_speed = 5
+                x_speed = 2
                 keydown[4] = True
             if event.key == pygame.K_ESCAPE:
                 done = True
@@ -99,25 +88,25 @@ while not done:
 
             if event.key == pygame.K_w:
                 keydown[1] = False
-                if keydown[2] == False and keydown[3] == False and keydown[4]== False:
-                    y_speed =  0
+                if keydown[2] == False and keydown[3] == False and keydown[4] == False:
+                    y_speed = 0
                     x_speed = 0
 
             if event.key == pygame.K_s:
                 keydown[2] = False
-                if keydown[1] == False and keydown[3] == False and keydown[4]== False :
-                    y_speed =  0
+                if keydown[1] == False and keydown[3] == False and keydown[4] == False:
+                    y_speed = 0
                     x_speed = 0
 
             if event.key == pygame.K_a:
                 keydown[3] = False
-                if keydown[1] == False and keydown[2] == False and keydown[4]== False :
-                    x_speed =  0
+                if keydown[1] == False and keydown[2] == False and keydown[4]== False:
+                    x_speed = 0
                     y_speed = 0
             if event.key == pygame.K_d:
                 keydown[4] = False
-                if keydown[2] == False and keydown[3] == False and keydown[1]== False :
-                    x_speed =  0
+                if keydown[2] == False and keydown[3] == False and keydown[1] == False:
+                    x_speed = 0
                     y_speed = 0
 
             if event.key == pygame.K_ESCAPE:
@@ -133,11 +122,25 @@ while not done:
             x_mouse = pos[0]
             y_mouse = pos[1]
 
+    if keydown[1] or keydown[2] or keydown[3] or keydown[4]:
+        time2 = pygame.time.get_ticks() - time1
+        print(time2/1000)
+        acc = 0.5 * time2/1000
+        if keydown[1]:
+            y_speed -= acc
+        if keydown[2]:
+            y_speed += acc
+        if keydown[3]:
+            x_speed -= acc
+        if keydown[4]:
+            x_speed += acc
     x_coord += x_speed
     y_coord += y_speed
 
+    if x_coord - rekt_x1 in death and y_coord - rekt_y1 in death:
+        print("Game over")
+        done = True
     # lägg till något som dödar dig
-
 
     screen.fill(NIGHTBLUE)
 
@@ -147,7 +150,7 @@ while not done:
     rekt_y1 += rekt_change_y1
     if rekt_x1 > 1316 or rekt_x1 < 0:
         rekt_change_x1 *= -1
-    if rekt_y1 >718 or rekt_y1 < 0:
+    if rekt_y1 > 718 or rekt_y1 < 0:
         rekt_change_y1 *= -1
 
     pygame.draw.rect(screen, WHITE, [rekt_x2, rekt_y2, 50, 50])
@@ -156,11 +159,8 @@ while not done:
     rekt_y2 += rekt_change_y2
     if rekt_x2 > 1316 or rekt_x2 < 0:
         rekt_change_x2 *= -1
-    if rekt_y2 >718 or rekt_y2 < 0:
+    if rekt_y2 > 718 or rekt_y2 < 0:
         rekt_change_y2 *= -1
-
-
-
 
     pygame.draw.rect(screen, RED, [x_coord, y_coord, 15, 15])
 
@@ -173,7 +173,10 @@ while not done:
             x = random.randrange(0, 1366)
             snow_list[i][0] = x
 
-
+    if keydown[0]:
+        font = pygame.font.SysFont('Courier New', 300, True, False)
+        text = font.render("GAME OVER!", True, BLACK)
+        screen.blit(text, [250, 200])
 
     pygame.display.flip()
 
