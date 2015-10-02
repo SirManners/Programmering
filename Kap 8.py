@@ -39,10 +39,10 @@ rekt_y1 = 300
 rekt_x2 = 50
 rekt_y2 = 50
 
-rekt_change_x1 = 0
-rekt_change_y1 = 0
+rekt_change_x1 = 5
+rekt_change_y1 = 5
 
-rekt_change_x2 = 10
+rekt_change_x2 = 5
 rekt_change_y2 = 5
 
 x_mouse = 0
@@ -53,6 +53,7 @@ y_speed = 0
 
 x_coord = 10
 y_coord = 600
+projectile_speed = 5
 
 time1 = 0
 time2 = 0
@@ -60,6 +61,8 @@ time_down = pygame.time.get_ticks()
 acc = 0
 keydown = [None, False, False, False, False]
 
+x_shoot = 0
+y_shoot = 0
 death = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30)
 
 while not done:
@@ -83,6 +86,13 @@ while not done:
                 keydown[4] = True
             if event.key == pygame.K_ESCAPE:
                 done = True
+
+            if event.key == pygame.K_x:
+                time3 = pygame.time.get_ticks()
+                keydown[0] = True
+                x_shoot = x_coord
+                y_shoot = y_coord
+
 
         if event.type == pygame.KEYUP:
 
@@ -112,6 +122,9 @@ while not done:
             if event.key == pygame.K_ESCAPE:
                 done = True
 
+            if event.key == pygame.K_x:
+                keydown[0] = False
+
         if event.type == pygame.QUIT:
             print("User has asked to quit.")
             done = True
@@ -121,6 +134,7 @@ while not done:
             pos = pygame.mouse.get_pos()
             x_mouse = pos[0]
             y_mouse = pos[1]
+            # gör så att man skjuter emot mouse_pos
 
     if keydown[1] or keydown[2] or keydown[3] or keydown[4]:
         time2 = pygame.time.get_ticks() - time1
@@ -134,15 +148,29 @@ while not done:
             x_speed -= acc
         if keydown[4]:
             x_speed += acc
+
+        if not keydown[0]:
+            x_shoot = 0
+            y_shoot = 0
+
+    y_shoot -= projectile_speed
+
     x_coord += x_speed
     y_coord += y_speed
 
     if x_coord - rekt_x1 in death and y_coord - rekt_y1 in death:
         print("Game over")
-        done = True
+        keydown[0] = True
     # lägg till något som dödar dig
 
     screen.fill(NIGHTBLUE)
+
+    if x_coord > 1351 or y_coord <= 0:
+        x_speed == 0
+    if y_coord > 753 or x_coord <= 0:
+        y_speed == 0
+
+
 
     pygame.draw.rect(screen, WHITE, [rekt_x1, rekt_y1, 50, 50])
     pygame.draw.rect(screen, RED, [rekt_x1 + 10, rekt_y1 + 10, 30, 30])
@@ -162,7 +190,7 @@ while not done:
     if rekt_y2 > 718 or rekt_y2 < 0:
         rekt_change_y2 *= -1
 
-    pygame.draw.rect(screen, RED, [x_coord, y_coord, 15, 15])
+    pygame.draw.rect(screen, BLACK, [x_coord, y_coord, 15, 15])
 
     for i in range(len(snow_list)):
         pygame.draw.circle(screen, WHITE, snow_list[i], 2)
@@ -173,10 +201,18 @@ while not done:
             x = random.randrange(0, 1366)
             snow_list[i][0] = x
 
-    if keydown[0]:
+    """if keydown[0]:
         font = pygame.font.SysFont('Courier New', 300, True, False)
         text = font.render("GAME OVER!", True, BLACK)
         screen.blit(text, [250, 200])
+"""
+
+    if keydown[0]:
+        pygame.draw.rect(screen, YELLOW, [x_shoot+4, y_shoot - 2, 5, 5])
+        # gör att projektilerna fungerar som snöflingorna? listor och så?
+
+
+
 
     pygame.display.flip()
 
