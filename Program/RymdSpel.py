@@ -24,6 +24,8 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Kapitel 5")
 """
 
+
+
 snow_list = []
 for i in range(50):
     x = random.randrange(0, 1366)
@@ -57,6 +59,9 @@ x_coord = 10
 y_coord = 600
 projectile_speed = 5
 
+x_total = 0
+y_total = 0
+
 time1 = 0
 time2 = 0
 time_down = pygame.time.get_ticks()
@@ -66,6 +71,18 @@ keydown = [None, False, False, False, False]
 x_shoot = -1
 y_shoot = -1
 death = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30)
+
+def rektangel(x, y, speed_x, speed_y):
+    pygame.draw.rect(screen, WHITE, [x, y, 50, 50])
+    pygame.draw.rect(screen, RED, [x + 10, y + 10, 30, 30])
+    x += speed_x
+    y += speed_y
+    if x > 1316 or x < 0:
+        speed_x *= -1
+    if y > 718 or y < 0:
+        speed_y *= -1
+
+kanter = "x_coord", "y_coord"
 
 while not done:
 
@@ -138,6 +155,8 @@ while not done:
             y_mouse = pos[1]
             # gör så att man skjuter emot mouse_pos
 
+# Game logic
+
     if keydown[1] or keydown[2] or keydown[3] or keydown[4]:
         time2 = pygame.time.get_ticks() - time1
         print(time2/1000)
@@ -165,23 +184,23 @@ while not done:
         keydown[0] = True
     # lägg till något som dödar dig
 
+    if x_coord > 1351 or x_coord < 0:
+        x_speed *= -1
+
+    if y_coord > 753 or y_coord < 0:
+        y_speed *= -1
+
+    # kollision med kanten
+
+    # if kanter
+
     screen.fill(NIGHTBLUE)
 
-    if x_coord > 1351 or y_coord <= 0:
-        x_speed == 0
-    if y_coord > 753 or x_coord <= 0:
-        y_speed == 0
+# Grafik
 
+    rektangel(50, 50, 5, 5)
 
-
-    pygame.draw.rect(screen, WHITE, [rekt_x1, rekt_y1, 50, 50])
-    pygame.draw.rect(screen, RED, [rekt_x1 + 10, rekt_y1 + 10, 30, 30])
-    rekt_x1 += rekt_change_x1
-    rekt_y1 += rekt_change_y1
-    if rekt_x1 > 1316 or rekt_x1 < 0:
-        rekt_change_x1 *= -1
-    if rekt_y1 > 718 or rekt_y1 < 0:
-        rekt_change_y1 *= -1
+    rektangel(0, 300, 5, 5)
 
     pygame.draw.rect(screen, WHITE, [rekt_x2, rekt_y2, 50, 50])
     pygame.draw.rect(screen, RED, [rekt_x2 + 10, rekt_y2 + 10, 30, 30])
