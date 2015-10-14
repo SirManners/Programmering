@@ -16,9 +16,9 @@ GREY      = (  50,  50,  82)
 
 size = (700, 500)
 screen = pygame.display.set_mode(size)
-pygame.display.set_mode((1366,768),pygame.FULLSCREEN)
-"""
+pygame.display.set_mode((1366, 768), pygame.FULLSCREEN)
 
+"""
 size = (700, 500)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Kapitel 5")
