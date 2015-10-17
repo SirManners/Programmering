@@ -10,7 +10,7 @@ pygame.init()
 size = (700, 500)
 screen = pygame.display.set_mode(size)
 # För att få fullscreen, siffrorna är skärmens upplösning
-pygame.display.set_mode((1366,768),pygame.FULLSCREEN)
+pygame.display.set_mode((1366, 768), pygame.FULLSCREEN)
 
 done = False
 clock = pygame.time.Clock()
