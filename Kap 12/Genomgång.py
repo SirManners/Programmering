@@ -41,6 +41,45 @@ def print_address(address):
         print( address.line2 )
     print(address.city + ", " + address.state + " " + address.zip)
 
-print_address(home_address)
-print()
-print_address(vacation_home_address)
+
+class Cat():
+    def __init__(self):
+        self.name = ""
+        self.color = ""
+        self.weight = ""
+
+    def meow(self):
+        print("Meow")
+
+my_cat = Cat()
+Cat.name = "Bruce"
+Cat.color = "Brown"
+Cat.weight = "20 pounds"
+#my_cat.meow()
+
+
+class Monster():
+    def __init__(self, new_name,new_health ):
+        self.name = new_name
+        self.health = new_health
+
+    def decrease_health(self):
+        self.health -= self.amount
+        if self.health < 1:
+            print("The animal died.")
+
+class Dog():
+    def __init__(self):
+        # Constructor. Called when creating an object of this type.
+        self.name = ""
+        print("A new dog is born!")
+
+# This creates the dog
+# my_dog = Dog()
+
+
+class Star():
+    def __init__(self):
+        print("A new star is born!")
+
+kurt = Monster("Kurt", 200)
