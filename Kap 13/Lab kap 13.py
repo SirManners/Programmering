@@ -24,6 +24,7 @@ class Player(pygame.sprite.Sprite):
 
         super().__init__()
 
+
 pygame.init()
 
 size = (700, 500)
