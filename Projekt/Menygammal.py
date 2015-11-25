@@ -1,12 +1,6 @@
 __author__ = 'ab53995'
 
-def rita():
-    import pygame
-    size = (700, 500)
-    WHITE     = ( 255, 255, 255)
-    screen = pygame.display.set_mode(size)
 
-    pygame.draw.rect(screen, WHITE, [50, 50, 50, 50])
 def öppna_meny():
     import pygame
     BLACK     = (   0,   0,   0)
@@ -19,6 +13,13 @@ def öppna_meny():
     NIGHTBLUE = (   0,   1,  64)
     STARBLUE  = ( 159, 161, 252)
     GREY      = (  50,  50,  82)
+
+    pygame.init()
+
+    size = (700, 500)
+    screen = pygame.display.set_mode(size)
+    # För att få fullscreen, siffrorna är skärmens upplösning
+    pygame.display.set_mode((1366, 768), pygame.FULLSCREEN)
 
     clock = pygame.time.Clock()
 
@@ -84,3 +85,4 @@ def öppna_meny():
 
     pygame.quit()
 
+öppna_meny()
