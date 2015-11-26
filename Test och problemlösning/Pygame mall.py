@@ -1,7 +1,7 @@
-__author__ = 'ab53995'
+
 __author__ = 'ab53995'
 
-# Färger, http://www.colorpicker.com/
+# FÃ¤rger, http://www.colorpicker.com/
 
 ROSA    = ( 255, 0, 132)
 BLACK     = (   0,   0,   0)
@@ -20,27 +20,29 @@ pygame.init()
 
 size = (700, 500)
 screen = pygame.display.set_mode(size)
-# För att få fullscreen, siffrorna är skärmens upplösning
+# FÃ¶r att fÃ¥ fullscreen, siffrorna Ã¤r skÃ¤rmens upplÃ¶sning
 pygame.display.set_mode((1366, 768), pygame.FULLSCREEN)
+
 
 done = False
 clock = pygame.time.Clock()
 
 while not done:
     for event in pygame.event.get():
-        # Gör att programet stängs när man trycker på en knapp
+        # GÃ¶r att programet stÃ¤ngs nÃ¤r man trycker pÃ¥ en knapp
         if event.type == pygame.KEYDOWN:
             done = True
         if event.type == pygame.QUIT:
             print("User has asked to quit.")
             done = True
 
-    # Färgen som fyller hela fönstret
+    # FÃ¤rgen som fyller hela fÃ¶nstret
     screen.fill(NIGHTBLUE)
 
-    # Printar allting på skärmen
+    # Printar allting pÃ¥ skÃ¤rmen
     pygame.display.flip()
-    # Hur många gånger per sekund som skärmen uppdateras
+
+    # Hur mÃ¥nga gÃ¥nger per sekund som skÃ¤rmen uppdateras
     clock.tick(60)
 
 pygame.quit()
