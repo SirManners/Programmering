@@ -1,10 +1,17 @@
+import Projekt.Klasser
+import pygame
+
+# --- Globala konstanter ---
+NIGHTBLUE = (   0,   1,  64)
+WHITE     = ( 255, 255, 255)
+RED       = ( 255,   0,   0)
+STARBLUE  = ( 159, 161, 252)
+BLACK     = (   0,   0,   0)
+
+# --- Klasser ---
 
 
-def öppna_intro(screen):
-    import Projekt.Klasser
-    import pygame
-
-    class Ridå(Projekt.Klasser.Rektangel):
+class Ridå(Projekt.Klasser.Rektangel):
         def __init__(self):
             super().__init__()
 
@@ -13,12 +20,10 @@ def öppna_intro(screen):
             if self.y >= -769:
                 self.y += self.change_y
 
-    NIGHTBLUE = (   0,   1,  64)
-    WHITE     = ( 255, 255, 255)
-    RED       = ( 255,   0,   0)
-    STARBLUE  = ( 159, 161, 252)
-    BLACK     = (   0,   0,   0)
 
+def öppna_intro(screen):
+
+    # Objekt och data
     ridå = Ridå()
     ridå.x = 0
     ridå.y = -500
@@ -37,16 +42,16 @@ def öppna_intro(screen):
     done = False
     clock = pygame.time.Clock()
     parameter = 0
+
+    # Main loop
     while not done:
         for event in pygame.event.get():
-            # Gör att programet stängs när man trycker på en knapp
             if event.type == pygame.KEYDOWN:
                 done = True
             if event.type == pygame.QUIT:
                 print("User has asked to quit.")
                 done = True
 
-        # Färgen som fyller hela fönstret
         screen.fill(NIGHTBLUE)
 
         spelnamn.skriv(screen)
@@ -54,11 +59,9 @@ def öppna_intro(screen):
         ridå.rita(screen)
         ridå.rörelse()
 
-
-        # Printar allting på skärmen
         pygame.display.flip()
-        # Hur många gånger per sekund som skärmen uppdateras
         clock.tick(60)
+
         """parameter += 1
         if parameter == 4:
             done = True

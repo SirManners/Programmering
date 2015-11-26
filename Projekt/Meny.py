@@ -1,9 +1,14 @@
-__author__ = 'ab53995'
+import pygame
+import Projekt.Klasser
+
+# --- Globala konstanter ---
+WHITE     = ( 255, 255, 255)
+NIGHTBLUE = (   0,   1,  64)
+
+# --- Klasser ---
 
 
 def öppna_meny(screen, resume):
-    import pygame
-    import Projekt.Klasser
 
     def menyn():
         if resume is False:
@@ -24,6 +29,7 @@ def öppna_meny(screen, resume):
             screen.blit(text, [200, 500])
             text = font.render("Quit", True, WHITE)
             screen.blit(text, [200, 600])
+    # gör om till ett resultat av Text klassen, flytta ut ur öppna_meny
 
     class Markör(Projekt.Klasser.Rektangel):
         def __init__(self):
@@ -41,14 +47,7 @@ def öppna_meny(screen, resume):
                 else:
                     self.y = 600
 
-    # This is a font we use to draw text on the screen (size 36)
-    WHITE     = ( 255, 255, 255)
-    NIGHTBLUE = (   0,   1,  64)
-
-    clock = pygame.time.Clock()
-    done_meny = False
-    done = False
-
+    #Objekt och data
     font = pygame.font.Font(None, 36)
     meny_markör = Markör()
     meny_markör.bredd = 30
@@ -57,9 +56,13 @@ def öppna_meny(screen, resume):
     meny_markör.y = 300
     meny_markör.change_y = 100
 
+    clock = pygame.time.Clock()
+    done_meny = False
+    done = False
+
+    # Main loop
     while not done:
         for event in pygame.event.get():
-            # Gör att programet stängs när man trycker på en knapp
             if event.type == pygame.KEYDOWN:
                 meny_markör.rörelse()
                 if event.key == pygame.K_ESCAPE:
@@ -83,17 +86,14 @@ def öppna_meny(screen, resume):
                 done_meny = True
                 break
 
-        # Färgen som fyller hela fönstret
         screen.fill(NIGHTBLUE)
 
         menyn()
 
         meny_markör.rita(screen)
 
-        # Limit to 60 frames per second
         clock.tick(60)
 
-        # Go ahead and update the screen with what we've drawn.
         pygame.display.flip()
     resume = True
     return(done_meny)

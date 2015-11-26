@@ -1,6 +1,6 @@
-__author__ = 'Mr.Orange'
 import pygame
 
+# --- Globala konstanter ---
 ROSA      = ( 255,   0, 132)
 BLACK     = (   0,   0,   0)
 WHITE     = ( 255, 255, 255)
@@ -15,6 +15,9 @@ GREY      = (  50,  50,  82)
 # Fixa importerbara färger
 colours = ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY
 
+# --- Klasser ---
+
+
 class Text():
     def __init__(self):
         self.text = ""
@@ -27,6 +30,7 @@ class Text():
     def skriv(self, screen):
         text = pygame.font.Font(None, self.font).render(self.text, self.bold, self.colour)
         screen.blit(text, [self.x, self.y])
+
 
 class Rektangel():
     def __init__(self):
