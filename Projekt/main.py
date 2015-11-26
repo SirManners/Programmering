@@ -1,6 +1,6 @@
 import pygame
 import Programmering.Projekt.Meny
-
+import Programmering.Projekt.Intro
 __author__ = 'ab53995'
 # Färger, http://www.colorpicker.com/
 
@@ -26,8 +26,11 @@ pygame.display.set_mode((1366, 768), pygame.FULLSCREEN)
 done = False
 clock = pygame.time.Clock()
 
+Programmering.Projekt.Intro.öppna_intro(screen)
+
+done = Programmering.Projekt.Meny.öppna_meny(screen)
+
 while not done:
-    #Programmering.Projekt.Meny.öppna_meny()
     for event in pygame.event.get():
         # Gör att programet stängs när man trycker på en knapp
         if event.type == pygame.KEYDOWN:
@@ -38,8 +41,6 @@ while not done:
 
     # Färgen som fyller hela fönstret
     screen.fill(NIGHTBLUE)
-    pygame.draw.rect(screen, WHITE, [50, 50, 50, 1000])
-    Programmering.Projekt.Meny.rita()
     pygame.draw.rect(screen, WHITE, [100, 100, 50, 200])
     # Printar allting på skärmen
     pygame.display.flip()

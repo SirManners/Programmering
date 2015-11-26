@@ -1,78 +1,90 @@
 __author__ = 'ab53995'
 
-def rita():
-    import pygame
-    size = (700, 500)
-    WHITE     = ( 255, 255, 255)
-    screen = pygame.display.set_mode(size)
 
-    pygame.draw.rect(screen, WHITE, [50, 50, 50, 50])
-def öppna_meny():
+def öppna_meny(screen):
     import pygame
-    BLACK     = (   0,   0,   0)
     WHITE     = ( 255, 255, 255)
-    GREEN     = (   0, 255,   0)
-    RED       = ( 255,   0,   0)
-    BROWN     = (  77,  18,  18)
-    YELLOW    = ( 255, 251,   0)
-    BLUE      = (   0,   4, 255)
     NIGHTBLUE = (   0,   1,  64)
-    STARBLUE  = ( 159, 161, 252)
-    GREY      = (  50,  50,  82)
-
-    clock = pygame.time.Clock()
 
     # This is a font we use to draw text on the screen (size 36)
     font = pygame.font.Font(None, 36)
 
-    display_instructions = False
-    instruction_page = 1
-    markör_y = 400
+    clock = pygame.time.Clock()
+    done_meny = False
+    done = False
 
     def menyn():
         text = font.render("Play", True, WHITE)
-        screen.blit(text, [200, 400])
+        screen.blit(text, [200, 300])
         text = font.render("Highscore", True, WHITE)
+        screen.blit(text, [200, 400])
+        text = font.render("Help", True, WHITE)
         screen.blit(text, [200, 500])
         text = font.render("Quit", True, WHITE)
         screen.blit(text, [200, 600])
 
+    class meny_markör():
+        def __init__(self):
+            self.markör_y = 400
+
+        def rita(self, markör_y):
+            pygame.draw.rect(screen, WHITE, [150, markör_y, 30, 30])
+
+        def rörelse(self, markör_y):
+            if event.key == pygame.K_DOWN:
+                    markör_y += 100
+            elif event.key == pygame.K_UP:
+                    markör_y -= 100
+            return markör_y
+
+    """
     def meny_markör(markör_y):
         pygame.draw.rect(screen, WHITE, [150, markör_y, 30, 30])
+    def meny_markör_rörelse(markör_y):
+        if event.key == pygame.K_DOWN:
+                markör_y += 100
+        elif event.key == pygame.K_UP:
+                markör_y -= 100
+        return markör_y
+    """
+    markör = meny_markör
 
-    while not display_instructions:
+    while not done:
         for event in pygame.event.get():
             # Gör att programet stängs när man trycker på en knapp
             if event.type == pygame.KEYDOWN:
+                markör.rörelse(markör)
+                """markör_y = meny_markör_rörelse(markör_y)"""
+
                 if event.key == pygame.K_ESCAPE:
-                    display_instructions = True
-                elif event.key == pygame.K_DOWN:
-                    instruction_page += 1
-                    markör_y += 100
-                elif event.key == pygame.K_UP:
-                    instruction_page -= 1
-                    markör_y -= 100
-                elif event.key == pygame.K_RETURN:
-                    if instruction_page == 1:
-                        display_instructions = True
-                    elif instruction_page == 2:
+                    done = True
+                    done_meny = True
+                    break
+
+                if event.key == pygame.K_RETURN:
+                    if markör.markör_y == 300:
+                        done = True
+                    elif markör.markör_y == 400:
                         print("Something")
-                    elif instruction_page == 3:
-                        display_instructions = True
+                    elif markör.markör_y == 600:
+                        done = True
+                        done_meny = True
+                        break
                 else:
                     continue
+
             if event.type == pygame.QUIT:
                 print("User has asked to quit.")
-                display_instructions = True
                 done = True
+                done_meny = True
                 break
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                instruction_page += 1
 
         # Färgen som fyller hela fönstret
         screen.fill(NIGHTBLUE)
 
         menyn()
+
+        markör.rita(meny_markör)
 
         meny_markör(markör_y)
 
@@ -82,5 +94,5 @@ def öppna_meny():
         # Go ahead and update the screen with what we've drawn.
         pygame.display.flip()
 
-    pygame.quit()
+    return(done_meny)
 
