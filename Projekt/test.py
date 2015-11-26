@@ -1,8 +1,19 @@
-__author__ = 'ab53995'
 
+import Projekt.Klasser
+import pygame
+pygame.init()
+
+class Block(pygame.sprite.Sprite):
+    def __init__(self, colour, width, height):
+        super().__init__()
+        self.image = pygame.Surface([width, height])
+        self.image.fill(WHITE)
+        self.image.set_colourkey(WHITE)
+
+        pygame.draw.ellipse(self.image, colour, [0, 0, width, height])
+        self.rect = self.image.get_rect()
 
 # Färger, http://www.colorpicker.com/
-
 ROSA    = ( 255, 0, 132)
 BLACK     = (   0,   0,   0)
 WHITE     = ( 255, 255, 255)
@@ -15,38 +26,10 @@ NIGHTBLUE = (   0,   1,  64)
 STARBLUE  = ( 159, 161, 252)
 GREY      = (  50,  50,  82)
 
-import pygame
-pygame.init()
-
 size = (700, 500)
 screen = pygame.display.set_mode(size)
 # För att få fullscreen, siffrorna är skärmens upplösning
 pygame.display.set_mode((1366, 768), pygame.FULLSCREEN)
-
-
-class Rektangel:
-        def __init__(self):
-            self.x = 0
-            self.y = 0
-            self.change.x = 0
-            self.change.y = 0
-            self.bredd = 0
-            self.höjd = 0
-            self.färg = [255, 255, 255]
-
-        def rörelse(self):
-            self.x += self.change.x
-            self.y += self.change.y
-
-        def rita(self, screen):
-            pygame.draw.rect(screen, self.färg, [self.x, self.y, self.bredd, self.längd])
-
-ridå = Rektangel()
-ridå.x = 0
-ridå.y = -768
-ridå.bredd = 1366
-ridå.höjd = 768
-
 
 done = False
 clock = pygame.time.Clock()
@@ -62,8 +45,7 @@ while not done:
 
     # Färgen som fyller hela fönstret
     screen.fill(NIGHTBLUE)
-    ridå.rörelse()
-    ridå.rita(screen)
+
     # Printar allting på skärmen
     pygame.display.flip()
     # Hur många gånger per sekund som skärmen uppdateras

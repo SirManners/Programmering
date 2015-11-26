@@ -4,11 +4,6 @@ def öppna_intro(screen):
     import Projekt.Klasser
     import pygame
 
-    NIGHTBLUE = (   0,   1,  64)
-    WHITE     = ( 255, 255, 255)
-    RED       = ( 255,   0,   0)
-    STARBLUE  = ( 159, 161, 252)
-
     class Ridå(Projekt.Klasser.Rektangel):
         def __init__(self):
             super().__init__()
@@ -17,6 +12,12 @@ def öppna_intro(screen):
             self.x += self.change_x
             if self.y >= -769:
                 self.y += self.change_y
+
+    NIGHTBLUE = (   0,   1,  64)
+    WHITE     = ( 255, 255, 255)
+    RED       = ( 255,   0,   0)
+    STARBLUE  = ( 159, 161, 252)
+    BLACK     = (   0,   0,   0)
 
     ridå = Ridå()
     ridå.x = 0
@@ -30,7 +31,7 @@ def öppna_intro(screen):
     spelnamn.text = "Imse Vimse spindel / RYMDSPEl"
     spelnamn.x = 200
     spelnamn.y = 300
-    spelnamn.colour = STARBLUE
+    spelnamn.colour = BLACK
     spelnamn.font = 100
 
     done = False

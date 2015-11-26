@@ -5,16 +5,6 @@ def öppna_meny(screen, resume):
     import pygame
     import Projekt.Klasser
 
-    # This is a font we use to draw text on the screen (size 36)
-    WHITE     = ( 255, 255, 255)
-    NIGHTBLUE = (   0,   1,  64)
-
-    clock = pygame.time.Clock()
-    done_meny = False
-    done = False
-    markör_y = 300
-    font = pygame.font.Font(None, 36)
-
     def menyn():
         if resume is False:
             text = font.render("Play", True, WHITE)
@@ -50,6 +40,16 @@ def öppna_meny(screen, resume):
                     self.y -= self.change_y
                 else:
                     self.y = 600
+
+    # This is a font we use to draw text on the screen (size 36)
+    WHITE     = ( 255, 255, 255)
+    NIGHTBLUE = (   0,   1,  64)
+
+    clock = pygame.time.Clock()
+    done_meny = False
+    done = False
+
+    font = pygame.font.Font(None, 36)
     meny_markör = Markör()
     meny_markör.bredd = 30
     meny_markör.höjd = 30
