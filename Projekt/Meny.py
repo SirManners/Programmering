@@ -53,7 +53,6 @@ def öppna_meny(screen):
         for event in pygame.event.get():
             # Gör att programet stängs när man trycker på en knapp
             if event.type == pygame.KEYDOWN:
-                markör.rörelse(markör)
                 """markör_y = meny_markör_rörelse(markör_y)"""
 
                 if event.key == pygame.K_ESCAPE:
@@ -83,8 +82,6 @@ def öppna_meny(screen):
         screen.fill(NIGHTBLUE)
 
         menyn()
-
-        markör.rita(meny_markör)
 
         meny_markör(markör_y)
 
