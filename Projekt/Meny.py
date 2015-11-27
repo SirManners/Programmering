@@ -30,6 +30,8 @@ def öppna_meny(screen, resume):
             text = font.render("Quit", True, WHITE)
             screen.blit(text, [200, 600])
     # gör om till ett resultat av Text klassen, flytta ut ur öppna_meny
+    # spara text utanför loopen
+    # Gör en lista och kör igenom den och rita allting
 
     class Markör(Klasser.Rektangel):
         def __init__(self):
