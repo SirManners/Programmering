@@ -1,5 +1,5 @@
 
-import Projekt.Klasser
+import Klasser
 import pygame
 
 # --- Globala konstanter ---

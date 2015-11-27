@@ -1,5 +1,5 @@
 import pygame
-import Projekt.Klasser
+import Klasser
 
 # --- Globala konstanter ---
 WHITE     = ( 255, 255, 255)
@@ -31,7 +31,7 @@ def öppna_meny(screen, resume):
             screen.blit(text, [200, 600])
     # gör om till ett resultat av Text klassen, flytta ut ur öppna_meny
 
-    class Markör(Projekt.Klasser.Rektangel):
+    class Markör(Klasser.Rektangel):
         def __init__(self):
             super().__init__()
 

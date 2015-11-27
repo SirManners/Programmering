@@ -1,4 +1,4 @@
-import Projekt.Klasser
+import Klasser
 import pygame
 
 # --- Globala konstanter ---
@@ -11,7 +11,7 @@ BLACK     = (   0,   0,   0)
 # --- Klasser ---
 
 
-class Ridå(Projekt.Klasser.Rektangel):
+class Ridå(Klasser.Rektangel):
         def __init__(self):
             super().__init__()
 
@@ -32,7 +32,7 @@ def öppna_intro(screen):
     ridå.change_y = 3
     ridå.färg = WHITE
 
-    spelnamn = Projekt.Klasser.Text()
+    spelnamn = Klasser.Text()
     spelnamn.text = "Imse Vimse spindel / RYMDSPEl"
     spelnamn.x = 200
     spelnamn.y = 300

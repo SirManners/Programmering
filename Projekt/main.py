@@ -1,9 +1,8 @@
 import pygame
-import Projekt.Meny
-import Projekt.Intro
-import Projekt.Klasser
-"""import Programmering.Projekt.Meny
-import Programmering.Projekt.Intro osv på skoldatorn"""
+import Meny
+import Intro
+import Klasser
+
 
 # --- Globala konstanter ---
 NIGHTBLUE = (   0,   1,  64)
@@ -28,9 +27,9 @@ def main():
     resume = False
 
     # Main loop
-    Projekt.Intro.öppna_intro(screen)
+    Intro.öppna_intro(screen)
     while not done:
-        done = Projekt.Meny.öppna_meny(screen, resume)
+        done = Meny.öppna_meny(screen, resume)
         if not done:
             done_game = False
         while not done_game:
