@@ -1,3 +1,5 @@
+Fixa GIT så att import-pathen blir samma som på skoldatorn
+Lägg till en game-class? http://programarcadegames.com/python_examples/show_file.php?file=game_class_example.py
 Struktur:
     Gör om det mesta till klasser/funktioner.
     Klura ut globala variabler och få dem att sluta strula
