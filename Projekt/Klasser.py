@@ -12,6 +12,10 @@ BLUE      = (   0,   4, 255)
 NIGHTBLUE = (   0,   1,  64)
 STARBLUE  = ( 159, 161, 252)
 GREY      = (  50,  50,  82)
+
+SCREEN_HEIGHT = 688
+SCREEN_WIDTH = 1366
+
 # Fixa importerbara färger
 colours = ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY
 
@@ -23,8 +27,9 @@ class Text():
         self.text = ""
         self.bold = True
         self.colour = WHITE
-        self.x = 0
-        self.y = 0
+        # ändrat till screen width osv
+        self.x = (SCREEN_WIDTH // 2) - (text.get_width() // 2)
+        self.y = (SCREEN_HEIGHT // 2) - (text.get_height() // 2)
         self.font = 36
 
     def skriv(self, screen):
