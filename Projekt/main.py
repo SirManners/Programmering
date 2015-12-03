@@ -2,7 +2,7 @@ import pygame
 import Meny
 import Intro
 import Klasser
-
+import Spel
 
 # --- Globala konstanter ---
 NIGHTBLUE = (   0,   1,  64)
@@ -25,6 +25,7 @@ def main():
     done_game = False
     clock = pygame.time.Clock()
     resume = False
+    # spel = Spel.Game()
 
     # Main loop
     Intro.öppna_intro(screen)
@@ -33,6 +34,11 @@ def main():
         if not done:
             done_game = False
         while not done_game:
+            # done = game.process_events()
+            # game.run_logic()
+            # game.display_frame(screen)
+            # clock.tick(60)
+        # pygame.quit()
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
