@@ -34,12 +34,12 @@ def main():
         if not done:
             done_game = False
         while not done_game:
-            # done = game.process_events()
-            # game.run_logic()
-            # game.display_frame(screen)
-            # clock.tick(60)
-        # pygame.quit()
-            for event in pygame.event.get():
+            done_game = game.process_events()
+            game.run_logic()
+            game.display_frame(screen)
+            clock.tick(60)
+    pygame.quit()
+            """for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         done_game = True
@@ -56,7 +56,7 @@ def main():
 
             clock.tick(60)
 
-    pygame.quit()
+    pygame.quit()"""
 
 if __name__ == "__main__":
     main()

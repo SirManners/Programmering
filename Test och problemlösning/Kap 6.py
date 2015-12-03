@@ -1,5 +1,5 @@
 
-'''
+"""
 for i in range(0, 10):
     for j in range(10-i):
         print(j, end = " ")
@@ -19,7 +19,7 @@ for row in range (9):
         print((row+1)*(column+1), end = " " )
     print()
 
-'''
+
 
 for row in range(9):
     for column in range(row+1):
@@ -29,3 +29,5 @@ for row in range(9):
         print(row, end=" ")
 
     print()
+
+"""

@@ -48,3 +48,4 @@ class Rektangel():
 
     def rita(self, screen):
         pygame.draw.rect(screen, self.färg, [self.x, self.y, self.bredd, self.höjd])
+
