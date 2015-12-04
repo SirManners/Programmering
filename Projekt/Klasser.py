@@ -1,24 +1,25 @@
 import pygame
 
-# --- Globala konstanter ---
-ROSA      = ( 255,   0, 132)
-BLACK     = (   0,   0,   0)
-WHITE     = ( 255, 255, 255)
-GREEN     = (   0, 255,   0)
-RED       = ( 255,   0,   0)
-BROWN     = (  77,  18,  18)
-YELLOW    = ( 255, 251,   0)
-BLUE      = (   0,   4, 255)
-NIGHTBLUE = (   0,   1,  64)
-STARBLUE  = ( 159, 161, 252)
-GREY      = (  50,  50,  82)
+def färger():
+    # --- Globala konstanter ---
+    global ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY
+    ROSA = ( 255,   0, 132)
+    BLACK     = (   0,   0,   0)
+    WHITE     = ( 255, 255, 255)
+    GREEN     = (   0, 255,   0)
+    RED       = ( 255,   0,   0)
+    BROWN     = (  77,  18,  18)
+    YELLOW    = ( 255, 251,   0)
+    BLUE      = (   0,   4, 255)
+    NIGHTBLUE = (   0,   1,  64)
+    STARBLUE  = ( 159, 161, 252)
+    GREY      = (  50,  50,  82)
 
-SCREEN_HEIGHT = 688
-SCREEN_WIDTH = 1366
+    global SCREEN_HEIGHT, SCREEN_WIDTH
+    SCREEN_HEIGHT = 688
+    SCREEN_WIDTH = 1366
 
 # Fixa importerbara färger
-colours = ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY
-
 # --- Klasser ---
 
 
