@@ -1,8 +1,8 @@
 import pygame
 import random
-import Klasser.f‰rger
+import Klasser.f√§rger
 
-Klasser.f‰rger()
+Klasser.f√§rger()
 
 class Spelare(pygame.sprite.Sprite):
     def __init__(self):
@@ -12,7 +12,7 @@ class Spelare(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
     def update(self):
-        #piltangenter
+        # piltangenter
 
 class Fiender(pygame.sprite.Sprite):
     def __init__(self):

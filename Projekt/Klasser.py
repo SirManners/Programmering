@@ -1,5 +1,6 @@
 import pygame
 
+
 def färger():
     # --- Globala konstanter ---
     global ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY
