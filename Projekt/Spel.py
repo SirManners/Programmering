@@ -14,17 +14,24 @@ class Spelare(pygame.sprite.Sprite):
     def update(self):
         # piltangenter
 
-class Fiender(pygame.sprite.Sprite):
+class Fiendermall(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface([20, 20])
-        self.image.fill(WHITE)
+        self.image.fill(RED)
         self.rect = self.image.get_rect()
-
+        self.move_x = 1
+        self.move_y = 1
+        # self.remove_width
+        # self.remove_height
     def reset_pos(self):
 
     def update(self):
+        self.rect.y += self.move_y
+        self.rect.x += self.move_x
+        if 0 + self.rect.height > self.rect.x > SCREEN_WIDH + self.rect.height:
 
+        if 0 + self.rect.width > self.rect.y > SCREEN_HEIGHT + self.rect.height:
 
 class Game(object):
 
