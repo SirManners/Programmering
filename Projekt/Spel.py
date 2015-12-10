@@ -98,7 +98,7 @@ class Game(object):
             # projectile_hit_list = pygame.sprite.spritecollide(self.projectile, self.enemy_list, True)
             enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, True)
 
-            for hit in enemy_hit_list:
+            for collision in enemy_hit_list:
                 self.game_over = True
             # for enemy in projectile_hit_list:
                 # self.score += 1
