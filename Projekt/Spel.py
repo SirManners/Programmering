@@ -37,12 +37,13 @@ class Fiendermall(pygame.sprite.Sprite):
         # if 0 + self.rect.width > self.rect.y > SCREEN_HEIGHT + self.rect.height:
         # ta bort
 
-class Projektil(pygame.sprite.Sprite):
+# class Projektil(pygame.sprite.Sprite):
 
 class Game(object):
 
     def __init__(self):
 
+        # Attributes
         self.score = 0
         self.game_over = False
 
@@ -59,6 +60,10 @@ class Game(object):
         # Create the sprites
         # Projektiler, skapa ifall variabel?
         boss = Fiendermall()
+
+        self.enemy_list.add(boss)
+        self.all_sprites_list.add(boss)
+
 
     def process_events(self):
         for event in pygame.event.get():
