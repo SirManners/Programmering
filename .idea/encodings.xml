@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/../Gymnasiearbete/Robot/kalibrering.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Program/Dungeon.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Program/Fahrenheit.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Program/Quiz.py" charset="UTF-8" />
