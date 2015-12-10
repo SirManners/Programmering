@@ -33,7 +33,7 @@ def öppna_intro(screen):
     ridå.färg = WHITE
 
     spelnamn = Klasser.Text()
-    spelnamn.text = "Imse Vimse spindel / RYMDSPEl"
+    spelnamn.text = "RYMDSPEL"
     spelnamn.x = 200
     spelnamn.y = 300
     spelnamn.colour = BLACK

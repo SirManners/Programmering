@@ -1,20 +1,33 @@
 import pygame
 import random
-import Klasser.färger
+import Klasser
 
-Klasser.färger()
+# Klasser.färger()
 SCREEN_HEIGHT = 688
 SCREEN_WIDTH = 1366
+ROSA = ( 255,   0, 132)
+BLACK     = (   0,   0,   0)
+WHITE     = ( 255, 255, 255)
+GREEN     = (   0, 255,   0)
+RED       = ( 255,   0,   0)
+BROWN     = (  77,  18,  18)
+YELLOW    = ( 255, 251,   0)
+BLUE      = (   0,   4, 255)
+NIGHTBLUE = (   0,   1,  64)
+STARBLUE  = ( 159, 161, 252)
+GREY      = (  50,  50,  82)
+
 
 class Spelare(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface(30, 30)
+        self.image = pygame.Surface([30, 30])
         self.image.fill(WHITE)
         self.rect = self.image.get_rect()
 
-    def update(self):
+    # def update(self):
         # piltangenter
+
 
 class Fiendermall(pygame.sprite.Sprite):
     def __init__(self):
@@ -26,9 +39,11 @@ class Fiendermall(pygame.sprite.Sprite):
         self.move_y = 0
         # self.remove_width
         # self.remove_height
+
     def reset_pos(self):
         self.rect.y = random.randrange(300, 500)
         self.rect.x = random.randrange(SCREEN_WIDTH)
+
     def update(self):
         self.rect.y += self.move_y
         self.rect.x += self.move_x
@@ -38,6 +53,7 @@ class Fiendermall(pygame.sprite.Sprite):
         # ta bort
 
 # class Projektil(pygame.sprite.Sprite):
+
 
 class Game(object):
 
@@ -51,8 +67,8 @@ class Game(object):
         self.enemy_list = pygame.sprite.Group()
         self.all_sprites_list = pygame.sprite.Group()
 
-        self.projectile_list = pygame.sprite.Group()
-        self.all_sprites_list.add(self.projectile_list)
+        # self.projectile_list = pygame.sprite.Group()
+        # self.all_sprites_list.add(self.projectile_list)
 
         self.player = Spelare()
         self.all_sprites_list.add(self.player)
@@ -60,10 +76,10 @@ class Game(object):
         # Create the sprites
         # Projektiler, skapa ifall variabel?
         boss = Fiendermall()
+        boss.image = pygame.Surface([200, 200])
 
         self.enemy_list.add(boss)
         self.all_sprites_list.add(boss)
-
 
     def process_events(self):
         for event in pygame.event.get():
@@ -79,13 +95,13 @@ class Game(object):
     def run_logic(self):
         if not self.game_over:
             self.all_sprites_list.update()
-            projectile_hit_list = pygame.sprite.spritecollide(self.projectile, self.enemy_list, True)
-            enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy.list, True)
+            # projectile_hit_list = pygame.sprite.spritecollide(self.projectile, self.enemy_list, True)
+            enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, True)
 
             for hit in enemy_hit_list:
                 self.game_over = True
-            for enemy in projectile_hit_list:
-                self.score += 1
+            # for enemy in projectile_hit_list:
+                # self.score += 1
 
     def display_frame(self, screen):
         screen.fill(NIGHTBLUE)
@@ -93,7 +109,8 @@ class Game(object):
         if self.game_over:
             """ rip meddelande """
 
-        if  not self.game_over:
+        if not self.game_over:
             self.all.sprites.list.draw(screen)
+            # den ritar ingenting
 
-        pygame.display.flip
+        pygame.display.flip()
