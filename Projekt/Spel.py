@@ -19,6 +19,26 @@ STARBLUE  = ( 159, 161, 252)
 GREY      = (  50,  50,  82)
 
 
+# Latemanslösning, se grafik
+snow_list = []
+for i in range(50):
+    snow_x = random.randrange(0, 1366)
+    snow_y = random.randrange(-768, 0)
+    snow_list.append([snow_x, snow_y])
+
+
+def snow(screen):
+    for i in range(len(snow_list)):
+            pygame.draw.circle(screen, WHITE, snow_list[i], 2)
+            snow_list[i][1] += 5
+            if snow_list[i][1] > 768:
+                y = random.randrange(-50, -10)
+                snow_list[i][1] = y
+                x = random.randrange(0, 1366)
+                snow_list[i][0] = x
+
+# Gör om så att både spelare och fiender båda är barn till samma klass?
+
 class Spelare(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -33,6 +53,7 @@ class Spelare(pygame.sprite.Sprite):
         self.player_down = False
         self.player_left = False
         self.player_right = False
+        self.player_shoot = False
 
     def update(self):
         # tills vidare
@@ -44,6 +65,9 @@ class Spelare(pygame.sprite.Sprite):
             self.rect.x -= self.move_x
         if self.player_right:
             self.rect.x += self.move_x
+        # if self.player_shoot
+# Hur ska jag få den att skjuta något med players x och y koord samtidigt som jag ritar något nytt?
+
 
 
 class Fiendermall(pygame.sprite.Sprite):
@@ -52,8 +76,9 @@ class Fiendermall(pygame.sprite.Sprite):
         self.image = pygame.Surface([20, 20])
         self.image.fill(RED)
         self.rect = self.image.get_rect()
+        self.rect.y = 0
         self.move_x = 2
-        self.move_y = 1
+        self.move_y = 2
         # self.remove_width
         # self.remove_height
 
@@ -70,6 +95,16 @@ class Fiendermall(pygame.sprite.Sprite):
         # ta bort
 
 """
+class Projektil(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.Surface([3, 3])
+        self.image.fill(YELLOW)
+        self.rect = self.image.get_rect()
+        self.move_y = 30
+        self.rect.x = self.player.rect.x
+        self.rect.x = self.player.rect.x
+
 class Boss(pygame.sprite.Sprite, Fiendermall):
     def __init__(self):
         super().__init__()
@@ -82,13 +117,35 @@ class Boss(pygame.sprite.Sprite, Fiendermall):
         # HP bars? Mer komplicerade attacker?
 
 
-class Grafik():
+class Grafik:
     def __init_(self):
+        self.snow_list = []
+        self.snow_x = 0
+        self.snow_y = 0
+        # fixa så att det inte bara är snö som är grafik
 
+    def snö(self):
+        for i in range(50):
+            self.snow_x = random.randrange(0, 1366)
+            self.snow_y = random.randrange(-768, 0)
+            self.snow_list.append([self.snow_x, self.snow_y])
+
+    def draw_snow(self, screen):
+        for i in range(len(self.snow_list)):
+            pygame.draw.circle(screen, WHITE, self.snow_list[i], 2)
+            self.snow_list[i][1] += 1
+            if self.snow_list[i][1] > 768:
+                y = random.randrange(-50, -10)
+                self.snow_list[i][1] = y
+                x = random.randrange(0, 1366)
+                self.snow_list[i][0] = x
+
+
+class Stjärnor(Grafik):
+    def __init__(self):
+        super().__init__()
 
 """
-
-# class Projektil(pygame.sprite.Sprite):
 
 
 class Game(object):
@@ -99,14 +156,14 @@ class Game(object):
         self.level = 1
         self.score = 0
         self.game_over = False
-
+        # Grafik
+        # stjärnor = Grafik
+        # stjärnor.snö()
         # Create sprites lists
         self.boss_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
         self.all_sprites_list = pygame.sprite.Group()
-
-        # self.projectile_list = pygame.sprite.Group()
-        # self.all_sprites_list.add(self.projectile_list)
+        self.projectile_list = pygame.sprite.Group()
 
         self.player = Spelare()
         self.all_sprites_list.add(self.player)
@@ -121,6 +178,8 @@ class Game(object):
         boss = Fiendermall()
         # Senare bossmall
         boss.image = pygame.Surface([200, 200])
+        # ha den i update funk för att gå i kurva
+        boss.rect.y = 200 + 100*math.sin(math.radians(boss.rect.x))
         self.boss_list.add(boss)
         self.enemy_list.add(boss)
         self.all_sprites_list.add(boss)
@@ -145,6 +204,9 @@ class Game(object):
                     self.player.player_left = True
                 if event.key == pygame.K_d:
                     self.player.player_right = True
+                if event.key == pygame.K_x:
+                    self.player.player_shoot = True
+
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_w:
                     self.player.player_up = False
@@ -154,10 +216,14 @@ class Game(object):
                     self.player.player_left = False
                 if event.key == pygame.K_d:
                     self.player.player_right = False
+                if event.key == pygame.K_x:
+                    self.player.player_shoot = False
+
 
     def run_logic(self):
+        self.enemy_list.update()
         if not self.game_over:
-            self.all_sprites_list.update()
+            self.player.update()
             # projectile_hit_list = pygame.sprite.spritecollide(self.projectile, self.enemy_list, True)
             enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, True)
 
@@ -173,6 +239,8 @@ class Game(object):
     def display_frame(self, screen):
         if self.level == 1:
             screen.fill(NIGHTBLUE)
+            snow(screen)
+            # Grafik.draw_snow(screen)
         if self.level == 2:
             screen.fill(RED)
 
@@ -180,9 +248,9 @@ class Game(object):
             print("you are rip")
 
             """ rip meddelande """
-
+        self.enemy_list.draw(screen)
         if not self.game_over:
-            self.all_sprites_list.draw(screen)
-            # den ritar ingenting
+            self.player.draw(screen)
+            # fixa så den ritar fienderna efter du dött
 
         pygame.display.flip()
