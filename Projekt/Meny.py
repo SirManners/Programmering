@@ -1,10 +1,12 @@
 import pygame
 import Klasser
-
+import Spel
+import main
 # --- Globala konstanter ---
 WHITE     = ( 255, 255, 255)
 NIGHTBLUE = (   0,   1,  64)
-
+SCREEN_HEIGHT = 688
+SCREEN_WIDTH = 1366
 # --- Klasser ---
 
 
@@ -75,7 +77,11 @@ def öppna_meny(screen, resume):
                     if meny_markör.y == 300:
                         done = True
                     elif meny_markör.y == 400:
-                        print("Something")
+                        highscore = Klasser.Text()
+                        highscore.text = "You have scored", main.game.score
+                        highscore.x = SCREEN_WIDTH /2
+                        highscore.y = SCREEN_HEIGHT/2
+                        highscore.skriv()
                     elif meny_markör.y == 600:
                         done = True
                         done_meny = True

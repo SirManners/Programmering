@@ -134,7 +134,6 @@ while not done:
                 x_shoot = x_coord
                 y_shoot = y_coord
 
-
         if event.type == pygame.KEYUP:
 
             if event.key == pygame.K_w:

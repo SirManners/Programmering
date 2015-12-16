@@ -22,10 +22,11 @@ def main():
 
     # Objekt och data
     done = False
-    done_game = False
+    done_game = True
     clock = pygame.time.Clock()
     resume = False
     # spel = Spel.Game()
+    game = Spel.Game()
 
 
     # Main loop
@@ -34,9 +35,7 @@ def main():
         done = Meny.öppna_meny(screen, resume)
         if not done:
             done_game = False
-        game = Spel.Game()
         while not done_game:
-
             done_game = game.process_events()
 
             game.run_logic()
