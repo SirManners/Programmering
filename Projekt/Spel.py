@@ -65,7 +65,8 @@ class Spelare(pygame.sprite.Sprite):
             self.rect.x -= self.move_x
         if self.player_right:
             self.rect.x += self.move_x
-        # if self.player_shoot
+        # if self.player_shoot:
+            #
 # Hur ska jag få den att skjuta något med players x och y koord samtidigt som jag ritar något nytt?
 
 
@@ -104,6 +105,11 @@ class Projektil(pygame.sprite.Sprite):
         self.move_y = 30
         self.rect.x = self.player.rect.x
         self.rect.x = self.player.rect.x
+
+    def update(self):
+        # någonting görs true i en lista med alla projektiler när du klickar på shoot,
+        # sätts false när de lämnar skärmen eller krockar.
+        #
 
 class Boss(pygame.sprite.Sprite, Fiendermall):
     def __init__(self):
@@ -153,6 +159,7 @@ class Game(object):
     def __init__(self):
 
         # Attributes
+        self.player_hp = 3
         self.level = 1
         self.score = 0
         self.game_over = False
@@ -164,25 +171,31 @@ class Game(object):
         self.enemy_list = pygame.sprite.Group()
         self.all_sprites_list = pygame.sprite.Group()
         self.projectile_list = pygame.sprite.Group()
+        self.player_list = pygame.sprite.Group()
 
         self.player = Spelare()
+        self.player_list.add(self.player)
         self.all_sprites_list.add(self.player)
 
         # Create the sprites
         # Projektiler, skapa ifall variabel?
-        mobs = Fiendermall()
-        mobs.image = pygame.Surface([20, 20])
-        self.enemy_list.add(mobs)
-        self.all_sprites_list.add(mobs)
 
-        boss = Fiendermall()
-        # Senare bossmall
-        boss.image = pygame.Surface([200, 200])
-        # ha den i update funk för att gå i kurva
-        boss.rect.y = 200 + 100*math.sin(math.radians(boss.rect.x))
-        self.boss_list.add(boss)
-        self.enemy_list.add(boss)
-        self.all_sprites_list.add(boss)
+        # Level 1:
+        if self.level == 1:
+            # detta fungerar dock inte
+            mobs = Fiendermall()
+            mobs.image = pygame.Surface([20, 20])
+            self.enemy_list.add(mobs)
+            self.all_sprites_list.add(mobs)
+
+            boss = Fiendermall()
+            # Senare bossmall
+            boss.image = pygame.Surface([200, 200])
+            # ha den i update funk för att gå i kurva
+            boss.rect.y = 200 + 100*math.sin(math.radians(boss.rect.x))
+            self.boss_list.add(boss)
+            self.enemy_list.add(boss)
+            self.all_sprites_list.add(boss)
 
     def process_events(self):
         for event in pygame.event.get():
@@ -224,10 +237,14 @@ class Game(object):
         self.enemy_list.update()
         if not self.game_over:
             self.player.update()
+
             # projectile_hit_list = pygame.sprite.spritecollide(self.projectile, self.enemy_list, True)
-            enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, True)
+            enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, False)
 
             if len(enemy_hit_list) != 0:
+                self.player_hp -= 1
+
+            if self.player_hp == 0:
                 self.game_over = True
 
             for collision in enemy_hit_list:
@@ -249,8 +266,10 @@ class Game(object):
 
             """ rip meddelande """
         self.enemy_list.draw(screen)
+        # Ha olika enemy_lists för olika nivåer. briljant jonas, briljant
+        self.projectile_list.draw(screen)
         if not self.game_over:
-            self.player.draw(screen)
+            self.player_list.draw(screen)
             # fixa så den ritar fienderna efter du dött
 
         pygame.display.flip()
