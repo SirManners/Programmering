@@ -77,7 +77,6 @@ class Fiendermall(pygame.sprite.Sprite):
         self.image = pygame.Surface([20, 20])
         self.image.fill(RED)
         self.rect = self.image.get_rect()
-        self.rect.y = 0
         self.move_x = 2
         self.move_y = 2
         # self.remove_width
@@ -89,7 +88,11 @@ class Fiendermall(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.y += self.move_y
+        # if self.rect.x >= SCREEN_WIDTH - self.image.get_width() or self.rect.x <= 0 + self.image.get_width():
+            # self.move_x *= -1
         self.rect.x += self.move_x
+        # if self.rect.y >= SCREEN_HEIGHT - self.image.get_height() or self.rect.y <= 0 - self.image.get_height():
+            # self.move_y *= -1
         # if 0 + self.rect.height > self.rect.x > SCREEN_WIDTH + self.rect.height:
         # ta bort
         # if 0 + self.rect.width > self.rect.y > SCREEN_HEIGHT + self.rect.height:
@@ -159,16 +162,24 @@ class Game(object):
     def __init__(self):
 
         # Attributes
-        self.player_hp = 3
+        self.player_hp = 5
         self.level = 1
+        # Lägg till lvl -1 som är introskärm, lvl 0 som är meny??
         self.score = 0
         self.game_over = False
+
         # Grafik
+        # HP markörer
         # stjärnor = Grafik
         # stjärnor.snö()
+        # när du fixat snön på riktigt. Ha planeter i bakrunden annars?
+
         # Create sprites lists
         self.boss_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
+        # Gör en loop som skapar listorna?
+        self.boss_list1 = pygame.sprite.Group()
+        self.enemy_list1 = pygame.sprite.Group()
         self.all_sprites_list = pygame.sprite.Group()
         self.projectile_list = pygame.sprite.Group()
         self.player_list = pygame.sprite.Group()
@@ -178,24 +189,35 @@ class Game(object):
         self.all_sprites_list.add(self.player)
 
         # Create the sprites
-        # Projektiler, skapa ifall variabel?
 
         # Level 1:
-        if self.level == 1:
-            # detta fungerar dock inte
-            mobs = Fiendermall()
-            mobs.image = pygame.Surface([20, 20])
-            self.enemy_list.add(mobs)
-            self.all_sprites_list.add(mobs)
+        for  x in range(10):
+            mobs1 = Fiendermall()
+            mobs1.rect.x = random.randrange(40, SCREEN_WIDTH - 40)
+            mobs1.rect.y = random.randrange(40, 70)
+            mobs1.move_x = 0
+            mobs1.move_y = 3
+            self.enemy_list.add(mobs1)
+            self.enemy_list1.add(mobs1)
+            self.all_sprites_list.add(mobs1)
 
-            boss = Fiendermall()
-            # Senare bossmall
-            boss.image = pygame.Surface([200, 200])
-            # ha den i update funk för att gå i kurva
-            boss.rect.y = 200 + 100*math.sin(math.radians(boss.rect.x))
-            self.boss_list.add(boss)
-            self.enemy_list.add(boss)
-            self.all_sprites_list.add(boss)
+        boss1 = Fiendermall()
+        # Senare bossmall, typ boss1 = Bossmall()
+
+        boss1.image = pygame.Surface([200, 200])
+        boss1.rect = boss1.image.get_rect()
+        boss1.rect.x = SCREEN_WIDTH / 2 - boss1.image.get_width()
+        boss1.rect.y = -200
+        boss1.move_x = 0
+        boss1.move_y = 4
+        # ha den i update funk för att gå i kurva
+        #boss1.rect.y = 200 + 100*math.sin(math.radians(boss.rect.x))
+
+        self.boss_list.add(boss1)
+        self.boss_list1.add(boss1)
+        self.all_sprites_list.add(boss1)
+
+        # Level 2:
 
     def process_events(self):
         for event in pygame.event.get():
@@ -234,21 +256,28 @@ class Game(object):
 
 
     def run_logic(self):
-        self.enemy_list.update()
-        if not self.game_over:
-            self.player.update()
 
             # projectile_hit_list = pygame.sprite.spritecollide(self.projectile, self.enemy_list, True)
-            enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, False)
+            enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, True)
+            boss_hit_list = pygame.sprite.spritecollide(self.player, self.boss_list, False)
 
-            if len(enemy_hit_list) != 0:
-                self.player_hp -= 1
+            if not self.game_over:
+                self.player.update()
+            # Level 1, 2 under osv.
+            if self.level == 1:
+                self.enemy_list1.update()
+                if self.score > 2:
+                    self.boss_list1.update()
+
+            if len(boss_hit_list) != 0:
+                self.level += 1
 
             if self.player_hp == 0:
                 self.game_over = True
 
             for collision in enemy_hit_list:
                 self.score += 1
+                self.player_hp -= 1
                 print(self.score)
             # for enemy in projectile_hit_list:
                 # self.score += 1
@@ -262,12 +291,18 @@ class Game(object):
             screen.fill(RED)
 
         if self.game_over:
-            print("you are rip")
+            self.score = 0
 
             """ rip meddelande """
-        self.enemy_list.draw(screen)
-        # Ha olika enemy_lists för olika nivåer. briljant jonas, briljant
+
+        if self.level == 1:
+            self.enemy_list1.draw(screen)
+            if self.score > 2:
+                self.boss_list1.draw(screen)
+            # Ifall alla fiender dör, börja skapa bossen, typ if len(enemy_hit_list) == antal fiender
+
         self.projectile_list.draw(screen)
+
         if not self.game_over:
             self.player_list.draw(screen)
             # fixa så den ritar fienderna efter du dött

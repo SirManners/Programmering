@@ -38,7 +38,7 @@ def main():
         while not done_game:
             done_game = game.process_events()
 
-            game.run_logic()
+            enemy_hit_list = game.run_logic()
 
             game.display_frame(screen)
 
