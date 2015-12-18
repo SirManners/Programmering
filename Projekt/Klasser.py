@@ -1,4 +1,5 @@
 import pygame
+import random
 
 
 def färger():
@@ -77,17 +78,18 @@ class Fiendermall(pygame.sprite.Sprite):
         self.image = pygame.Surface([20, 20])
         self.image.fill(GREY)
         self.rect = self.image.get_rect()
-        self.move_x = 2
+        self.move_x = 0
         self.move_y = 2
         # self.remove_width
         # self.remove_height
 
     def reset_pos(self):
-        self.rect.y = random.randrange(300, 500)
-        self.rect.x = random.randrange(SCREEN_WIDTH)
+        self.rect.y = random.randrange(-100, 0)
 
     def update(self):
         self.rect.y += self.move_y
+        if self.rect.y > SCREEN_HEIGHT + 70:
+            self.reset_pos()
         # if self.rect.x >= SCREEN_WIDTH - self.image.get_width() or self.rect.x <= 0 + self.image.get_width():
             # self.move_x *= -1
         self.rect.x += self.move_x
@@ -97,7 +99,6 @@ class Fiendermall(pygame.sprite.Sprite):
         # ta bort
         # if 0 + self.rect.width > self.rect.y > SCREEN_HEIGHT + self.rect.height:
         # ta bort
-
 """
 class Projektil(pygame.sprite.Sprite):
     def __init__(self):
@@ -106,13 +107,20 @@ class Projektil(pygame.sprite.Sprite):
         self.image.fill(YELLOW)
         self.rect = self.image.get_rect()
         self.move_y = 30
-        self.rect.x = self.player.rect.x
-        self.rect.x = self.player.rect.x
+        # Få ut spelarens x och y värde ur dess klass i main
+        self.rect.y = main.game.player.rect.y
+        self.rect.x = main.game.player.rect.x
+
 
     def update(self):
+        if self.rect.y > SCREEN_HEIGHT:
+            self.reset_pos()
         # någonting görs true i en lista med alla projektiler när du klickar på shoot,
         # sätts false när de lämnar skärmen eller krockar.
-        #
+
+    def reset_pos(self):
+        # ta bort den på något sätt
+
 
 class Boss(pygame.sprite.Sprite, Fiendermall):
     def __init__(self):

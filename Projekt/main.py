@@ -30,7 +30,7 @@ def main():
 
 
     # Main loop
-    Intro.öppna_intro(screen)
+    # Intro.öppna_intro(screen)
     while not done:
         done = Meny.öppna_meny(screen, resume)
         if not done:

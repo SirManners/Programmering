@@ -31,6 +31,7 @@ def snow(screen):
     for i in range(len(snow_list)):
             pygame.draw.circle(screen, WHITE, snow_list[i], 2)
             snow_list[i][1] += 5
+            # fixa så att stjärnorna åker snabbare när man åker uppåt, och långsammare när man åker nedåt
             if snow_list[i][1] > 768:
                 y = random.randrange(-50, -10)
                 snow_list[i][1] = y
@@ -46,7 +47,7 @@ class Game(object):
     def __init__(self):
 
         # Attributes
-        self.player_hp = 5
+        self.player_hp = 10
         self.level = 1
         # Lägg till lvl -1 som är introskärm, lvl 0 som är meny??
         self.score = 0
@@ -71,17 +72,25 @@ class Game(object):
         self.projectile_list = pygame.sprite.Group()
         self.player_list = pygame.sprite.Group()
 
+        # Spelare
         self.player = Klasser.Spelare()
         self.player_list.add(self.player)
         self.all_sprites_list.add(self.player)
 
+        # Projektiler:
+        """
+        for x in range(10):
+            player_projektil = Klasser.Projektil()
+            self.all_sprites_list.add(player_projektil)
+            self.projectile_list.add(player_projektil)
+"""
         # Create the sprites
 
         # Level 1:
         for  x in range(10):
             mobs1 = Klasser.Fiendermall()
             mobs1.rect.x = random.randrange(40, SCREEN_WIDTH - 40)
-            mobs1.rect.y = random.randrange(40, 70)
+            mobs1.rect.y = random.randrange(-500, -300)
             mobs1.move_x = 0
             mobs1.move_y = 3
             self.enemy_list.add(mobs1)
@@ -105,17 +114,17 @@ class Game(object):
         self.all_sprites_list.add(boss1)
 
         # Level 2:
+        i = 0
         for x in range(20):
-            i = 0
             mobs2 = Klasser.Fiendermall()
             mobs2.rect.x = 40 + i
-            mobs2.rect.y = random.randrange(40, 70)
+            mobs2.rect.y = random.randrange(-200, 0)
             mobs2.move_x = 0
             mobs2.move_y = 3
             self.enemy_list.add(mobs2)
             self.enemy_list2.add(mobs2)
             self.all_sprites_list.add(mobs2)
-            i += 40
+            i += 80
 
         boss2 = Klasser.Fiendermall()
         boss2.image = pygame.Surface([500,500])
@@ -222,6 +231,7 @@ class Game(object):
             # Ifall alla fiender dör, börja skapa bossen, typ if len(enemy_hit_list) == antal fiender
 
         if self.level == 2:
+            self.enemy_list1.draw(screen)
             self.enemy_list2.draw(screen)
             if self.score > 3:
                 self.boss_list2.draw(screen)

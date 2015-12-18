@@ -62,9 +62,4 @@ def öppna_intro(screen):
         pygame.display.flip()
         clock.tick(60)
 
-        """parameter += 1
-        if parameter == 4:
-            done = True
-        else:
-            continue"""
 
