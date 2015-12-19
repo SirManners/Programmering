@@ -82,7 +82,7 @@ class Fiendermall(pygame.sprite.Sprite):
         # self.remove_height
 
     def reset_pos(self):
-        self.rect.y = random.randrange(-100, 0)
+        self.rect.y = 0 - self.image.get_height()
 
     def update(self):
         self.rect.y += self.move_y

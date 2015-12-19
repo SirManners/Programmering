@@ -45,7 +45,7 @@ class Game(object):
     def __init__(self):
 
         # Attributes
-        self.player_hp = 1
+        self.player_hp = 5
         self.level = 1
         # Lägg till lvl -1 som är introskärm, lvl 0 som är meny??
         self.score = 0
@@ -126,7 +126,7 @@ class Game(object):
         boss2 = Klasser.Fiendermall()
         boss2.image = pygame.Surface([500,500])
         boss2.rect = boss2.image.get_rect()
-        boss2.rect.x = SCREEN_WIDTH /2 - boss2.image.get_width()
+        boss2.rect.x = SCREEN_WIDTH // 2 - boss2.image.get_width()
         boss2.rect.y = -1000
         self.boss_list.add(boss2)
         self.boss_list2.add(boss2)
@@ -190,8 +190,8 @@ class Game(object):
             if not self.game_over:
                 self.player.update()
                 self.projectile_list.update()
-                enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, False)
-                boss_hit_list = pygame.sprite.spritecollide(self.player, self.boss_list, False)
+                enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, True)
+                boss_hit_list = pygame.sprite.spritecollide(self.player, self.boss_list, True)
 
                 for collision in boss_hit_list:
                     self.level += 1
