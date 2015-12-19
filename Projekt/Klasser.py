@@ -66,9 +66,7 @@ class Spelare(pygame.sprite.Sprite):
             self.rect.x -= self.move_x
         if self.player_right:
             self.rect.x += self.move_x
-        # if self.player_shoot:
-            #
-# Hur ska jag få den att skjuta något med players x och y koord samtidigt som jag ritar något nytt?
+       # if self.player_shoot:
 
 
 
@@ -99,29 +97,27 @@ class Fiendermall(pygame.sprite.Sprite):
         # ta bort
         # if 0 + self.rect.width > self.rect.y > SCREEN_HEIGHT + self.rect.height:
         # ta bort
-"""
+
 class Projektil(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface([3, 3])
         self.image.fill(YELLOW)
         self.rect = self.image.get_rect()
-        self.move_y = 30
+        self.move_y = -3
         # Få ut spelarens x och y värde ur dess klass i main
-        self.rect.y = main.game.player.rect.y
-        self.rect.x = main.game.player.rect.x
-
+        self.rect.y = 0
+        self.rect.x = 0
 
     def update(self):
-        if self.rect.y > SCREEN_HEIGHT:
-            self.reset_pos()
+        self.rect.y += self.move_y
         # någonting görs true i en lista med alla projektiler när du klickar på shoot,
         # sätts false när de lämnar skärmen eller krockar.
 
-    def reset_pos(self):
+    # def reset_pos(self):
         # ta bort den på något sätt
 
-
+"""
 class Boss(pygame.sprite.Sprite, Fiendermall):
     def __init__(self):
         super().__init__()
@@ -165,24 +161,25 @@ class Stjärnor(Grafik):
 """
 
 
-
-class Text():
+class Text(): # TRASIG
     def __init__(self):
-        self.text = ""
+        self.font = 36
+        self.text = pygame.font.Font(None, self.font)
+        self.title = ""
         self.bold = True
         self.colour = WHITE
-        # ändrat till screen width osv
-        # self.x = (SCREEN_WIDTH // 2) - (text.get_width() // 2)
-        # self.y = (SCREEN_HEIGHT // 2) - (text.get_height() // 2)
+        # self.x = (SCREEN_WIDTH // 2) - (self.text.get_width() // 2)
+        # self.y = (SCREEN_HEIGHT // 2) - (self.text.get_height() // 2)
         self.x = 0
         self.y = 0
-        self.font = 36
+
 
     def skriv(self, screen):
-        text = pygame.font.Font(None, self.font).render(self.text, self.bold, self.colour)
-        screen.blit(text, [self.x, self.y])
+        self.text.render(self.title, self.bold, self.colour)
+        screen.blit(self.title, [self.x, self.y])
+"""
 
-
+"""
 class Rektangel():
     def __init__(self):
         self.x = 0
