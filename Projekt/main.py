@@ -15,9 +15,9 @@ def main():
 
     # Pygame och fönster
     pygame.init()
-    size = (700, 500)
+    size = (1366, 688)
     screen = pygame.display.set_mode(size)
-    pygame.display.set_mode((1366, 768), pygame.FULLSCREEN)
+    # pygame.display.set_mode((1366, 768), pygame.FULLSCREEN)
     pygame.display.set_caption("Projekt 1")
 
     # Objekt och data
@@ -27,7 +27,7 @@ def main():
     resume = False
     # spel = Spel.Game()
     game = Spel.Game()
-
+    highscore = 0
 
     # Main loop
     # Intro.öppna_intro(screen)
@@ -38,8 +38,11 @@ def main():
         while not done_game:
             done_game = game.process_events()
 
-            enemy_hit_list = game.run_logic()
+            game.run_logic()
+            if game.highscore > highscore:
+                game.highscore = highscore
 
+#enemy_hit_list =
             game.display_frame(screen)
 
             clock.tick(60)

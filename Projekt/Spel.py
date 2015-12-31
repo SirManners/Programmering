@@ -50,6 +50,7 @@ class Game(object):
         # Lägg till lvl -1 som är introskärm, lvl 0 som är meny??
         self.score = 0
         self.highscore = 0
+        self.highscore_message = False
         self.game_over = False
 
         self.ripmeddelande = Klasser.Text()
@@ -159,6 +160,7 @@ class Game(object):
                         self.player_projektil = Klasser.Projektil() # Latemanslösning
                         self.player_projektil.rect.x = self.player.rect.x
                         self.player_projektil.rect.y = self.player.rect.y
+                        self.player_projektil.rect = self.player_projektil.image.get_rect()
                         self.all_sprites_list.add(self.player_projektil)
                         self.projectile_list.add(self.player_projektil)
                         self.player.player_shoot = True
@@ -181,8 +183,8 @@ class Game(object):
                 print("Nivå:", self.level)
                 print("Score:", self.score)
                 print("Hitpoints", self.player_hp)
-                print("Highscore", self.highscore)
-                print("--------------------------")
+            print("Highscore", self.highscore)
+            print("--------------------------")
 
             if self.player_hp < 1:
                 self.game_over = True
@@ -203,7 +205,7 @@ class Game(object):
                     # self.score += 1
 
                 for projectile in self.projectile_list:
-                    projectile_hit_list = pygame.sprite.spritecollide(self.player_projektil, self.enemy_list, True)
+                    projectile_hit_list = pygame.sprite.spritecollide(self.projectile_list, self.enemy_list, True)
 
                     for enemy in projectile_hit_list:
                         self.projectile_list.remove(self.player_projektil)
@@ -216,6 +218,8 @@ class Game(object):
             if self.game_over:
                 if self.score > self.highscore:
                     self.highscore = self.score
+                    self.highscore_message = True
+                self.score = 0
 
             # Gör en loop (eller funktion) istället, som tar self.level och gör detta med den
             # Level 1
@@ -248,11 +252,9 @@ class Game(object):
             if self.score > 3:
                 self.boss_list2.draw(screen)
 
-
-        self.projectile_list.draw(screen)
-
         if not self.game_over:
             self.player_list.draw(screen)
+            self.projectile_list.draw(screen)
 
         if self.game_over:
             font = pygame.font.SysFont("system bold", 150)
@@ -260,5 +262,12 @@ class Game(object):
             center_x = (SCREEN_WIDTH // 2) - (text.get_width() // 2)
             center_y = (SCREEN_HEIGHT // 2) - (text.get_height() // 2)
             screen.blit(text, [center_x, center_y])
+            if self.highscore_message:
+                font = pygame.font.SysFont("system bold", 150)
+                text = font.render("NEW HIGHSCORE", True, STARBLUE)
+                center_x = (SCREEN_WIDTH // 2) - (text.get_width() // 2)
+                center_y = (SCREEN_HEIGHT // 2) - (text.get_height() // 2) - 250
+                screen.blit(text, [center_x, center_y])
+
 
         pygame.display.flip()

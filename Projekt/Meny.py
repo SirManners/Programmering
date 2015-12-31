@@ -12,8 +12,9 @@ SCREEN_WIDTH = 1366
 
 def öppna_meny(screen, resume):
 
-    def menyn():
+    def menyn(screen):
         if resume is False:
+            font = pygame.font.SysFont("system bold", 36)
             text = font.render("Play", True, WHITE)
             screen.blit(text, [200, 300])
             text = font.render("Highscore", True, WHITE)
@@ -23,6 +24,7 @@ def öppna_meny(screen, resume):
             text = font.render("Quit", True, WHITE)
             screen.blit(text, [200, 600])
         else:
+            font = pygame.font.SysFont("system bold", 36)
             text = font.render("Resume", True, WHITE)
             screen.blit(text, [200, 300])
             text = font.render("Highscore", True, WHITE)
@@ -52,7 +54,7 @@ def öppna_meny(screen, resume):
                     self.y = 600
 
     #Objekt och data
-    font = pygame.font.Font(None, 36)
+
     meny_markör = Markör()
     meny_markör.bredd = 30
     meny_markör.höjd = 30
@@ -77,11 +79,11 @@ def öppna_meny(screen, resume):
                     if meny_markör.y == 300:
                         done = True
                     elif meny_markör.y == 400:
-                        highscore = Klasser.Text()
-                        highscore.text = "You have scored", main.game.score
-                        highscore.x = SCREEN_WIDTH /2
-                        highscore.y = SCREEN_HEIGHT/2
-                        highscore.skriv()
+                        font = pygame.font.SysFont("system bold", 36)
+                        text = font.render("Your highscore is ", True, WHITE)
+                        screen.blit(text, [200, 300])
+                        #highscore.text = "Your highscore is ", main.highscore
+                        # Fixa så att all annan text försvinner
                     elif meny_markör.y == 600:
                         done = True
                         done_meny = True
@@ -96,7 +98,7 @@ def öppna_meny(screen, resume):
 
         screen.fill(NIGHTBLUE)
 
-        menyn()
+        menyn(screen)
 
         meny_markör.rita(screen)
 

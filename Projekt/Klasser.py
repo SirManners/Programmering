@@ -101,8 +101,9 @@ class Fiendermall(pygame.sprite.Sprite):
 class Projektil(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface([3, 3])
+        self.image = pygame.Surface([50, 50])
         self.image.fill(YELLOW)
+        print("Jag finns")
         self.rect = self.image.get_rect()
         self.move_y = -3
         # Få ut spelarens x och y värde ur dess klass i main
@@ -111,6 +112,7 @@ class Projektil(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.y += self.move_y
+        print("Jag finns fortfarande")
         # någonting görs true i en lista med alla projektiler när du klickar på shoot,
         # sätts false när de lämnar skärmen eller krockar.
 
