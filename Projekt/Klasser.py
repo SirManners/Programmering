@@ -112,14 +112,14 @@ class Bossmall(Fiendermall):
 class Projektil(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface([50, 50])
+        self.image = pygame.Surface([100, 100])
         self.image.fill(YELLOW)
         print("Jag finns")
         self.rect = self.image.get_rect()
-        self.move_y = -3
+        self.move_y = 10
         # Få ut spelarens x och y värde ur dess klass i main
-        self.rect.y = 0
-        self.rect.x = 0
+        self.rect.y = 500
+        self.rect.x = 500
 
     def update(self):
         self.rect.y += self.move_y

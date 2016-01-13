@@ -157,7 +157,7 @@ class Game(object):
                         self.player_projektil = Klasser.Projektil() # Latemanslösning
                         self.player_projektil.rect.x = self.player.rect.x
                         self.player_projektil.rect.y = self.player.rect.y
-                        # self.player_projektil.rect = self.player_projektil.image.get_rect()
+                        self.player_projektil.rect = self.player_projektil.image.get_rect()
                         self.all_sprites_list.add(self.player_projektil)
                         self.projectile_list.add(self.player_projektil)
                         self.player.player_shoot = True
@@ -192,25 +192,23 @@ class Game(object):
                 enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, True)
                 boss_hit_list = pygame.sprite.spritecollide(self.player, self.boss_list, True)
 
+                for projectile in self.projectile_list:
+                    projectile_hit_list = pygame.sprite.spritecollide(self.player_projektil, self.enemy_list, True)
+
+                    for enemy in projectile_hit_list:
+                        self.projectile_list.remove(self.player_projektil)
+                        self.all_sprites_list.remove(self.player_projektil)
+                        self.score += 1
+                    if self.player_projektil.rect.y < SCREEN_HEIGHT:
+                        self.projectile_list.remove(self.player_projektil)
+                        self.all_sprites_list.remove(self.player_projektil)
+
                 for collision in boss_hit_list:
                     self.level += 1
 
                 for collision in enemy_hit_list:
                     self.score += 1
                     self.player_hp -= 1
-                # for enemy in projectile_hit_list:
-                    # self.score += 1
-
-                for projectile in self.projectile_list:
-                    projectile_hit_list = pygame.sprite.spritecollide(self.projectile_list, self.enemy_list, True)
-
-                    for enemy in projectile_hit_list:
-                        self.projectile_list.remove(self.player_projektil)
-                        self.all_sprites_list.remove(self.player_projektil)
-
-                    if self.player_projektil.rect.y < SCREEN_HEIGHT:
-                        self.projectile_list.remove(self.player_projektil)
-                        self.all_sprites_list.remove(self.player_projektil)
 
             if self.game_over:
                 if self.score > self.highscore:
@@ -231,6 +229,8 @@ class Game(object):
                 if self.score > 3:
                     self.boss_list2.update()
 
+            # Level 3
+
     def display_frame(self, screen):
 
         if self.level == 1:
@@ -248,6 +248,9 @@ class Game(object):
             self.enemy_list2.draw(screen)
             if self.score > 3:
                 self.boss_list2.draw(screen)
+
+        if self.level == 3:
+            screen.fill(GREEN)
 
         if not self.game_over:
             self.player_list.draw(screen)
