@@ -49,7 +49,7 @@ class Spelare(pygame.sprite.Sprite):
         self.rect.x = SCREEN_WIDTH/2 - 15
         self.rect.y = 300
         self.move_x = 4
-        self.move_y = 4
+        self.move_y = 6
         self.player_up = False
         self.player_down = False
         self.player_left = False
@@ -85,6 +85,7 @@ class Fiendermall(pygame.sprite.Sprite):
         self.rect.y = 0 - self.image.get_height()
 
     def update(self):
+
         self.rect.y += self.move_y
         if self.rect.y > SCREEN_HEIGHT + 70:
             self.reset_pos()
@@ -97,6 +98,16 @@ class Fiendermall(pygame.sprite.Sprite):
         # ta bort
         # if 0 + self.rect.width > self.rect.y > SCREEN_HEIGHT + self.rect.height:
         # ta bort
+
+class Bossmall(Fiendermall):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.Surface([200, 200])
+        self.rect = self.image.get_rect()
+        self.image.fill(BLACK)
+        self.move_x = 0
+        self.move_y = 4
+
 
 class Projektil(pygame.sprite.Sprite):
     def __init__(self):

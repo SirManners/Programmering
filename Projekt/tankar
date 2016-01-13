@@ -1,6 +1,13 @@
 Fixa GIT så att import-pathen blir samma som på skoldatorn
 Lägg till en game-class? http://programarcadegames.com/python_examples/show_file.php?file=game_class_example.py
 !!! Gör så att spelet kan köras, endast en stor boll i mitten som man vinner när man skjuter
+
+Koncept: Mobs som åker i mönster, skjuta för att döda. Bossar som skjuter tillbaka.
+Kanske astereoider? Kanske fixa bakrund?
+
+
+
+
 Struktur:
     Gör om det mesta till klasser/funktioner.
     Klura ut globala variabler och få dem att sluta strula

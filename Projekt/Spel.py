@@ -95,15 +95,12 @@ class Game(object):
             self.enemy_list1.add(mobs1)
             self.all_sprites_list.add(mobs1)
 
-        boss1 = Klasser.Fiendermall()
+        boss1 = Klasser.Bossmall()
         # Senare bossmall, typ boss1 = Bossmall()
 
-        boss1.image = pygame.Surface([200, 200])
-        boss1.rect = boss1.image.get_rect()
         boss1.rect.x = SCREEN_WIDTH / 2 - boss1.image.get_width()
         boss1.rect.y = -200
-        boss1.move_x = 0
-        boss1.move_y = 4
+
         # ha den i update funk för att gå i kurva
         #boss1.rect.y = 200 + 100*math.sin(math.radians(boss.rect.x))
 
@@ -160,7 +157,7 @@ class Game(object):
                         self.player_projektil = Klasser.Projektil() # Latemanslösning
                         self.player_projektil.rect.x = self.player.rect.x
                         self.player_projektil.rect.y = self.player.rect.y
-                        self.player_projektil.rect = self.player_projektil.image.get_rect()
+                        # self.player_projektil.rect = self.player_projektil.image.get_rect()
                         self.all_sprites_list.add(self.player_projektil)
                         self.projectile_list.add(self.player_projektil)
                         self.player.player_shoot = True
