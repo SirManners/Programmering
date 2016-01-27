@@ -95,20 +95,19 @@ class Game(object):
             self.enemy_list1.add(mobs1)
             self.all_sprites_list.add(mobs1)
 
-        boss1 = Klasser.Bossmall()
-        # Senare bossmall, typ boss1 = Bossmall()
-
-        boss1.rect.x = SCREEN_WIDTH / 2 - boss1.image.get_width()
-        boss1.rect.y = -200
+        self.boss1 = Klasser.Bossmall()
+        self.boss1.rect.x = SCREEN_WIDTH / 2 - self.boss1.image.get_width()
+        self.boss1.rect.y = -200
 
         # ha den i update funk för att gå i kurva
         #boss1.rect.y = 200 + 100*math.sin(math.radians(boss.rect.x))
 
-        self.boss_list.add(boss1)
-        self.boss_list1.add(boss1)
-        self.all_sprites_list.add(boss1)
+        self.boss_list.add(self.boss1)
+        self.boss_list1.add(self.boss1)
+        self.all_sprites_list.add(self.boss1)
 
         # Level 2:
+
         i = 0
         for x in range(20):
             mobs2 = Klasser.Fiendermall()
@@ -121,17 +120,18 @@ class Game(object):
             self.all_sprites_list.add(mobs2)
             i += 80
 
-        boss2 = Klasser.Fiendermall()
-        boss2.image = pygame.Surface([500,500])
-        boss2.rect = boss2.image.get_rect()
-        boss2.rect.x = SCREEN_WIDTH // 2 - boss2.image.get_width()
-        boss2.rect.y = -1000
-        self.boss_list.add(boss2)
-        self.boss_list2.add(boss2)
-        self.all_sprites_list.add(boss2)
+        self.boss2 = Klasser.Bossmall()
+        self.boss2.image = pygame.Surface([500,500])
+        self.boss2.rect = self.boss2.image.get_rect()
+        self.boss2.rect.x = SCREEN_WIDTH // 2 - self.boss2.image.get_width()
+        self.boss2.rect.y = -1000
+        self.boss_list.add(self.boss2)
+        self.boss_list2.add(self.boss2)
+        self.all_sprites_list.add(self.boss2)
 
     def process_events(self):
         for event in pygame.event.get():
+
             if event.type == pygame.QUIT:
                 return True
             if event.type == pygame.KEYDOWN:
@@ -144,44 +144,48 @@ class Game(object):
                 if event.key == pygame.K_1:
                     self.game_over = True
                 if not self.game_over:
-                    if event.key == pygame.K_w:
+
+                    if event.key == pygame.K_w or event.key == pygame.K_UP:
                         self.player.player_up = True
-                    if event.key == pygame.K_s:
+                    if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                         self.player.player_down = True
-                    if event.key == pygame.K_a:
+                    if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                         self.player.player_left = True
-                    if event.key == pygame.K_d:
+                    if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                         self.player.player_right = True
-                    if event.key == pygame.K_x:
-                        print("---------------POW--------------------")
+
+                    if event.key == pygame.K_z:
                         self.player_projektil = Klasser.Projektil() # Latemanslösning
+                        self.player_projektil.rect = self.player_projektil.image.get_rect()
                         self.player_projektil.rect.x = self.player.rect.x
                         self.player_projektil.rect.y = self.player.rect.y
-                        self.player_projektil.rect = self.player_projektil.image.get_rect()
                         self.all_sprites_list.add(self.player_projektil)
                         self.projectile_list.add(self.player_projektil)
-                        self.player.player_shoot = True
+                        # Begränsa antalet skott ute samtidigt?
+                        # Göra så att man skjuter två skott, en från vardera vinge?
 
+                    # if event.key == pygame.K_x:
+                        # bomb
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_w:
+                if event.key == pygame.K_w or event.key == pygame.K_UP:
                     self.player.player_up = False
-                if event.key == pygame.K_s:
+                if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                     self.player.player_down = False
-                if event.key == pygame.K_a:
+                if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                     self.player.player_left = False
-                if event.key == pygame.K_d:
+                if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                     self.player.player_right = False
                 if event.key == pygame.K_x:
                     self.player.player_shoot = False
 
     def run_logic(self):
 
-            if not self.game_over:
-                print("Nivå:", self.level)
-                print("Score:", self.score)
-                print("Hitpoints", self.player_hp)
-            print("Highscore", self.highscore)
-            print("--------------------------")
+            #if not self.game_over:
+            #    print("Nivå:", self.level)
+            #    print("Score:", self.score)
+            #    print("Hitpoints", self.player_hp)
+            #print("Highscore", self.highscore)
+            #print("--------------------------")
 
             if self.player_hp < 1:
                 self.game_over = True
@@ -190,25 +194,40 @@ class Game(object):
                 self.player.update()
                 self.projectile_list.update()
                 enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, True)
-                boss_hit_list = pygame.sprite.spritecollide(self.player, self.boss_list, True)
+                boss_hit_list = pygame.sprite.spritecollide(self.player, self.boss_list, False)
 
-                for projectile in self.projectile_list:
-                    projectile_hit_list = pygame.sprite.spritecollide(self.player_projektil, self.enemy_list, True)
+                for self.player_projektil in self.projectile_list:
+                    self.projectile_hit_list = pygame.sprite.spritecollide(self.player_projektil, self.enemy_list, True)
+                    self.projectile_boss_hit_list = pygame.sprite.spritecollide(self.player_projektil, self.boss_list, False)
 
-                    for enemy in projectile_hit_list:
+                    for enemy in self.projectile_hit_list:
                         self.projectile_list.remove(self.player_projektil)
                         self.all_sprites_list.remove(self.player_projektil)
                         self.score += 1
-                    if self.player_projektil.rect.y < SCREEN_HEIGHT:
+
+                    for boss in self.projectile_boss_hit_list:
+                        # Lägg till boss HP som går ner när den träffas
                         self.projectile_list.remove(self.player_projektil)
                         self.all_sprites_list.remove(self.player_projektil)
 
-                for collision in boss_hit_list:
-                    self.level += 1
+                        if self.level == 1:
+                            self.boss1.hp -= self.player_projektil.damage
+                            print(self.boss1.hp)
+
+                        if self.level == 2:
+                            self.boss2.hp -= self.player_projektil.damage
+
+                    if self.player_projektil.rect.y < 0:
+                        self.projectile_list.remove(self.player_projektil)
+                        self.all_sprites_list.remove(self.player_projektil)
+
+# Lägg till odödlighet efter att du krockat med en fiende och tappat liv
 
                 for collision in enemy_hit_list:
                     self.score += 1
                     self.player_hp -= 1
+                for collision in boss_hit_list:
+                    self.game_over = True
 
             if self.game_over:
                 if self.score > self.highscore:
@@ -216,18 +235,22 @@ class Game(object):
                     self.highscore_message = True
                 self.score = 0
 
-            # Gör en loop (eller funktion) istället, som tar self.level och gör detta med den
             # Level 1
             if self.level == 1:
                 self.enemy_list1.update()
                 if self.score > 2:
                     self.boss_list1.update()
-
+                if self.boss1.hp < 1:
+                    self.level += 1
+                    self.boss_list.remove(self.boss1)
             # Level 2
             if self.level == 2:
                 self.enemy_list2.update()
                 if self.score > 3:
                     self.boss_list2.update()
+                if self.boss2.hp < 1:
+                    self.level += 1
+                    self.boss_list.remove(self.boss2)
 
             # Level 3
 
@@ -240,7 +263,7 @@ class Game(object):
             if self.score > 2:
                 self.boss_list1.draw(screen)
             # Grafik.draw_snow(screen)
-
+#
         if self.level == 2:
             screen.fill(RED)
             snow(screen)
@@ -248,7 +271,7 @@ class Game(object):
             self.enemy_list2.draw(screen)
             if self.score > 3:
                 self.boss_list2.draw(screen)
-
+#
         if self.level == 3:
             screen.fill(GREEN)
 

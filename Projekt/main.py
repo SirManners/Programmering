@@ -1,6 +1,6 @@
 import pygame
 import Meny
-import Intro
+
 import Klasser
 import Spel
 

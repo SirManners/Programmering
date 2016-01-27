@@ -1,6 +1,6 @@
 import pygame
 import random
-
+import main
 
 def färger():
     # --- Globala konstanter ---
@@ -78,6 +78,8 @@ class Fiendermall(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.move_x = 0
         self.move_y = 2
+        self.hp = 10
+        self.hit = False
         # self.remove_width
         # self.remove_height
 
@@ -85,13 +87,14 @@ class Fiendermall(pygame.sprite.Sprite):
         self.rect.y = 0 - self.image.get_height()
 
     def update(self):
-
         self.rect.y += self.move_y
         if self.rect.y > SCREEN_HEIGHT + 70:
             self.reset_pos()
         # if self.rect.x >= SCREEN_WIDTH - self.image.get_width() or self.rect.x <= 0 + self.image.get_width():
             # self.move_x *= -1
         self.rect.x += self.move_x
+        if self.hp < 1:
+            print("JAG ÄR DÖD")
         # if self.rect.y >= SCREEN_HEIGHT - self.image.get_height() or self.rect.y <= 0 - self.image.get_height():
             # self.move_y *= -1
         # if 0 + self.rect.height > self.rect.x > SCREEN_WIDTH + self.rect.height:
@@ -99,36 +102,29 @@ class Fiendermall(pygame.sprite.Sprite):
         # if 0 + self.rect.width > self.rect.y > SCREEN_HEIGHT + self.rect.height:
         # ta bort
 
+
 class Bossmall(Fiendermall):
     def __init__(self):
         super().__init__()
+        self.hp = 100
         self.image = pygame.Surface([200, 200])
         self.rect = self.image.get_rect()
         self.image.fill(BLACK)
         self.move_x = 0
-        self.move_y = 4
+        self.move_y = 2
 
+    # Bossen ska också skjuta
 
 class Projektil(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface([100, 100])
+        self.image = pygame.Surface([2, 5])
         self.image.fill(YELLOW)
-        print("Jag finns")
-        self.rect = self.image.get_rect()
-        self.move_y = 10
-        # Få ut spelarens x och y värde ur dess klass i main
-        self.rect.y = 500
-        self.rect.x = 500
+        self.move_y = -10
+        self.damage = 10
 
     def update(self):
         self.rect.y += self.move_y
-        print("Jag finns fortfarande")
-        # någonting görs true i en lista med alla projektiler när du klickar på shoot,
-        # sätts false när de lämnar skärmen eller krockar.
-
-    # def reset_pos(self):
-        # ta bort den på något sätt
 
 """
 class Boss(pygame.sprite.Sprite, Fiendermall):
