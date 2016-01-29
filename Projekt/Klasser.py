@@ -1,6 +1,7 @@
 import pygame
 import random
 import main
+import math
 
 def färger():
     # --- Globala konstanter ---
@@ -48,8 +49,8 @@ class Spelare(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = SCREEN_WIDTH/2 - 15
         self.rect.y = 300
-        self.move_x = 4
-        self.move_y = 6
+        self.move_x = 7
+        self.move_y = 8
         self.player_up = False
         self.player_down = False
         self.player_left = False
@@ -87,12 +88,13 @@ class Fiendermall(pygame.sprite.Sprite):
         self.rect.y = 0 - self.image.get_height()
 
     def update(self):
-        self.rect.y += self.move_y
+        self.rect.y += 1 + 2*math.sin(math.radians(self.rect.x))
+        #self.move_y
+        self.rect.x += 1 + 2*math.sin(math.radians(self.rect.y))
         if self.rect.y > SCREEN_HEIGHT + 70:
             self.reset_pos()
         # if self.rect.x >= SCREEN_WIDTH - self.image.get_width() or self.rect.x <= 0 + self.image.get_width():
             # self.move_x *= -1
-        self.rect.x += self.move_x
         if self.hp < 1:
             print("JAG ÄR DÖD")
         # if self.rect.y >= SCREEN_HEIGHT - self.image.get_height() or self.rect.y <= 0 - self.image.get_height():
@@ -118,9 +120,9 @@ class Bossmall(Fiendermall):
 class Projektil(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface([2, 5])
+        self.image = pygame.Surface([4, 7])
         self.image.fill(YELLOW)
-        self.move_y = -10
+        self.move_y = -15
         self.damage = 10
 
     def update(self):

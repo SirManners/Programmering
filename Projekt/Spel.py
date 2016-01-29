@@ -85,10 +85,10 @@ class Game(object):
         # Create the sprites
 
         # Level 1:
-        for  x in range(10):
+        for  x in range(3):
             mobs1 = Klasser.Fiendermall()
-            mobs1.rect.x = random.randrange(40, SCREEN_WIDTH - 40)
-            mobs1.rect.y = random.randrange(-500, -300)
+            mobs1.rect.x = random.randrange(200, SCREEN_WIDTH - 200)
+            mobs1.rect.y = random.randrange(0, 100)
             mobs1.move_x = 0
             mobs1.move_y = 3
             self.enemy_list.add(mobs1)
@@ -97,7 +97,7 @@ class Game(object):
 
         self.boss1 = Klasser.Bossmall()
         self.boss1.rect.x = SCREEN_WIDTH / 2 - self.boss1.image.get_width()
-        self.boss1.rect.y = -200
+        self.boss1.rect.y = -500
 
         # ha den i update funk för att gå i kurva
         #boss1.rect.y = 200 + 100*math.sin(math.radians(boss.rect.x))
@@ -109,7 +109,7 @@ class Game(object):
         # Level 2:
 
         i = 0
-        for x in range(20):
+        for x in range(5):
             mobs2 = Klasser.Fiendermall()
             mobs2.rect.x = 40 + i
             mobs2.rect.y = random.randrange(-200, 0)
@@ -157,10 +157,17 @@ class Game(object):
                     if event.key == pygame.K_z:
                         self.player_projektil = Klasser.Projektil() # Latemanslösning
                         self.player_projektil.rect = self.player_projektil.image.get_rect()
-                        self.player_projektil.rect.x = self.player.rect.x
+                        self.player_projektil.rect.x = self.player.rect.x + 5
                         self.player_projektil.rect.y = self.player.rect.y
                         self.all_sprites_list.add(self.player_projektil)
                         self.projectile_list.add(self.player_projektil)
+                        self.player_projektil = Klasser.Projektil() # Latemanslösning
+                        self.player_projektil.rect = self.player_projektil.image.get_rect()
+                        self.player_projektil.rect.x = self.player.rect.x + 25
+                        self.player_projektil.rect.y = self.player.rect.y
+                        self.all_sprites_list.add(self.player_projektil)
+                        self.projectile_list.add(self.player_projektil)
+
                         # Begränsa antalet skott ute samtidigt?
                         # Göra så att man skjuter två skott, en från vardera vinge?
 
@@ -216,8 +223,9 @@ class Game(object):
 
                         if self.level == 2:
                             self.boss2.hp -= self.player_projektil.damage
-
-                    if self.player_projektil.rect.y < 0:
+                            print(self.boss2.hp)
+                    if self.player_projektil.rect.y <= 0:
+                        print("DELETED")
                         self.projectile_list.remove(self.player_projektil)
                         self.all_sprites_list.remove(self.player_projektil)
 
@@ -237,20 +245,26 @@ class Game(object):
 
             # Level 1
             if self.level == 1:
-                self.enemy_list1.update()
                 if self.score > 2:
+                    print("Boss has spawned")
                     self.boss_list1.update()
-                if self.boss1.hp < 1:
-                    self.level += 1
-                    self.boss_list.remove(self.boss1)
+                    if self.boss1.hp < 1:
+                        self.level += 1
+                        self.boss_list.remove(self.boss1)
+                else:
+                    self.enemy_list1.update()
+
+
             # Level 2
             if self.level == 2:
-                self.enemy_list2.update()
-                if self.score > 3:
+                if self.score > 7:
+                    print("Boss has spawned")
                     self.boss_list2.update()
-                if self.boss2.hp < 1:
-                    self.level += 1
-                    self.boss_list.remove(self.boss2)
+                    if self.boss2.hp < 1:
+                        self.level += 1
+                        self.boss_list.remove(self.boss2)
+                else:
+                    self.enemy_list2.update()
 
             # Level 3
 
