@@ -57,6 +57,11 @@ class Spelare(pygame.sprite.Sprite):
         self.player_right = False
         self.player_shoot = False
 
+    def reset_pos(self):
+        self.rect.x = SCREEN_WIDTH/2 - 15
+        self.rect.y = 300
+
+
     def update(self):
         # tills vidare
         if self.player_up:
@@ -75,22 +80,26 @@ class Fiendermall(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface([20, 20])
-        self.image.fill(GREY)
+        self.image.fill(GREEN)
         self.rect = self.image.get_rect()
         self.move_x = 0
-        self.move_y = 2
+        self.move_y = 0
+        self.rect.x = 0
+        self.rect.y = 0
+        self.original_posx = self.rect.x
+        self.original_posy = self.rect.y
         self.hp = 10
         self.hit = False
         # self.remove_width
         # self.remove_height
 
     def reset_pos(self):
-        self.rect.y = 0 - self.image.get_height()
+        self.rect.x = self.original_posx
+        self.rect.y = self.original_posy
 
     def update(self):
-        self.rect.y += 1 + 2*math.sin(math.radians(self.rect.x))
-        #self.move_y
-        self.rect.x += 1 + 2*math.sin(math.radians(self.rect.y))
+        self.rect.x += self.move_x
+        self.rect.y += self.move_y
         if self.rect.y > SCREEN_HEIGHT + 70:
             self.reset_pos()
         # if self.rect.x >= SCREEN_WIDTH - self.image.get_width() or self.rect.x <= 0 + self.image.get_width():
@@ -115,6 +124,10 @@ class Bossmall(Fiendermall):
         self.move_x = 0
         self.move_y = 2
 
+    def update(self):
+        self.rect.y += 1 + 2*math.sin(math.radians(self.rect.x))
+        #self.move_y
+        self.rect.x += 1 + 2*math.sin(math.radians(self.rect.y))
     # Bossen ska också skjuta
 
 class Projektil(pygame.sprite.Sprite):
@@ -128,6 +141,13 @@ class Projektil(pygame.sprite.Sprite):
     def update(self):
         self.rect.y += self.move_y
 
+class Bossprojektil(Projektil):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.Surface([20, 20])
+        self.image.fill(RED)
+        self.move_y = 15
+        self.damage = 1
 """
 class Boss(pygame.sprite.Sprite, Fiendermall):
     def __init__(self):

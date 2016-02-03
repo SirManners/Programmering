@@ -45,7 +45,7 @@ class Game(object):
     def __init__(self):
 
         # Attributes
-        self.player_hp = 5
+        self.player_hp = 3
         self.level = 1
         # Lägg till lvl -1 som är introskärm, lvl 0 som är meny??
         self.score = 0
@@ -85,19 +85,29 @@ class Game(object):
         # Create the sprites
 
         # Level 1:
-        for  x in range(3):
+        i = 1
+        for  x in range(20):
             mobs1 = Klasser.Fiendermall()
-            mobs1.rect.x = random.randrange(200, SCREEN_WIDTH - 200)
-            mobs1.rect.y = random.randrange(0, 100)
-            mobs1.move_x = 0
-            mobs1.move_y = 3
+            if i < 11:
+                mobs1.rect.x = SCREEN_WIDTH
+                mobs1.move_x = -4
+                mobs1.move_y = 4
+            if i >= 11:
+                mobs1.rect.x = 0
+                mobs1.move_x = 4
+                mobs1.move_y = 4
+            mobs1.rect.y = 0 + (-30 * i)
+            mobs1.original_posx = mobs1.rect.x
+            mobs1.original_posy = mobs1.rect.y
             self.enemy_list.add(mobs1)
             self.enemy_list1.add(mobs1)
             self.all_sprites_list.add(mobs1)
+            i += 1
 
         self.boss1 = Klasser.Bossmall()
         self.boss1.rect.x = SCREEN_WIDTH / 2 - self.boss1.image.get_width()
         self.boss1.rect.y = -500
+        self.boss1.active = 0
 
         # ha den i update funk för att gå i kurva
         #boss1.rect.y = 200 + 100*math.sin(math.radians(boss.rect.x))
@@ -105,6 +115,8 @@ class Game(object):
         self.boss_list.add(self.boss1)
         self.boss_list1.add(self.boss1)
         self.all_sprites_list.add(self.boss1)
+
+        # Astereoider:
 
         # Level 2:
 
@@ -125,6 +137,7 @@ class Game(object):
         self.boss2.rect = self.boss2.image.get_rect()
         self.boss2.rect.x = SCREEN_WIDTH // 2 - self.boss2.image.get_width()
         self.boss2.rect.y = -1000
+        self.boss2.active = 0
         self.boss_list.add(self.boss2)
         self.boss_list2.add(self.boss2)
         self.all_sprites_list.add(self.boss2)
@@ -169,7 +182,6 @@ class Game(object):
                         self.projectile_list.add(self.player_projektil)
 
                         # Begränsa antalet skott ute samtidigt?
-                        # Göra så att man skjuter två skott, en från vardera vinge?
 
                     # if event.key == pygame.K_x:
                         # bomb
@@ -193,7 +205,7 @@ class Game(object):
             #    print("Hitpoints", self.player_hp)
             #print("Highscore", self.highscore)
             #print("--------------------------")
-
+            print(len(self.enemy_list1))
             if self.player_hp < 1:
                 self.game_over = True
 
@@ -234,6 +246,8 @@ class Game(object):
                 for collision in enemy_hit_list:
                     self.score += 1
                     self.player_hp -= 1
+                    self.player.reset_pos()
+                    # odödlighet
                 for collision in boss_hit_list:
                     self.game_over = True
 
@@ -245,8 +259,11 @@ class Game(object):
 
             # Level 1
             if self.level == 1:
-                if self.score > 2:
-                    print("Boss has spawned")
+                if len(self.enemy_list1) == 0:
+                    if self.boss1.active == 0:
+                        print("Boss has spawned")
+                        if self.boss1.active ==0:
+                            self.boss1.active += 1
                     self.boss_list1.update()
                     if self.boss1.hp < 1:
                         self.level += 1
@@ -257,8 +274,10 @@ class Game(object):
 
             # Level 2
             if self.level == 2:
-                if self.score > 7:
-                    print("Boss has spawned")
+                if len(self.enemy_list2) == 0:
+                    if self.boss2.active == 0:
+                        print("Boss has spawned")
+                        self.boss2.active += 1
                     self.boss_list2.update()
                     if self.boss2.hp < 1:
                         self.level += 1

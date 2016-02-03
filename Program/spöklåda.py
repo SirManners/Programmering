@@ -20,15 +20,15 @@ BLUE      = (   0,   4, 255)
 NIGHTBLUE = (   0,   1,  64)
 STARBLUE  = ( 159, 161, 252)
 GREY      = (  50,  50,  82)
-SCREEN_HEIGHT = 1080
-SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 768
+SCREEN_WIDTH = 1366
 import pygame
 pygame.init()
 
 size = (700, 500)
 screen = pygame.display.set_mode(size)
 # För att få fullscreen, siffrorna är skärmens upplösning
-pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
+pygame.display.set_mode((1366, 768), pygame.FULLSCREEN)
 
 y_m = 7
 x_m = 7
