@@ -41,6 +41,7 @@ SCREEN_HEIGHT = 688
 SCREEN_WIDTH = 1366
 
 
+
 class Spelare(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -84,9 +85,9 @@ class Fiendermall(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.move_x = 0
         self.move_y = 0
-        self.rect.x = 0
-        self.rect.y = 0
         self.hp = 10
+        self.level = 0
+        self.grupp = 0
         self.hit = False
         # self.remove_width
         # self.remove_height
@@ -98,19 +99,26 @@ class Fiendermall(pygame.sprite.Sprite):
     def update(self):
         self.rect.x += self.move_x
         self.rect.y += self.move_y
-        if self.rect.y > SCREEN_HEIGHT + 70:
+        if self.rect.y > SCREEN_HEIGHT + 20:
             self.reset_pos()
         # if self.rect.x >= SCREEN_WIDTH - self.image.get_width() or self.rect.x <= 0 + self.image.get_width():
             # self.move_x *= -1
         if self.hp < 1:
             print("JAG ÄR DÖD")
+
+        if self.level == 2:
+            if self.rect.y > (SCREEN_HEIGHT // 5):
+                if self.grupp == 1:
+                    self.move_x = 3
+                if self.grupp == 2:
+                    self.move_x = -3
+
         # if self.rect.y >= SCREEN_HEIGHT - self.image.get_height() or self.rect.y <= 0 - self.image.get_height():
             # self.move_y *= -1
         # if 0 + self.rect.height > self.rect.x > SCREEN_WIDTH + self.rect.height:
         # ta bort
         # if 0 + self.rect.width > self.rect.y > SCREEN_HEIGHT + self.rect.height:
         # ta bort
-
 
 class Bossmall(Fiendermall):
     def __init__(self):
@@ -226,3 +234,11 @@ class Rektangel():
     def rita(self, screen):
         pygame.draw.rect(screen, self.färg, [self.x, self.y, self.bredd, self.höjd])
 
+class Ridå(Rektangel):
+        def __init__(self):
+            super().__init__()
+
+        def rörelse(self):
+            self.x += self.change_x
+            if self.y >= -769:
+                self.y += self.change_y

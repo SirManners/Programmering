@@ -11,20 +11,12 @@ BLACK     = (   0,   0,   0)
 # --- Klasser ---
 
 
-class Ridå(Klasser.Rektangel):
-        def __init__(self):
-            super().__init__()
-
-        def rörelse(self):
-            self.x += self.change_x
-            if self.y >= -769:
-                self.y += self.change_y
 
 
-def öppna_intro(screen):
+def öppna_intro():
 
     # Objekt och data
-    ridå = Ridå()
+    ridå = Klasser.Ridå()
     ridå.x = 0
     ridå.y = -500
     ridå.bredd = 1366
@@ -32,12 +24,13 @@ def öppna_intro(screen):
     ridå.change_y = 3
     ridå.färg = WHITE
 
-    spelnamn = Klasser.Text()
-    spelnamn.text = "RYMDSPEL"
-    spelnamn.x = 200
-    spelnamn.y = 300
-    spelnamn.colour = BLACK
-    spelnamn.font = 100
+"""
+    # spelnamn = Klasser.Text()
+    # spelnamn.text = "RYMDSPEL"
+    # spelnamn.x = 200
+    # spelnamn.y = 300
+    # spelnamn.colour = BLACK
+    # spelnamn.font = 100
 
     done = False
     clock = pygame.time.Clock()
@@ -61,5 +54,5 @@ def öppna_intro(screen):
 
         pygame.display.flip()
         clock.tick(60)
-
+"""
 
