@@ -86,7 +86,7 @@ class Game(object):
 
         # Level 1:
         i = 1
-        for  x in range(20):
+        for  x in range(20): # 20 st
             mobs1 = Klasser.Fiendermall()
             if i < 11:
                 mobs1.rect.x = SCREEN_WIDTH
@@ -121,16 +121,28 @@ class Game(object):
         # Level 2:
 
         i = 0
-        for x in range(5):
+        for x in range(20):
             mobs2 = Klasser.Fiendermall()
-            mobs2.rect.x = 40 + i
-            mobs2.rect.y = random.randrange(-200, 0)
-            mobs2.move_x = 0
+            mobs2.rect.y = 0 - x * 30
+            mobs2.rect.x = 30
             mobs2.move_y = 3
+            mobs2.original_posx = mobs1.rect.x
+            mobs2.original_posy = mobs1.rect.y
             self.enemy_list.add(mobs2)
             self.enemy_list2.add(mobs2)
             self.all_sprites_list.add(mobs2)
-            i += 80
+
+
+        for x in range(20):
+            mobs2 = Klasser.Fiendermall()
+            mobs2.rect.x = SCREEN_WIDTH - 50
+            mobs2.rect.y = 0 - x * 30
+            mobs2.move_y = 3
+            mobs2.original_posx = mobs1.rect.x
+            mobs2.original_posy = mobs1.rect.y
+            self.enemy_list.add(mobs2)
+            self.enemy_list2.add(mobs2)
+            self.all_sprites_list.add(mobs2)
 
         self.boss2 = Klasser.Bossmall()
         self.boss2.image = pygame.Surface([500,500])

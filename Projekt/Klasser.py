@@ -86,8 +86,6 @@ class Fiendermall(pygame.sprite.Sprite):
         self.move_y = 0
         self.rect.x = 0
         self.rect.y = 0
-        self.original_posx = self.rect.x
-        self.original_posy = self.rect.y
         self.hp = 10
         self.hit = False
         # self.remove_width
