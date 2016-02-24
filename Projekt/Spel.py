@@ -46,13 +46,16 @@ class Game(object):
     def __init__(self):
 
         # Attributes
-        self.player_hp = 10000
+        self.player_hp = 10
+        self.immortality = False
         self.level = 1
         # Lägg till lvl -1 som är introskärm, lvl 0 som är meny??
         self.score = 0
         self.highscore = 0
         self.highscore_message = False
         self.game_over = False
+        self.time_1 = 0
+        self.time_2 = 0
 
         self.ripmeddelande = Klasser.Text()
         self.ripmeddelande.font = 60
@@ -162,6 +165,9 @@ class Game(object):
         self.all_sprites_list.add(self.boss2)
 
     def process_events(self):
+
+        self.time_1 = pygame.time.get_ticks()
+
         for event in pygame.event.get():
 
             if event.type == pygame.QUIT:
@@ -226,16 +232,29 @@ class Game(object):
             #    print("Hitpoints", self.player_hp)
             #print("Highscore", self.highscore)
             #print("--------------------------")
-            print(len(self.enemy_list1))
-            print(len(self.enemy_list2))
+            #print(len(self.enemy_list1))
+            #print(len(self.enemy_list2))
+
+            print(self.player_hp)
+
+            print(self.immortality)
 
             if self.player_hp < 1:
                 self.game_over = True
 
+            if self.time_1 - self.time_2 > 1500:
+                self.immortality = False
+                self.player.image.fill(WHITE)
+
             if not self.game_over:
                 self.player.update()
                 self.projectile_list.update()
-                enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, True)
+
+                if self.immortality:
+                    enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, False)
+                else:
+                    enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, True)
+
                 boss_hit_list = pygame.sprite.spritecollide(self.player, self.boss_list, False)
 
                 for self.player_projektil in self.projectile_list:
@@ -267,11 +286,15 @@ class Game(object):
 
 # Lägg till odödlighet efter att du krockat med en fiende och tappat liv
 
-                for collision in enemy_hit_list:
-                    self.score += 1
-                    self.player_hp -= 1
-                    self.player.reset_pos()
-                    # odödlighet
+                if not self.immortality:
+                    for collision in enemy_hit_list:
+                        self.score += 1
+                        self.player_hp -= 1
+                        self.player.reset_pos()
+                        self.time_2 = pygame.time.get_ticks()
+                        self.immortality = True
+                        self.player.image.fill(GREY)
+
                 for collision in boss_hit_list:
                     self.game_over = True
 
