@@ -85,7 +85,8 @@ class Game(object):
         self.all_sprites_list.add(self.player)
 
         # Projektiler:
-
+        self.bossprojektil = Bossprojektil()
+        self.all_sprites_list
         # Create the sprites
 
         # Level 1:

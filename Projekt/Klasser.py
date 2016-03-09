@@ -137,7 +137,7 @@ class Bossmall(Fiendermall):
 
 class Projektil(pygame.sprite.Sprite):
     def __init__(self):
-        # Lägg till spelare här
+        # Lägg till spelare här????
         super().__init__()
         self.image = pygame.Surface([4, 7])
         self.image.fill(YELLOW)
