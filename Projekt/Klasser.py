@@ -2,6 +2,7 @@ import pygame
 import random
 import main
 import math
+import Vektorer
 
 def färger():
     # --- Globala konstanter ---
@@ -75,8 +76,6 @@ class Spelare(pygame.sprite.Sprite):
             self.rect.x += self.move_x
        # if self.player_shoot:
 
-
-
 class Fiendermall(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -138,6 +137,7 @@ class Bossmall(Fiendermall):
 
 class Projektil(pygame.sprite.Sprite):
     def __init__(self):
+        # Lägg till spelare här
         super().__init__()
         self.image = pygame.Surface([4, 7])
         self.image.fill(YELLOW)
@@ -154,6 +154,13 @@ class Bossprojektil(Projektil):
         self.image.fill(RED)
         self.move_y = 15
         self.damage = 1
+
+    def choose_target(self, target_x, target_y):
+        self.target_x = target_x
+        self.target_y = target_Y
+
+    def update(self):
+        self.rect.x, self.rect.y = Vektorer.vector_movement(self.rect.x, self.rect.y, )
 """
 class Boss(pygame.sprite.Sprite, Fiendermall):
     def __init__(self):
