@@ -1,3 +1,9 @@
+Vektorer:
+movement = 3
+x_move = cos v * movement * t
+y_move = sin v * movement * t (sträckor)
+x_pos = x_pos + x_move
+
 Fixa GIT så att import-pathen blir samma som på skoldatorn
 Lägg till en game-class? http://programarcadegames.com/python_examples/show_file.php?file=game_class_example.py
 !!! Gör så att spelet kan köras, endast en stor boll i mitten som man vinner när man skjuter
