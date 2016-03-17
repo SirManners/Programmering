@@ -62,6 +62,9 @@ class Game(object):
         self.ripmeddelande.title = "GAME OVER"
 
         # Grafik
+        self.stjärnor = Klasser.Stjärnor()
+
+        # Astereoider
         # HP markörer
         # stjärnor = Grafik
         # stjärnor.snö()
@@ -70,7 +73,6 @@ class Game(object):
         # Create sprites lists
         self.boss_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
-        # Gör en loop som skapar listorna?
         self.boss_list1 = pygame.sprite.Group()
         self.boss_list2 = pygame.sprite.Group()
         self.enemy_list1 = pygame.sprite.Group()
@@ -85,30 +87,31 @@ class Game(object):
         self.all_sprites_list.add(self.player)
 
         # Projektiler:
-        self.bossprojektil = Bossprojektil()
-        self.all_sprites_list
+        #self.bossprojektil = Bossprojektil()
+        #self.all_sprites_list
         # Create the sprites
 
         # Level 1:
         i = 1
         for  x in range(20): # 20 st
-            mobs1 = Klasser.Fiendermall()
+            self.mobs1 = Klasser.Fiendermall()
             if i < 11:
-                mobs1.rect.x = SCREEN_WIDTH
-                mobs1.move_x = -4
-                mobs1.move_y = 4
-                mobs1.rect.y = 0 + (-30 * i)
+                self.mobs1.rect.x = SCREEN_WIDTH
+                self.mobs1.move_x = -4
+                self.mobs1.move_y = 4
+                self.mobs1.rect.y = 0 + (-30 * i)
             if i >= 11:
-                mobs1.rect.x = 0
-                mobs1.move_x = 4
-                mobs1.move_y = 4
-                mobs1.rect.y = 300 + (-30 * i)
-            mobs1.original_posx = mobs1.rect.x
-            mobs1.original_posy = mobs1.rect.y
-            self.enemy_list.add(mobs1)
-            self.enemy_list1.add(mobs1)
-            self.all_sprites_list.add(mobs1)
+                self.mobs1.rect.x = 0
+                self.mobs1.move_x = 4
+                self.mobs1.move_y = 4
+                self.mobs1.rect.y = 300 + (-30 * i)
+            self.mobs1.original_posx = self.mobs1.rect.x
+            self.mobs1.original_posy = self.mobs1.rect.y
+            self.enemy_list.add(self.mobs1)
+            self.enemy_list1.add(self.mobs1)
+            self.all_sprites_list.add(self.mobs1)
             i += 1
+        self.mobs1.choose_target(self.player.rect.x, self.player.rect.y)
 
         self.boss1 = Klasser.Bossmall()
         self.boss1.rect.x = SCREEN_WIDTH / 2 - self.boss1.image.get_width()
@@ -122,7 +125,6 @@ class Game(object):
         self.boss_list1.add(self.boss1)
         self.all_sprites_list.add(self.boss1)
 
-        # Astereoider:
 
         # Level 2:
 
@@ -200,15 +202,15 @@ class Game(object):
                         self.player.player_right = True
 
                     if event.key == pygame.K_z:
-                        for x in range(2):
-                            self.player_projektil = Klasser.Projektil() # Latemanslösning
-                            self.player_projektil.rect = self.player_projektil.image.get_rect()
-                            self.player_projektil.rect.x = self.player.rect.x + 5 + x*20
-                            self.player_projektil.rect.y = self.player.rect.y
-                            self.all_sprites_list.add(self.player_projektil)
-                            self.projectile_list.add(self.player_projektil)
-
-
+                        if len(self.projectile_list) < 2:
+                            for x in range(2):
+                                self.player_projektil = Klasser.Projektil() # Latemanslösning
+                                self.player_projektil.rect = self.player_projektil.image.get_rect()
+                                self.player_projektil.rect.x = self.player.rect.x + x * self.player.image.get_width() + -1^(x+1)*self.player_projektil.image.get_width()     #+ 5 + x*20
+                                self.player_projektil.rect.y = self.player.rect.y
+                                self.all_sprites_list.add(self.player_projektil)
+                                self.projectile_list.add(self.player_projektil)
+                        print(len(self.projectile_list))
                         # Begränsa antalet skott ute samtidigt?
 
                         # if event.key == pygame.K_x:
@@ -236,9 +238,9 @@ class Game(object):
             #print(len(self.enemy_list1))
             #print(len(self.enemy_list2))
 
-            print(self.player_hp)
+            # print(self.player_hp)
 
-            print(self.immortality)
+            # print(self.immortality)
 
             if self.player_hp < 1:
                 self.game_over = True
@@ -347,7 +349,13 @@ class Game(object):
 
         if self.level == 1:
             screen.fill(NIGHTBLUE)
+
             snow(screen)
+
+            # self.stjärnor.draw_snow(screen) <- Av någon anledning funkar ej.
+            # AttributeError: 'Stjärnor' object has no attribute 'snow_list'
+
+
             self.enemy_list1.draw(screen)
             if self.score > 2:
                 self.boss_list1.draw(screen)

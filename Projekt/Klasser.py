@@ -27,7 +27,7 @@ def färger():
 # Fixa importerbara färger
 # --- Klasser ---
 
-ROSA = ( 255,   0, 132)
+ROSA      = ( 255,   0, 132)
 BLACK     = (   0,   0,   0)
 WHITE     = ( 255, 255, 255)
 GREEN     = (   0, 255,   0)
@@ -63,7 +63,6 @@ class Spelare(pygame.sprite.Sprite):
         self.rect.x = SCREEN_WIDTH/2 - 15
         self.rect.y = 300
 
-
     def update(self):
         # tills vidare
         if self.player_up:
@@ -91,10 +90,21 @@ class Fiendermall(pygame.sprite.Sprite):
         # self.remove_width
         # self.remove_height
 
+
+        self.target_x = 0
+        self.target_y = 0
     def reset_pos(self):
         self.rect.x = self.original_posx
         self.rect.y = self.original_posy
 
+    def choose_target(self, target_x, target_y):
+        self.target_x = target_x
+        self.target_y = target_y
+
+    def update(self):
+        self.rect.x, self.rect.y = Vektorer.vector_movement(self.rect.x, self.rect.y, self.target_x, self.target_y, self.move_y )
+        print(self.rect.x, self.rect.y)
+"""
     def update(self):
         self.rect.x += self.move_x
         self.rect.y += self.move_y
@@ -102,8 +112,6 @@ class Fiendermall(pygame.sprite.Sprite):
             self.reset_pos()
         # if self.rect.x >= SCREEN_WIDTH - self.image.get_width() or self.rect.x <= 0 + self.image.get_width():
             # self.move_x *= -1
-        if self.hp < 1:
-            print("JAG ÄR DÖD")
 
         if self.level == 2:
             if self.rect.y > (SCREEN_HEIGHT // 5):
@@ -118,7 +126,7 @@ class Fiendermall(pygame.sprite.Sprite):
         # ta bort
         # if 0 + self.rect.width > self.rect.y > SCREEN_HEIGHT + self.rect.height:
         # ta bort
-
+"""
 class Bossmall(Fiendermall):
     def __init__(self):
         super().__init__()
@@ -139,7 +147,7 @@ class Projektil(pygame.sprite.Sprite):
     def __init__(self):
         # Lägg till spelare här????
         super().__init__()
-        self.image = pygame.Surface([4, 7])
+        self.image = pygame.Surface([100, 7])
         self.image.fill(YELLOW)
         self.move_y = -15
         self.damage = 10
@@ -160,7 +168,30 @@ class Bossprojektil(Projektil):
         self.target_y = target_Y
 
     def update(self):
-        self.rect.x, self.rect.y = Vektorer.vector_movement(self.rect.x, self.rect.y, )
+        self.rect.x, self.rect.y = Vektorer.vector_movement(self.rect.x, self.rect.y, self.target_x, self.target_y, self.move_y )
+
+class Stjärnor():
+    def __init_(self):
+        self.färg = WHITE
+        self.snow_list = []
+        # AttributeError: 'Stjärnor' object has no attribute 'snow_list'
+
+        for i in range(50):
+            snow_x = random.randrange(0, 1366)
+            snow_y = random.randrange(-768, 0)
+            self.snow_list.append([snow_x, snow_y])
+
+    def draw_snow(self, screen):
+        for i in range(len(self.snow_list)):
+            pygame.draw.circle(screen, self.färg, self.snow_list[i], 2)
+            self.snow_list[i][1] += 5
+            if self.snow_list[i][1] > 768:
+                y = random.randrange(-50, -10)
+                self.snow_list[i][1] = y
+                x = random.randrange(0, 1366)
+                self.snow_list[i][0] = x
+
+
 """
 class Boss(pygame.sprite.Sprite, Fiendermall):
     def __init__(self):
@@ -176,26 +207,11 @@ class Boss(pygame.sprite.Sprite, Fiendermall):
 
 class Grafik:
     def __init_(self):
-        self.snow_list = []
-        self.snow_x = 0
-        self.snow_y = 0
-        # fixa så att det inte bara är snö som är grafik
+        self.färg = WHITE
+        self.
 
-    def snö(self):
-        for i in range(50):
-            self.snow_x = random.randrange(0, 1366)
-            self.snow_y = random.randrange(-768, 0)
-            self.snow_list.append([self.snow_x, self.snow_y])
+    def draw(self, screen):
 
-    def draw_snow(self, screen):
-        for i in range(len(self.snow_list)):
-            pygame.draw.circle(screen, WHITE, self.snow_list[i], 2)
-            self.snow_list[i][1] += 1
-            if self.snow_list[i][1] > 768:
-                y = random.randrange(-50, -10)
-                self.snow_list[i][1] = y
-                x = random.randrange(0, 1366)
-                self.snow_list[i][0] = x
 
 
 class Stjärnor(Grafik):
@@ -203,7 +219,6 @@ class Stjärnor(Grafik):
         super().__init__()
 
 """
-
 
 class Text(): # TRASIG
     def __init__(self):
@@ -221,9 +236,7 @@ class Text(): # TRASIG
     def skriv(self, screen):
         self.text.render(self.title, self.bold, self.colour)
         screen.blit(self.title, [self.x, self.y])
-"""
 
-"""
 class Rektangel():
     def __init__(self):
         self.x = 0

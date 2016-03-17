@@ -25,7 +25,6 @@ def main():
     done_game = True
     clock = pygame.time.Clock()
     resume = False
-    # spel = Spel.Game()
     game = Spel.Game()
     highscore = 0
 
@@ -42,7 +41,6 @@ def main():
             if game.highscore > highscore:
                 game.highscore = highscore
 
-#enemy_hit_list =
             game.display_frame(screen)
 
             clock.tick(60)

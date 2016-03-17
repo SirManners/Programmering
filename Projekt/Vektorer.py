@@ -1,5 +1,5 @@
-__author__ = 'ab53995'
 import math
+
 
 def vector_movement(current_pos_x, current_pos_y, goal_pos_x, goal_pos_y, movement):
 
