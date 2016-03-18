@@ -2,7 +2,10 @@ TO DO:
 
 Integrera Meny i game på något snyggt sätt, som lvl -1
 
+Fixa så att alla sprites rör sig lite mot spelaren
 
+Fixa så att man skjuter från Player klassen snanare än från process events, alltså hur jag skapar listor i Game-
+klassen ifrån Player klassen.
 
 
 Vektorer:

@@ -54,8 +54,8 @@ class Mall(pygame.sprite.Sprite):
         self.move_y = 0
         self.level = 0
         self.hp = 0
-        self.original_posx
-        self.original_posy
+        self.original_posx = 0
+        self.original_posy = 0
 
     def reset_pos(self):
         self.rect.x = self.original_posx
@@ -68,7 +68,7 @@ class Mall(pygame.sprite.Sprite):
             self.reset_pos()
 
 
-class Spelare(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
 
@@ -80,13 +80,16 @@ class Spelare(pygame.sprite.Sprite):
         self.rect.y = 300
         self.move_x = 7
         self.move_y = 8
+        self.original_posx = SCREEN_WIDTH/2 - 15
+        self.original_posy = 300
         ##
 
-        self.player_up = False
-        self.player_down = False
-        self.player_left = False
-        self.player_right = False
-        self.player_shoot = False
+        self.up = False
+        self.down = False
+        self.left = False
+        self.right = False
+
+        # self.shoot = False
 
 # detta skulle kunna tas bort ifall du fixar in self.original_posx i player
     def reset_pos(self):
@@ -96,18 +99,27 @@ class Spelare(pygame.sprite.Sprite):
 
     def update(self):
         # tills vidare
-        if self.player_up:
+        if self.up:
             self.rect.y -= self.move_y
-        if self.player_down:
+        if self.down:
             self.rect.y += self.move_y
-        if self.player_left:
+        if self.left:
             self.rect.x -= self.move_x
-        if self.player_right:
+        if self.right:
             self.rect.x += self.move_x
-       # if self.player_shoot:
+       # if self.shoot:
 
-    #def shoot(self):
+    #def shoot(self, projectile_list):
 
+    def movement(self, event, boolean):
+        if event.key == pygame.K_w or event.key == pygame.K_UP:
+            self.up = boolean
+        if event.key == pygame.K_s or event.key == pygame.K_DOWN:
+            self.down = boolean
+        if event.key == pygame.K_a or event.key == pygame.K_LEFT:
+            self.left = boolean
+        if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+            self.right = boolean
 
 class Fiendermall(pygame.sprite.Sprite):
     def __init__(self):
@@ -121,6 +133,8 @@ class Fiendermall(pygame.sprite.Sprite):
         self.level = 0
         self.grupp = 0
         self.hit = False
+        self.original_posx = 0
+        self.original_posy = 0
         # self.remove_width
         # self.remove_height
 
@@ -186,6 +200,7 @@ class Bossmall(Fiendermall):
     def update(self):
         self.rect.y += 1 + 2*math.sin(math.radians(self.rect.x))
         self.rect.x += 1 + 2*math.sin(math.radians(self.rect.y))
+
     # Bossen ska också skjuta
 
 
@@ -200,7 +215,6 @@ class Projektil(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.y += self.move_y
-
 
 class Bossprojektil(Projektil):
     def __init__(self):

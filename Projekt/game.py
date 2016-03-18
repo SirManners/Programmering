@@ -81,8 +81,8 @@ class Game(object):
         self.projectile_list = pygame.sprite.Group()
         self.player_list = pygame.sprite.Group()
 
-        # Spelare
-        self.player = sprites.Spelare()
+        # Player
+        self.player = sprites.Player()
         self.player.image = pygame.Surface([30, 30])
         self.player.image.fill(WHITE)
         self.player.rect = self.player.image.get_rect()
@@ -210,43 +210,24 @@ class Game(object):
 
                 if not self.game_over:
 
-                    if event.key == pygame.K_w or event.key == pygame.K_UP:
-                        self.player.player_up = True
-                    if event.key == pygame.K_s or event.key == pygame.K_DOWN:
-                        self.player.player_down = True
-                    if event.key == pygame.K_a or event.key == pygame.K_LEFT:
-                        self.player.player_left = True
-                    if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
-                        self.player.player_right = True
+                    self.player.movement(event, True)
 
                     if event.key == pygame.K_z:
-
-                        # Fixa en bättre lösning på skjutandet. Åter igen, få in saker i sprites.
-                        if len(self.projectile_list) < 2:
+                        if len(self.projectile_list) < 10:
                             for x in range(2):
-                                self.player_projektil = sprites.Projektil() # Latemanslösning
+                                self.player_projektil = sprites.Projektil()
                                 self.player_projektil.rect = self.player_projektil.image.get_rect()
                                 self.player_projektil.rect.x = self.player.rect.x + x * self.player.image.get_width() + -1^(x+1)*self.player_projektil.image.get_width()     #+ 5 + x*20
                                 self.player_projektil.rect.y = self.player.rect.y
                                 self.all_sprites_list.add(self.player_projektil)
                                 self.projectile_list.add(self.player_projektil)
-                        print(len(self.projectile_list))
-                        # Begränsa antalet skott ute samtidigt?
-
                         # if event.key == pygame.K_x:
                         # bomb
 
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_w or event.key == pygame.K_UP:
-                    self.player.player_up = False
-                if event.key == pygame.K_s or event.key == pygame.K_DOWN:
-                    self.player.player_down = False
-                if event.key == pygame.K_a or event.key == pygame.K_LEFT:
-                    self.player.player_left = False
-                if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
-                    self.player.player_right = False
-                if event.key == pygame.K_x:
-                    self.player.player_shoot = False
+
+                self.player.movement(event, False)
+
 
     def run_logic(self):
 
@@ -281,9 +262,9 @@ class Game(object):
                         self.projectile_list.remove(self.player_projektil)
                         self.all_sprites_list.remove(self.player_projektil)
                         self.score += 1
+                        print(self.score)
 
                     for boss in self.projectile_boss_hit_list:
-                        # Lägg till boss HP som går ner när den träffas
                         self.projectile_list.remove(self.player_projektil)
                         self.all_sprites_list.remove(self.player_projektil)
 
@@ -299,6 +280,7 @@ class Game(object):
                         print("DELETED")
                         self.projectile_list.remove(self.player_projektil)
                         self.all_sprites_list.remove(self.player_projektil)
+
 
                 if not self.immortality:
                     for collision in enemy_hit_list:
