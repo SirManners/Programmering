@@ -1,7 +1,9 @@
 import pygame
-import Klasser
-import Spel
+import sprites
+import game
 import main
+import graphics
+
 # --- Globala konstanter ---
 WHITE     = ( 255, 255, 255)
 NIGHTBLUE = (   0,   1,  64)
@@ -37,17 +39,17 @@ def öppna_meny(screen, resume):
     # spara text utanför loopen
     # Gör en lista och kör igenom den och rita allting
 
-    class Markör(Klasser.Rektangel):
+    class Markör(graphics.Rektangel):
         def __init__(self):
             super().__init__()
 
         def rörelse(self):
-            if event.key == pygame.K_DOWN:
+            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                 if self.y < 600:
                     self.y += self.change_y
                 else:
                     self.y = 300
-            elif event.key == pygame.K_UP:
+            elif event.key == pygame.K_UP or event.key == pygame.K_w:
                 if self.y > 300:
                     self.y -= self.change_y
                 else:

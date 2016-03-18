@@ -1,10 +1,11 @@
 import pygame
 import random
-import Klasser
+import sprites
+import graphics
 import math
 import Intro
 
-# Klasser.färger()
+# sprites.färger()
 SCREEN_HEIGHT = 688
 SCREEN_WIDTH = 1366
 ROSA = ( 255,   0, 132)
@@ -27,7 +28,6 @@ for i in range(50):
     snow_y = random.randrange(-768, 0)
     snow_list.append([snow_x, snow_y])
 
-
 def snow(screen):
     for i in range(len(snow_list)):
             pygame.draw.circle(screen, WHITE, snow_list[i], 2)
@@ -38,7 +38,7 @@ def snow(screen):
                 snow_list[i][1] = y
                 x = random.randrange(0, 1366)
                 snow_list[i][0] = x
-# Gör om så att både spelare och fiender båda är barn till samma klass?
+
 
 
 class Game(object):
@@ -46,7 +46,7 @@ class Game(object):
     def __init__(self):
 
         # Attributes
-        self.player_hp = 10
+        self.player_hp = 2
         self.immortality = False
         self.level = 1
         # Lägg till lvl -1 som är introskärm, lvl 0 som är meny??
@@ -57,12 +57,12 @@ class Game(object):
         self.time_1 = 0
         self.time_2 = 0
 
-        self.ripmeddelande = Klasser.Text()
+        self.ripmeddelande = graphics.Text()
         self.ripmeddelande.font = 60
         self.ripmeddelande.title = "GAME OVER"
 
         # Grafik
-        self.stjärnor = Klasser.Stjärnor()
+        self.stjärnor = sprites.Stjärnor()
 
         # Astereoider
         # HP markörer
@@ -82,11 +82,20 @@ class Game(object):
         self.player_list = pygame.sprite.Group()
 
         # Spelare
-        self.player = Klasser.Spelare()
+        self.player = sprites.Spelare()
+        self.player.image = pygame.Surface([30, 30])
+        self.player.image.fill(WHITE)
+        self.player.rect = self.player.image.get_rect()
+        self.player.rect.x = SCREEN_WIDTH/2 - 15
+        self.player.rect.y = 300
+        self.player.move_x = 7
+        self.player.move_y = 8
         self.player_list.add(self.player)
         self.all_sprites_list.add(self.player)
 
         # Projektiler:
+        # Skapa 4 eller 6 projektiler. Återanvänd dem hela tiden.
+
         #self.bossprojektil = Bossprojektil()
         #self.all_sprites_list
         # Create the sprites
@@ -94,7 +103,7 @@ class Game(object):
         # Level 1:
         i = 1
         for  x in range(20): # 20 st
-            self.mobs1 = Klasser.Fiendermall()
+            self.mobs1 = sprites.Fiendermall()
             if i < 11:
                 self.mobs1.rect.x = SCREEN_WIDTH
                 self.mobs1.move_x = -4
@@ -107,13 +116,22 @@ class Game(object):
                 self.mobs1.rect.y = 300 + (-30 * i)
             self.mobs1.original_posx = self.mobs1.rect.x
             self.mobs1.original_posy = self.mobs1.rect.y
+            #self.mobs1.choose_target(self.player.rect.x, self.player.rect.y)
             self.enemy_list.add(self.mobs1)
             self.enemy_list1.add(self.mobs1)
             self.all_sprites_list.add(self.mobs1)
             i += 1
-        self.mobs1.choose_target(self.player.rect.x, self.player.rect.y)
 
-        self.boss1 = Klasser.Bossmall()
+        # testis
+        self.mobs1.rect.x = SCREEN_WIDTH / 2
+        self.mobs1.rect.y = 50
+
+        self.enemy_list.add(self.mobs1)
+        self.enemy_list1.add(self.mobs1)
+        self.all_sprites_list.add(self.mobs1)
+
+
+        self.boss1 = sprites.Bossmall()
         self.boss1.rect.x = SCREEN_WIDTH / 2 - self.boss1.image.get_width()
         self.boss1.rect.y = -500
         self.boss1.active = 0
@@ -130,7 +148,7 @@ class Game(object):
 
         i = 0
         for x in range(20):
-            mobs2 = Klasser.Fiendermall()
+            mobs2 = sprites.Fiendermall()
             mobs2.rect.y = 0 - x * 30
             mobs2.rect.x = 30
             mobs2.move_y = 3
@@ -144,7 +162,7 @@ class Game(object):
             self.all_sprites_list.add(mobs2)
 
         for x in range(20):
-            mobs2 = Klasser.Fiendermall()
+            mobs2 = sprites.Fiendermall()
             mobs2.rect.x = SCREEN_WIDTH - 50
             mobs2.rect.y = 0 - x * 30
             mobs2.move_y = 3
@@ -157,7 +175,7 @@ class Game(object):
             self.enemy_list2.add(mobs2)
             self.all_sprites_list.add(mobs2)
 
-        self.boss2 = Klasser.Bossmall()
+        self.boss2 = sprites.Bossmall()
         self.boss2.image = pygame.Surface([500,500])
         self.boss2.rect = self.boss2.image.get_rect()
         self.boss2.rect.x = SCREEN_WIDTH // 2 - self.boss2.image.get_width()
@@ -202,9 +220,11 @@ class Game(object):
                         self.player.player_right = True
 
                     if event.key == pygame.K_z:
+
+                        # Fixa en bättre lösning på skjutandet. Åter igen, få in saker i sprites.
                         if len(self.projectile_list) < 2:
                             for x in range(2):
-                                self.player_projektil = Klasser.Projektil() # Latemanslösning
+                                self.player_projektil = sprites.Projektil() # Latemanslösning
                                 self.player_projektil.rect = self.player_projektil.image.get_rect()
                                 self.player_projektil.rect.x = self.player.rect.x + x * self.player.image.get_width() + -1^(x+1)*self.player_projektil.image.get_width()     #+ 5 + x*20
                                 self.player_projektil.rect.y = self.player.rect.y
@@ -215,6 +235,7 @@ class Game(object):
 
                         # if event.key == pygame.K_x:
                         # bomb
+
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_w or event.key == pygame.K_UP:
                     self.player.player_up = False
@@ -229,19 +250,6 @@ class Game(object):
 
     def run_logic(self):
 
-            #if not self.game_over:
-            #    print("Nivå:", self.level)
-            #    print("Score:", self.score)
-            #    print("Hitpoints", self.player_hp)
-            #print("Highscore", self.highscore)
-            #print("--------------------------")
-            #print(len(self.enemy_list1))
-            #print(len(self.enemy_list2))
-
-            # print(self.player_hp)
-
-            # print(self.immortality)
-
             if self.player_hp < 1:
                 self.game_over = True
 
@@ -252,6 +260,11 @@ class Game(object):
             if not self.game_over:
                 self.player.update()
                 self.projectile_list.update()
+
+                # Fungerar inte med flera sprites. Du måste få in player.pos i fiendeklassen.
+
+                self.mobs1.target_x = self.player.rect.x
+                self.mobs1.target_y = self.player.rect.y
 
                 if self.immortality:
                     enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, False)
@@ -287,8 +300,6 @@ class Game(object):
                         self.projectile_list.remove(self.player_projektil)
                         self.all_sprites_list.remove(self.player_projektil)
 
-# Lägg till odödlighet efter att du krockat med en fiende och tappat liv
-
                 if not self.immortality:
                     for collision in enemy_hit_list:
                         self.score += 1
@@ -301,7 +312,7 @@ class Game(object):
                 for collision in boss_hit_list:
                     self.game_over = True
 
-            if self.game_over:
+            else:
                 if self.score > self.highscore:
                     self.highscore = self.score
                     self.highscore_message = True
@@ -346,6 +357,11 @@ class Game(object):
         #    screen.fill(NIGHTBLUE)
         #    snow(screen)
         #    Intro.öppna_intro(screen)
+
+        if self.level == -1:
+            # Testnivå
+            screen.fill(BLACK)
+
 
         if self.level == 1:
             screen.fill(NIGHTBLUE)

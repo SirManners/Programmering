@@ -2,7 +2,7 @@ import pygame
 import random
 import main
 import math
-import Vektorer
+import trig
 
 def färger():
     # --- Globala konstanter ---
@@ -41,11 +41,38 @@ GREY      = (  50,  50,  82)
 SCREEN_HEIGHT = 688
 SCREEN_WIDTH = 1366
 
+# Gör om så att både spelare och fiender båda är barn till samma klass, Mall klassen?
+class Mall(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.Surface([100, 100])
+        self.image.fill(WHITE)
+        self.rect = self.image.get_rect()
+        self.rect.x = 0
+        self.rect.y = 0
+        self.move_x = 0
+        self.move_y = 0
+        self.level = 0
+        self.hp = 0
+        self.original_posx
+        self.original_posy
+
+    def reset_pos(self):
+        self.rect.x = self.original_posx
+        self.rect.y = self.original_posy
+
+    def update(self):
+        self.rect.x += self.move_x
+        self.rect.y += self.move_y
+        if self.rect.y > SCREEN_HEIGHT + self.image.get_height():
+            self.reset_pos()
 
 
 class Spelare(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
+
+        ## detta står nu i Game init
         self.image = pygame.Surface([30, 30])
         self.image.fill(WHITE)
         self.rect = self.image.get_rect()
@@ -53,15 +80,19 @@ class Spelare(pygame.sprite.Sprite):
         self.rect.y = 300
         self.move_x = 7
         self.move_y = 8
+        ##
+
         self.player_up = False
         self.player_down = False
         self.player_left = False
         self.player_right = False
         self.player_shoot = False
 
+# detta skulle kunna tas bort ifall du fixar in self.original_posx i player
     def reset_pos(self):
         self.rect.x = SCREEN_WIDTH/2 - 15
         self.rect.y = 300
+##
 
     def update(self):
         # tills vidare
@@ -74,6 +105,9 @@ class Spelare(pygame.sprite.Sprite):
         if self.player_right:
             self.rect.x += self.move_x
        # if self.player_shoot:
+
+    #def shoot(self):
+
 
 class Fiendermall(pygame.sprite.Sprite):
     def __init__(self):
@@ -90,43 +124,57 @@ class Fiendermall(pygame.sprite.Sprite):
         # self.remove_width
         # self.remove_height
 
+        self.target_x = -1
+        self.target_y = -1
 
-        self.target_x = 0
-        self.target_y = 0
+## detta står nu i Mall
     def reset_pos(self):
         self.rect.x = self.original_posx
         self.rect.y = self.original_posy
+##
 
-    def choose_target(self, target_x, target_y):
-        self.target_x = target_x
-        self.target_y = target_y
+    #def choose_target(self, target_x, target_y):
+    #    self.target_x = target_x
+    #    self.target_y = target_y
+    #    print(self.target_x, self.target_y)
 
     def update(self):
-        self.rect.x, self.rect.y = Vektorer.vector_movement(self.rect.x, self.rect.y, self.target_x, self.target_y, self.move_y )
-        print(self.rect.x, self.rect.y)
-"""
-    def update(self):
-        self.rect.x += self.move_x
-        self.rect.y += self.move_y
-        if self.rect.y > SCREEN_HEIGHT + 20:
-            self.reset_pos()
-        # if self.rect.x >= SCREEN_WIDTH - self.image.get_width() or self.rect.x <= 0 + self.image.get_width():
-            # self.move_x *= -1
+        if self.target_x == -1 and self.target_y == -1:
+            self.rect.x += self.move_x
+            self.rect.y += self.move_y
+            if self.rect.y > SCREEN_HEIGHT + 20:
+                self.reset_pos()
+            # if self.rect.x >= SCREEN_WIDTH - self.image.get_width() or self.rect.x <= 0 + self.image.get_width():
+                # self.move_x *= -1
 
-        if self.level == 2:
-            if self.rect.y > (SCREEN_HEIGHT // 5):
-                if self.grupp == 1:
-                    self.move_x = 3
-                if self.grupp == 2:
-                    self.move_x = -3
+            if self.level == 2:
+                if self.rect.y > (SCREEN_HEIGHT // 5):
+                    if self.grupp == 1:
+                        self.move_x = 3
+                    if self.grupp == 2:
+                        self.move_x = -3
 
-        # if self.rect.y >= SCREEN_HEIGHT - self.image.get_height() or self.rect.y <= 0 - self.image.get_height():
-            # self.move_y *= -1
-        # if 0 + self.rect.height > self.rect.x > SCREEN_WIDTH + self.rect.height:
-        # ta bort
-        # if 0 + self.rect.width > self.rect.y > SCREEN_HEIGHT + self.rect.height:
-        # ta bort
-"""
+            # if self.rect.y >= SCREEN_HEIGHT - self.image.get_height() or self.rect.y <= 0 - self.image.get_height():
+                # self.move_y *= -1
+            # if 0 + self.rect.height > self.rect.x > SCREEN_WIDTH + self.rect.height:
+            # ta bort
+            # if 0 + self.rect.width > self.rect.y > SCREEN_HEIGHT + self.rect.height:
+            # ta bort
+        else:
+            #self.choose_target(self.target_x, self.target_y)
+            self.x_move, self.y_move = trig.vector_movement(
+                self.rect.x,
+                self.rect.y,
+                self.target_x,
+                self.target_y,
+                self.move_y
+            )
+            self.rect.x -= self.x_move
+            self.rect.y -= self.y_move
+            if self.rect.y > (SCREEN_HEIGHT + 20):
+                self.reset_pos()
+
+
 class Bossmall(Fiendermall):
     def __init__(self):
         super().__init__()
@@ -134,26 +182,25 @@ class Bossmall(Fiendermall):
         self.image = pygame.Surface([200, 200])
         self.rect = self.image.get_rect()
         self.image.fill(BLACK)
-        self.move_x = 0
-        self.move_y = 2
 
     def update(self):
         self.rect.y += 1 + 2*math.sin(math.radians(self.rect.x))
-        #self.move_y
         self.rect.x += 1 + 2*math.sin(math.radians(self.rect.y))
     # Bossen ska också skjuta
+
 
 class Projektil(pygame.sprite.Sprite):
     def __init__(self):
         # Lägg till spelare här????
         super().__init__()
-        self.image = pygame.Surface([100, 7])
+        self.image = pygame.Surface([4, 7])
         self.image.fill(YELLOW)
         self.move_y = -15
         self.damage = 10
 
     def update(self):
         self.rect.y += self.move_y
+
 
 class Bossprojektil(Projektil):
     def __init__(self):
@@ -165,10 +212,17 @@ class Bossprojektil(Projektil):
 
     def choose_target(self, target_x, target_y):
         self.target_x = target_x
-        self.target_y = target_Y
+        self.target_y = target_y
 
     def update(self):
-        self.rect.x, self.rect.y = Vektorer.vector_movement(self.rect.x, self.rect.y, self.target_x, self.target_y, self.move_y )
+        self.rect.x, self.rect.y = Vektorer.vector_movement(
+            self.rect.x,
+            self.rect.y,
+            self.target_x,
+            self.target_y,
+            self.move_y
+        )
+
 
 class Stjärnor():
     def __init_(self):
@@ -204,61 +258,4 @@ class Boss(pygame.sprite.Sprite, Fiendermall):
 
         # HP bars? Mer komplicerade attacker?
 
-
-class Grafik:
-    def __init_(self):
-        self.färg = WHITE
-        self.
-
-    def draw(self, screen):
-
-
-
-class Stjärnor(Grafik):
-    def __init__(self):
-        super().__init__()
-
 """
-
-class Text(): # TRASIG
-    def __init__(self):
-        self.font = 36
-        self.text = pygame.font.Font(None, self.font)
-        self.title = ""
-        self.bold = True
-        self.colour = WHITE
-        # self.x = (SCREEN_WIDTH // 2) - (self.text.get_width() // 2)
-        # self.y = (SCREEN_HEIGHT // 2) - (self.text.get_height() // 2)
-        self.x = 0
-        self.y = 0
-
-
-    def skriv(self, screen):
-        self.text.render(self.title, self.bold, self.colour)
-        screen.blit(self.title, [self.x, self.y])
-
-class Rektangel():
-    def __init__(self):
-        self.x = 0
-        self.y = 0
-        self.change_x = 0
-        self.change_y = 0
-        self.bredd = 0
-        self.höjd = 0
-        self.färg = [255, 255, 255]
-
-    def rörelse(self):
-        self.x += self.change_x
-        self.y += self.change_y
-
-    def rita(self, screen):
-        pygame.draw.rect(screen, self.färg, [self.x, self.y, self.bredd, self.höjd])
-
-class Ridå(Rektangel):
-        def __init__(self):
-            super().__init__()
-
-        def rörelse(self):
-            self.x += self.change_x
-            if self.y >= -769:
-                self.y += self.change_y

@@ -1,15 +1,11 @@
 import pygame
 import Meny
-
-import Klasser
-import Spel
+import sprites
+import game
 
 # --- Globala konstanter ---
 NIGHTBLUE = (   0,   1,  64)
 WHITE     = ( 255, 255, 255)
-
-# --- Klasser ---
-
 
 def main():
 
@@ -25,7 +21,7 @@ def main():
     done_game = True
     clock = pygame.time.Clock()
     resume = False
-    game = Spel.Game()
+    session = game.Game()
     highscore = 0
 
     # Main loop
@@ -35,13 +31,13 @@ def main():
         if not done:
             done_game = False
         while not done_game:
-            done_game = game.process_events()
+            done_game = session.process_events()
 
-            game.run_logic()
-            if game.highscore > highscore:
-                game.highscore = highscore
+            session.run_logic()
+            if session.highscore > highscore:
+                session.highscore = highscore
 
-            game.display_frame(screen)
+            session.display_frame(screen)
 
             clock.tick(60)
     pygame.quit()
@@ -50,12 +46,6 @@ def main():
 if __name__ == "__main__":
     main()
 
-"""
-
-
-if __name__ == "__main__":
-    main()
- """
 
 """    for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:

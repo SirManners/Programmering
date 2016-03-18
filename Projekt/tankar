@@ -1,3 +1,10 @@
+TO DO:
+
+Integrera Meny i game på något snyggt sätt, som lvl -1
+
+
+
+
 Vektorer:
 movement = 3
 x_move = cos v * movement * t

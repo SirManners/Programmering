@@ -1,4 +1,4 @@
-import Klasser
+import sprites
 import pygame
 
 # --- Globala konstanter ---
@@ -16,7 +16,7 @@ BLACK     = (   0,   0,   0)
 def öppna_intro():
 
     # Objekt och data
-    ridå = Klasser.Ridå()
+    ridå = sprites.Ridå()
     ridå.x = 0
     ridå.y = -500
     ridå.bredd = 1366
@@ -25,7 +25,7 @@ def öppna_intro():
     ridå.färg = WHITE
 
 """
-    # spelnamn = Klasser.Text()
+    # spelnamn = sprites.Text()
     # spelnamn.text = "RYMDSPEL"
     # spelnamn.x = 200
     # spelnamn.y = 300
