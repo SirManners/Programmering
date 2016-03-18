@@ -57,10 +57,6 @@ class Game(object):
         self.time_1 = 0
         self.time_2 = 0
 
-        self.ripmeddelande = graphics.Text()
-        self.ripmeddelande.font = 60
-        self.ripmeddelande.title = "GAME OVER"
-
         # Grafik
         self.stjärnor = graphics.Stjärnor()
 
@@ -95,17 +91,17 @@ class Game(object):
         self.player_list.add(self.player)
         self.all_sprites_list.add(self.player)
 
-        # Projektiler:
-        # Skapa 4 eller 6 projektiler. Återanvänd dem hela tiden.
+        # projectileer:
+        # Skapa 4 eller 6 projectileer. Återanvänd dem hela tiden.
 
-        #self.bossprojektil = Bossprojektil()
+        #self.bossprojectile = Bossprojectile()
         #self.all_sprites_list
         # Create the sprites
 
         # Level 1:
         i = 1
         for  x in range(20): # 20 st
-            self.mobs1 = sprites.Fiendermall()
+            self.mobs1 = sprites.Enemies()
             if i < 11:
                 self.mobs1.rect.x = SCREEN_WIDTH
                 self.mobs1.move_x = -4
@@ -133,7 +129,7 @@ class Game(object):
         self.all_sprites_list.add(self.mobs1)
 
 
-        self.boss1 = sprites.Bossmall()
+        self.boss1 = sprites.Boss()
         self.boss1.rect.x = SCREEN_WIDTH / 2 - self.boss1.image.get_width()
         self.boss1.rect.y = -500
         self.boss1.active = 0
@@ -150,7 +146,7 @@ class Game(object):
 
         i = 0
         for x in range(20):
-            mobs2 = sprites.Fiendermall()
+            mobs2 = sprites.Enemies()
             mobs2.rect.y = 0 - x * 30
             mobs2.rect.x = 30
             mobs2.move_y = 3
@@ -164,7 +160,7 @@ class Game(object):
             self.all_sprites_list.add(mobs2)
 
         for x in range(20):
-            mobs2 = sprites.Fiendermall()
+            mobs2 = sprites.Enemies()
             mobs2.rect.x = SCREEN_WIDTH - 50
             mobs2.rect.y = 0 - x * 30
             mobs2.move_y = 3
@@ -177,7 +173,7 @@ class Game(object):
             self.enemy_list2.add(mobs2)
             self.all_sprites_list.add(mobs2)
 
-        self.boss2 = sprites.Bossmall()
+        self.boss2 = sprites.Boss()
         self.boss2.image = pygame.Surface([500,500])
         self.boss2.rect = self.boss2.image.get_rect()
         self.boss2.rect.x = SCREEN_WIDTH // 2 - self.boss2.image.get_width()
@@ -203,6 +199,7 @@ class Game(object):
                         self.__init__()
                         self.score = 0
 
+                # För att testa lättare
                 if event.key == pygame.K_q:
                     self.game_over = True
                 if event.key == pygame.K_1:
@@ -217,12 +214,12 @@ class Game(object):
                     if event.key == pygame.K_z:
                         if len(self.projectile_list) < 10:
                             for x in range(2):
-                                self.player_projektil = sprites.Projektil()
-                                self.player_projektil.rect = self.player_projektil.image.get_rect()
-                                self.player_projektil.rect.x = self.player.rect.x + x * self.player.image.get_width() + -1^(x+1)*self.player_projektil.image.get_width()     #+ 5 + x*20
-                                self.player_projektil.rect.y = self.player.rect.y
-                                self.all_sprites_list.add(self.player_projektil)
-                                self.projectile_list.add(self.player_projektil)
+                                self.player_projectile = sprites.Projectile()
+                                self.player_projectile.rect = self.player_projectile.image.get_rect()
+                                self.player_projectile.rect.x = self.player.rect.x + x * self.player.image.get_width() + -1^(x+1)*self.player_projectile.image.get_width()     #+ 5 + x*20
+                                self.player_projectile.rect.y = self.player.rect.y
+                                self.all_sprites_list.add(self.player_projectile)
+                                self.projectile_list.add(self.player_projectile)
                         # if event.key == pygame.K_x:
                         # bomb
 
@@ -255,32 +252,32 @@ class Game(object):
 
                 boss_hit_list = pygame.sprite.spritecollide(self.player, self.boss_list, False)
 
-                for self.player_projektil in self.projectile_list:
-                    self.projectile_hit_list = pygame.sprite.spritecollide(self.player_projektil, self.enemy_list, True)
-                    self.projectile_boss_hit_list = pygame.sprite.spritecollide(self.player_projektil, self.boss_list, False)
+                for self.player_projectile in self.projectile_list:
+                    self.projectile_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.enemy_list, True)
+                    self.projectile_boss_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.boss_list, False)
 
                     for enemy in self.projectile_hit_list:
-                        self.projectile_list.remove(self.player_projektil)
-                        self.all_sprites_list.remove(self.player_projektil)
+                        self.projectile_list.remove(self.player_projectile)
+                        self.all_sprites_list.remove(self.player_projectile)
                         self.score += 1
                         print(self.score)
 
                     for boss in self.projectile_boss_hit_list:
-                        self.projectile_list.remove(self.player_projektil)
-                        self.all_sprites_list.remove(self.player_projektil)
+                        self.projectile_list.remove(self.player_projectile)
+                        self.all_sprites_list.remove(self.player_projectile)
 
                         if self.level == 1:
-                            self.boss1.hp -= self.player_projektil.damage
+                            self.boss1.hp -= self.player_projectile.damage
                             print(self.boss1.hp)
 
                         if self.level == 2:
-                            self.boss2.hp -= self.player_projektil.damage
+                            self.boss2.hp -= self.player_projectile.damage
                             print(self.boss2.hp)
 
-                    if self.player_projektil.rect.y <= 0:
+                    if self.player_projectile.rect.y <= 0:
                         print("DELETED")
-                        self.projectile_list.remove(self.player_projektil)
-                        self.all_sprites_list.remove(self.player_projektil)
+                        self.projectile_list.remove(self.player_projectile)
+                        self.all_sprites_list.remove(self.player_projectile)
 
 
                 if not self.immortality:
@@ -295,11 +292,9 @@ class Game(object):
                 for collision in boss_hit_list:
                     self.game_over = True
 
-            else:
+            #else:
                 if self.score > self.highscore:
                     self.highscore = self.score
-                    self.highscore_message = True
-                self.score = 0
 
             # Level 0
             # if self.level == 0:
@@ -336,6 +331,7 @@ class Game(object):
 
     def display_frame(self, screen):
 
+
         #if self.level == 0: # Fixa senare... du måste omstrukturera menyn också och allt.
         #    screen.fill(NIGHTBLUE)
         #    snow(screen)
@@ -371,11 +367,25 @@ class Game(object):
         if self.level == 3:
             screen.fill(GREEN)
 
+        # Overlay
+        graphics.text(screen, 50, WHITE, str(self.score), 0, -300)
+        graphics.text(screen, 50, WHITE, "HP", 550, -300)
+        graphics.text(screen, 50, ROSA, str(self.player_hp), 600, -300)
+        graphics.text(screen, 50, WHITE, "Level", -600, -300)
+        graphics.text(screen, 50, YELLOW, str(self.level), -500, -300)
+
         if not self.game_over:
             self.player_list.draw(screen)
             self.projectile_list.draw(screen)
 
         if self.game_over:
+
+            graphics.text(screen, 150, WHITE, "Game Over", 0, 0)
+            graphics.text(screen, 150, STARBLUE, "NEW HIGH SCORE", 0, 200)
+
+            # self.gameover_message.skriv()
+            """
+            # Latemanslösning
             font = pygame.font.SysFont("system bold", 150)
             text = font.render("Game Over", True, WHITE)
             center_x = (SCREEN_WIDTH // 2) - (text.get_width() // 2)
@@ -387,6 +397,6 @@ class Game(object):
                 center_x = (SCREEN_WIDTH // 2) - (text.get_width() // 2)
                 center_y = (SCREEN_HEIGHT // 2) - (text.get_height() // 2) - 250
                 screen.blit(text, [center_x, center_y])
-
+"""
 
         pygame.display.flip()

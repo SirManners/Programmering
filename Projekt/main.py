@@ -35,8 +35,9 @@ def main():
 
             session.run_logic()
             if session.highscore > highscore:
-                session.highscore = highscore
-
+                highscore = session.highscore
+                print("Detta är den nya highscoren", highscore)
+                session.highscore_message = True
             session.display_frame(screen)
 
             clock.tick(60)

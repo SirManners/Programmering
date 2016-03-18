@@ -103,7 +103,7 @@ class Player(Mall):
         if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
             self.right = boolean
 
-class Fiendermall(Mall):
+class Enemies(Mall):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface([20, 20])
@@ -147,8 +147,7 @@ class Fiendermall(Mall):
             if self.rect.y > (SCREEN_HEIGHT + 20):
                 self.reset_pos()
 
-
-class Bossmall(Fiendermall):
+class Boss(Enemies):
     def __init__(self):
         super().__init__()
         self.hp = 100
@@ -161,9 +160,9 @@ class Bossmall(Fiendermall):
         self.rect.x += 1 + 2*math.sin(math.radians(self.rect.y))
 
     # Bossen ska också skjuta
+    # HP bar?
 
-
-class Projektil(pygame.sprite.Sprite):
+class Projectile(pygame.sprite.Sprite):
     def __init__(self):
         # Lägg till spelare här????
         super().__init__()
@@ -176,9 +175,11 @@ class Projektil(pygame.sprite.Sprite):
         self.rect.y += self.move_y
 
 # class Missile(Projektil):
+    # Tänker mig att den ska använda trig mot sin position och vara helt målsökande. Hur ska den välja vem den
+    # siktar emot?
 
 
-class Bossprojektil(pygame.sprite.Sprite):
+class Bossprojectile(pygame.sprite.Sprite): # Sen ska denna ärva Missile - klassen.
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface([20, 20])
@@ -200,17 +201,3 @@ class Bossprojektil(pygame.sprite.Sprite):
         )
 
 # Asteroider
-
-"""
-class Boss(pygame.sprite.Sprite, Fiendermall):
-    def __init__(self):
-        super().__init__()
-        # pygame.sprite.Sprite.__init__()
-        # Fiendermall.__init__()
-
-    def död(self):
-        Game.level += 1
-
-        # HP bars? Mer komplicerade attacker?
-
-"""
