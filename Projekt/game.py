@@ -62,7 +62,7 @@ class Game(object):
         self.ripmeddelande.title = "GAME OVER"
 
         # Grafik
-        self.stjärnor = sprites.Stjärnor()
+        self.stjärnor = graphics.Stjärnor()
 
         # Astereoider
         # HP markörer
@@ -90,6 +90,8 @@ class Game(object):
         self.player.rect.y = 300
         self.player.move_x = 7
         self.player.move_y = 8
+        self.player.original_posx = SCREEN_WIDTH/2 - 15
+        self.player.original_posy = 300
         self.player_list.add(self.player)
         self.all_sprites_list.add(self.player)
 
@@ -227,7 +229,6 @@ class Game(object):
             if event.type == pygame.KEYUP:
 
                 self.player.movement(event, False)
-
 
     def run_logic(self):
 

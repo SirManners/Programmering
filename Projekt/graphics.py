@@ -32,7 +32,29 @@ class Stjärnor(Grafik):
 
 """
 
-# Asteroider
+
+class Stjärnor():
+    def __init_(self):
+        self.färg = WHITE
+        self.snow_list = []
+        # AttributeError: 'Stjärnor' object has no attribute 'snow_list'
+
+        for i in range(50):
+            snow_x = random.randrange(0, 1366)
+            snow_y = random.randrange(-768, 0)
+            self.snow_list.append([snow_x, snow_y])
+
+    def draw_snow(self, screen):
+        for i in range(len(self.snow_list)):
+            pygame.draw.circle(screen, self.färg, self.snow_list[i], 2)
+            self.snow_list[i][1] += 5
+            if self.snow_list[i][1] > 768:
+                y = random.randrange(-50, -10)
+                self.snow_list[i][1] = y
+                x = random.randrange(0, 1366)
+                self.snow_list[i][0] = x
+
+
 
 class Text(): # TRASIG
     def __init__(self):

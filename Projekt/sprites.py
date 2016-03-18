@@ -68,21 +68,9 @@ class Mall(pygame.sprite.Sprite):
             self.reset_pos()
 
 
-class Player(pygame.sprite.Sprite):
+class Player(Mall):
     def __init__(self):
         super().__init__()
-
-        ## detta står nu i Game init
-        self.image = pygame.Surface([30, 30])
-        self.image.fill(WHITE)
-        self.rect = self.image.get_rect()
-        self.rect.x = SCREEN_WIDTH/2 - 15
-        self.rect.y = 300
-        self.move_x = 7
-        self.move_y = 8
-        self.original_posx = SCREEN_WIDTH/2 - 15
-        self.original_posy = 300
-        ##
 
         self.up = False
         self.down = False
@@ -90,12 +78,6 @@ class Player(pygame.sprite.Sprite):
         self.right = False
 
         # self.shoot = False
-
-# detta skulle kunna tas bort ifall du fixar in self.original_posx i player
-    def reset_pos(self):
-        self.rect.x = SCREEN_WIDTH/2 - 15
-        self.rect.y = 300
-##
 
     def update(self):
         # tills vidare
@@ -121,31 +103,16 @@ class Player(pygame.sprite.Sprite):
         if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
             self.right = boolean
 
-class Fiendermall(pygame.sprite.Sprite):
+class Fiendermall(Mall):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface([20, 20])
         self.image.fill(GREEN)
         self.rect = self.image.get_rect()
-        self.move_x = 0
-        self.move_y = 0
-        self.hp = 10
-        self.level = 0
         self.grupp = 0
         self.hit = False
-        self.original_posx = 0
-        self.original_posy = 0
-        # self.remove_width
-        # self.remove_height
-
         self.target_x = -1
         self.target_y = -1
-
-## detta står nu i Mall
-    def reset_pos(self):
-        self.rect.x = self.original_posx
-        self.rect.y = self.original_posy
-##
 
     #def choose_target(self, target_x, target_y):
     #    self.target_x = target_x
@@ -158,8 +125,6 @@ class Fiendermall(pygame.sprite.Sprite):
             self.rect.y += self.move_y
             if self.rect.y > SCREEN_HEIGHT + 20:
                 self.reset_pos()
-            # if self.rect.x >= SCREEN_WIDTH - self.image.get_width() or self.rect.x <= 0 + self.image.get_width():
-                # self.move_x *= -1
 
             if self.level == 2:
                 if self.rect.y > (SCREEN_HEIGHT // 5):
@@ -168,12 +133,6 @@ class Fiendermall(pygame.sprite.Sprite):
                     if self.grupp == 2:
                         self.move_x = -3
 
-            # if self.rect.y >= SCREEN_HEIGHT - self.image.get_height() or self.rect.y <= 0 - self.image.get_height():
-                # self.move_y *= -1
-            # if 0 + self.rect.height > self.rect.x > SCREEN_WIDTH + self.rect.height:
-            # ta bort
-            # if 0 + self.rect.width > self.rect.y > SCREEN_HEIGHT + self.rect.height:
-            # ta bort
         else:
             #self.choose_target(self.target_x, self.target_y)
             self.x_move, self.y_move = trig.vector_movement(
@@ -216,7 +175,10 @@ class Projektil(pygame.sprite.Sprite):
     def update(self):
         self.rect.y += self.move_y
 
-class Bossprojektil(Projektil):
+# class Missile(Projektil):
+
+
+class Bossprojektil(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface([20, 20])
@@ -237,28 +199,7 @@ class Bossprojektil(Projektil):
             self.move_y
         )
 
-
-class Stjärnor():
-    def __init_(self):
-        self.färg = WHITE
-        self.snow_list = []
-        # AttributeError: 'Stjärnor' object has no attribute 'snow_list'
-
-        for i in range(50):
-            snow_x = random.randrange(0, 1366)
-            snow_y = random.randrange(-768, 0)
-            self.snow_list.append([snow_x, snow_y])
-
-    def draw_snow(self, screen):
-        for i in range(len(self.snow_list)):
-            pygame.draw.circle(screen, self.färg, self.snow_list[i], 2)
-            self.snow_list[i][1] += 5
-            if self.snow_list[i][1] > 768:
-                y = random.randrange(-50, -10)
-                self.snow_list[i][1] = y
-                x = random.randrange(0, 1366)
-                self.snow_list[i][0] = x
-
+# Asteroider
 
 """
 class Boss(pygame.sprite.Sprite, Fiendermall):
