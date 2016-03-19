@@ -5,21 +5,7 @@ import graphics
 import math
 import Intro
 
-# sprites.färger()
-SCREEN_HEIGHT = 688
-SCREEN_WIDTH = 1366
-ROSA = ( 255,   0, 132)
-BLACK     = (   0,   0,   0)
-WHITE     = ( 255, 255, 255)
-GREEN     = (   0, 255,   0)
-RED       = ( 255,   0,   0)
-BROWN     = (  77,  18,  18)
-YELLOW    = ( 255, 251,   0)
-BLUE      = (   0,   4, 255)
-NIGHTBLUE = (   0,   1,  64)
-STARBLUE  = ( 159, 161, 252)
-GREY      = (  50,  50,  82)
-
+ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = graphics.färger()
 
 # Latemanslösning, se grafik
 snow_list = []
@@ -54,8 +40,8 @@ class Game(object):
         self.highscore = 0
         self.highscore_message = False
         self.game_over = False
-        self.time_1 = 0
-        self.time_2 = 0
+        self.current_time = 0
+        self.time_death = 0
 
         # Grafik
         self.stjärnor = graphics.Stjärnor()
@@ -99,15 +85,14 @@ class Game(object):
         # Create the sprites
 
         # Level 1:
-        i = 1
-        for  x in range(20): # 20 st
+        for  i in range(21): # 20 st
             self.mobs1 = sprites.Enemies()
-            if i < 11:
+            if (i+1) < 11:
                 self.mobs1.rect.x = SCREEN_WIDTH
                 self.mobs1.move_x = -4
                 self.mobs1.move_y = 4
                 self.mobs1.rect.y = 0 + (-30 * i)
-            if i >= 11:
+            if (i+1) >= 11:
                 self.mobs1.rect.x = 0
                 self.mobs1.move_x = 4
                 self.mobs1.move_y = 4
@@ -123,7 +108,6 @@ class Game(object):
         # testis
         self.mobs1.rect.x = SCREEN_WIDTH / 2
         self.mobs1.rect.y = 50
-
         self.enemy_list.add(self.mobs1)
         self.enemy_list1.add(self.mobs1)
         self.all_sprites_list.add(self.mobs1)
@@ -145,7 +129,7 @@ class Game(object):
         # Level 2:
 
         i = 0
-        for x in range(20):
+        for x in range(21):
             mobs2 = sprites.Enemies()
             mobs2.rect.y = 0 - x * 30
             mobs2.rect.x = 30
@@ -159,7 +143,7 @@ class Game(object):
             self.enemy_list2.add(mobs2)
             self.all_sprites_list.add(mobs2)
 
-        for x in range(20):
+        for x in range(21):
             mobs2 = sprites.Enemies()
             mobs2.rect.x = SCREEN_WIDTH - 50
             mobs2.rect.y = 0 - x * 30
@@ -183,9 +167,10 @@ class Game(object):
         self.boss_list2.add(self.boss2)
         self.all_sprites_list.add(self.boss2)
 
+    @property
     def process_events(self):
 
-        self.time_1 = pygame.time.get_ticks()
+        self.current_time = pygame.time.get_ticks()
 
         for event in pygame.event.get():
 
@@ -212,15 +197,32 @@ class Game(object):
                     self.player.movement(event, True)
 
                     if event.key == pygame.K_z:
-                        if len(self.projectile_list) < 10:
-                            for x in range(2):
-                                self.player_projectile = sprites.Projectile()
-                                self.player_projectile.rect = self.player_projectile.image.get_rect()
-                                self.player_projectile.rect.x = self.player.rect.x + x * self.player.image.get_width() + -1^(x+1)*self.player_projectile.image.get_width()     #+ 5 + x*20
-                                self.player_projectile.rect.y = self.player.rect.y
-                                self.all_sprites_list.add(self.player_projectile)
-                                self.projectile_list.add(self.player_projectile)
-                        # if event.key == pygame.K_x:
+                        #if len(self.projectile_list) < 10:
+                        """
+                        for x in range(2):
+                            self.player_projectile = sprites.Projectile()
+                            self.player_projectile.rect.x = self.player.rect.x + self.player.image.get_width() // 2\
+                                                            - self.player_projectile.image.get_width() // 2 + -1^(x)\
+                                                            * self.player.image.get_width() // (x+1)
+                            #x * self.player.image.get_width() + -1^(x+1)*self.player_projectile.image.get_width()
+                            self.player_projectile.rect.y = self.player.rect.y
+                            self.all_sprites_list.add(self.player_projectile)
+                            self.projectile_list.add(self.player_projectile)
+                        """
+                        self.player_projectile = sprites.Projectile()
+                        self.player.shoot(1, self.player_projectile, self.all_sprites_list, self.projectile_list, 0, 0)
+
+                    if event.key == pygame.K_x:
+
+                        self.enemy_projectile = sprites.Enemyprojectile()
+                        self.mobs1.shoot(1, self.enemy_projectile, self.all_sprites_list, self.projectile_list, 0, 0)
+
+                    if event.key == pygame.K_y:
+
+                        self.boss_projectile = sprites.Bossprojectile()
+                        self.boss1.shoot(1, self.boss_projectile, self.all_sprites_list, self.projectile_list, self.player.rect.x, self.player.rect.y)
+
+
                         # bomb
 
             if event.type == pygame.KEYUP:
@@ -232,7 +234,7 @@ class Game(object):
             if self.player_hp < 1:
                 self.game_over = True
 
-            if self.time_1 - self.time_2 > 1500:
+            if self.current_time - self.time_death> 1500:
                 self.immortality = False
                 self.player.image.fill(WHITE)
 
@@ -279,13 +281,14 @@ class Game(object):
                         self.projectile_list.remove(self.player_projectile)
                         self.all_sprites_list.remove(self.player_projectile)
 
+                # samma for loop fast för bossskott.
 
                 if not self.immortality:
                     for collision in enemy_hit_list:
                         self.score += 1
                         self.player_hp -= 1
                         self.player.reset_pos()
-                        self.time_2 = pygame.time.get_ticks()
+                        self.time_death = pygame.time.get_ticks()
                         self.immortality = True
                         self.player.image.fill(GREY)
 
@@ -370,9 +373,11 @@ class Game(object):
         # Overlay
         graphics.text(screen, 50, WHITE, str(self.score), 0, -300)
         graphics.text(screen, 50, WHITE, "HP", 550, -300)
-        graphics.text(screen, 50, ROSA, str(self.player_hp), 600, -300)
+        graphics.text(screen, 50, YELLOW, str(self.player_hp), 600, -300)
         graphics.text(screen, 50, WHITE, "Level", -600, -300)
         graphics.text(screen, 50, YELLOW, str(self.level), -500, -300)
+        graphics.text(screen, 50, YELLOW, str(round(self.current_time / 1000, 1)) , -500, 300)
+        graphics.text(screen, 50, WHITE, "Time", -600, 300)
 
         if not self.game_over:
             self.player_list.draw(screen)

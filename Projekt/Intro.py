@@ -1,17 +1,8 @@
 import sprites
 import pygame
+import graphics
 
-# --- Globala konstanter ---
-NIGHTBLUE = (   0,   1,  64)
-WHITE     = ( 255, 255, 255)
-RED       = ( 255,   0,   0)
-STARBLUE  = ( 159, 161, 252)
-BLACK     = (   0,   0,   0)
-
-# --- Klasser ---
-
-
-
+ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = graphics.färger()
 
 def öppna_intro():
 

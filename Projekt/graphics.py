@@ -3,19 +3,26 @@ import random
 import main
 import math
 
-ROSA      = ( 255,   0, 132)
-BLACK     = (   0,   0,   0)
-WHITE     = ( 255, 255, 255)
-GREEN     = (   0, 255,   0)
-RED       = ( 255,   0,   0)
-BROWN     = (  77,  18,  18)
-YELLOW    = ( 255, 251,   0)
-BLUE      = (   0,   4, 255)
-NIGHTBLUE = (   0,   1,  64)
-STARBLUE  = ( 159, 161, 252)
-GREY      = (  50,  50,  82)
-SCREEN_HEIGHT = 688
-SCREEN_WIDTH = 1366
+def färger():
+
+    ROSA      = ( 255,   0, 132)
+    BLACK     = (   0,   0,   0)
+    WHITE     = ( 255, 255, 255)
+    GREEN     = (   0, 255,   0)
+    RED       = ( 255,   0,   0)
+    BROWN     = (  77,  18,  18)
+    YELLOW    = ( 255, 251,   0)
+    BLUE      = (   0,   4, 255)
+    NIGHTBLUE = (   0,   1,  64)
+    STARBLUE  = ( 159, 161, 252)
+    GREY      = (  50,  50,  82)
+
+    SCREEN_HEIGHT = 688
+    SCREEN_WIDTH = 1366
+    return ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH
+
+ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = färger()
+
 """
 class Grafik:
     def __init_(self):
@@ -35,7 +42,6 @@ class Stjärnor(Grafik):
 
 class Stjärnor():
     def __init_(self):
-        self.färg = WHITE
         self.snow_list = []
         # AttributeError: 'Stjärnor' object has no attribute 'snow_list'
 

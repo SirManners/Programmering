@@ -3,45 +3,10 @@ import random
 import main
 import math
 import trig
+import graphics
 
-def färger():
-    # --- Globala konstanter ---
-    global ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY
-    ROSA = ( 255,   0, 132)
-    BLACK     = (   0,   0,   0)
-    WHITE     = ( 255, 255, 255)
-    GREEN     = (   0, 255,   0)
-    RED       = ( 255,   0,   0)
-    BROWN     = (  77,  18,  18)
-    YELLOW    = ( 255, 251,   0)
-    BLUE      = (   0,   4, 255)
-    NIGHTBLUE = (   0,   1,  64)
-    STARBLUE  = ( 159, 161, 252)
-    GREY      = (  50,  50,  82)
+ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = graphics.färger()
 
-
-    global SCREEN_HEIGHT, SCREEN_WIDTH
-    SCREEN_HEIGHT = 688
-    SCREEN_WIDTH = 1366
-
-# Fixa importerbara färger
-# --- Klasser ---
-
-ROSA      = ( 255,   0, 132)
-BLACK     = (   0,   0,   0)
-WHITE     = ( 255, 255, 255)
-GREEN     = (   0, 255,   0)
-RED       = ( 255,   0,   0)
-BROWN     = (  77,  18,  18)
-YELLOW    = ( 255, 251,   0)
-BLUE      = (   0,   4, 255)
-NIGHTBLUE = (   0,   1,  64)
-STARBLUE  = ( 159, 161, 252)
-GREY      = (  50,  50,  82)
-SCREEN_HEIGHT = 688
-SCREEN_WIDTH = 1366
-
-# Gör om så att både spelare och fiender båda är barn till samma klass, Mall klassen?
 class Mall(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -66,6 +31,25 @@ class Mall(pygame.sprite.Sprite):
         self.rect.y += self.move_y
         if self.rect.y > SCREEN_HEIGHT + self.image.get_height():
             self.reset_pos()
+
+    def shoot(self, amount, name, list1, list2, target_x, target_y):
+        for x in range(amount): # funkar ej då bara en instans skapas i Game klassen
+            self.image.get_rect()
+            name.rect.x = self.rect.x + self.image.get_width()// 2\
+                        - name.image.get_width() // 2 + -1^(x)\
+                        * self.image.get_width() // (x+1)
+            if name.move_y < 0:
+                name.rect.y = self.rect.y
+            else:
+                name.rect.y = self.rect.y + self.image.get_height()
+
+            if name.track:
+                name.target_x = target_x
+                name.target_y = target_y
+
+            list1.add(name)
+            list2.add(name)
+
 
 
 class Player(Mall):
@@ -134,7 +118,6 @@ class Enemies(Mall):
                         self.move_x = -3
 
         else:
-            #self.choose_target(self.target_x, self.target_y)
             self.x_move, self.y_move = trig.vector_movement(
                 self.rect.x,
                 self.rect.y,
@@ -154,50 +137,63 @@ class Boss(Enemies):
         self.image = pygame.Surface([200, 200])
         self.rect = self.image.get_rect()
         self.image.fill(BLACK)
-
+        self.active = 0
     def update(self):
         self.rect.y += 1 + 2*math.sin(math.radians(self.rect.x))
         self.rect.x += 1 + 2*math.sin(math.radians(self.rect.y))
 
-    # Bossen ska också skjuta
     # HP bar?
 
 class Projectile(pygame.sprite.Sprite):
     def __init__(self):
         # Lägg till spelare här????
         super().__init__()
-        self.image = pygame.Surface([4, 7])
+        self.image = pygame.Surface([200, 7])
+        self.rect = self.image.get_rect()
         self.image.fill(YELLOW)
         self.move_y = -15
         self.damage = 10
+        self.track = False
 
     def update(self):
         self.rect.y += self.move_y
 
-# class Missile(Projektil):
+class Enemyprojectile(Projectile):
+    def __init__(self):
+        super().__init__()
+        self.image.fill(GREEN)
+        self.move_y = 15
+
+
+#class Missile(Projectile):
     # Tänker mig att den ska använda trig mot sin position och vara helt målsökande. Hur ska den välja vem den
     # siktar emot?
 
-
-class Bossprojectile(pygame.sprite.Sprite): # Sen ska denna ärva Missile - klassen.
+class Bossprojectile(Enemyprojectile): # Sen ska denna ärva Missile - klassen.
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface([20, 20])
         self.image.fill(RED)
         self.move_y = 15
         self.damage = 1
-
-    def choose_target(self, target_x, target_y):
-        self.target_x = target_x
-        self.target_y = target_y
+        self.target_x = -1
+        self.target_y = -1
+        self.track = True
+        self.x_move = 0
+        self.y_move = 0
 
     def update(self):
-        self.rect.x, self.rect.y = Vektorer.vector_movement(
-            self.rect.x,
-            self.rect.y,
-            self.target_x,
-            self.target_y,
-            self.move_y
-        )
+        if self.rect.x - self.target_x > 3 or self.rect.y - self.target_y > 3:
+            self.x_move, self.y_move = trig.vector_movement(
+                self.rect.x,
+                self.rect.y,
+                self.target_x,
+                self.target_y,
+                self.move_y
+            )
+        self.rect.x -= self.x_move
+        self.rect.y -= self.y_move
+
+
 
 # Asteroider

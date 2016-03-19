@@ -4,12 +4,8 @@ import game
 import main
 import graphics
 
-# --- Globala konstanter ---
-WHITE     = ( 255, 255, 255)
-NIGHTBLUE = (   0,   1,  64)
-SCREEN_HEIGHT = 688
-SCREEN_WIDTH = 1366
-# --- Klasser ---
+ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = graphics.färger()
+
 
 
 def öppna_meny(screen, resume):

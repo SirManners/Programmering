@@ -2,10 +2,10 @@ import pygame
 import Meny
 import sprites
 import game
+import graphics
 
-# --- Globala konstanter ---
-NIGHTBLUE = (   0,   1,  64)
-WHITE     = ( 255, 255, 255)
+ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = graphics.färger()
+
 
 def main():
 
@@ -31,12 +31,12 @@ def main():
         if not done:
             done_game = False
         while not done_game:
-            done_game = session.process_events()
+            done_game = session.process_events
 
             session.run_logic()
             if session.highscore > highscore:
                 highscore = session.highscore
-                print("Detta är den nya highscoren", highscore)
+                # print("Detta är den nya highscoren", highscore)
                 session.highscore_message = True
             session.display_frame(screen)
 

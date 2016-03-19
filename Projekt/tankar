@@ -1,53 +1,55 @@
 TO DO:
 
-Integrera Meny i game på något snyggt sätt, som lvl -1
+Integrera Meny i game pï¿½ nï¿½got snyggt sï¿½tt, som lvl -1
 
-Fixa så att alla sprites rör sig lite mot spelaren
+Fixa sï¿½ att alla sprites rï¿½r sig lite mot spelaren
 
-Fixa så att man skjuter från Player klassen snanare än från process events, alltså hur jag skapar listor i Game-
-klassen ifrån Player klassen.
+Fixa sï¿½ att man skjuter frï¿½n Player klassen snanare ï¿½n frï¿½n process events, alltsï¿½ hur jag skapar listor i Game-
+klassen ifrï¿½n Player klassen.
+
+Powerups som gÃ¶r att man skjuter mer saker / fÃ¥r missiler
 
 
 Vektorer:
 movement = 3
 x_move = cos v * movement * t
-y_move = sin v * movement * t (sträckor)
+y_move = sin v * movement * t (strï¿½ckor)
 x_pos = x_pos + x_move
 
-Rörelse med vektorer:
+Rï¿½relse med vektorer:
 
 import Vektorer
 current_pos_x, current_pos_y = vector_movement(current_pos_x, current_pos_y, player_x, player_y, 3)
 
 
-Fixa GIT så att import-pathen blir samma som på skoldatorn
-Lägg till en game-class? http://programarcadegames.com/python_examples/show_file.php?file=game_class_example.py
-!!! Gör så att spelet kan köras, endast en stor boll i mitten som man vinner när man skjuter
+Fixa GIT sï¿½ att import-pathen blir samma som pï¿½ skoldatorn
+Lï¿½gg till en game-class? http://programarcadegames.com/python_examples/show_file.php?file=game_class_example.py
+!!! Gï¿½r sï¿½ att spelet kan kï¿½ras, endast en stor boll i mitten som man vinner nï¿½r man skjuter
 
-Koncept: Mobs som åker i mönster, skjuta för att döda. Bossar som skjuter tillbaka.
+Koncept: Mobs som ï¿½ker i mï¿½nster, skjuta fï¿½r att dï¿½da. Bossar som skjuter tillbaka.
 Kanske astereoider? Kanske fixa bakrund?
 
 
 
 
 Struktur:
-    Gör om det mesta till klasser/funktioner.
-    Klura ut globala variabler och få dem att sluta strula
-    Välj spelide och börja jobba
+    Gï¿½r om det mesta till klasser/funktioner.
+    Klura ut globala variabler och fï¿½ dem att sluta strula
+    Vï¿½lj spelide och bï¿½rja jobba
     Rita upp programmet
 
-Två alternativa spelidéer:
+Tvï¿½ alternativa spelidï¿½er:
 
     Imse vimse spindel
         Platformer
-        Du är en spindel
-        Skjut tråd?
-        Klättra i nät
+        Du ï¿½r en spindel
+        Skjut trï¿½d?
+        Klï¿½ttra i nï¿½t
 
 
 
     >Rymdspel
         Space shooter
-        Du är ett rymdskepp
-        Sjut fiender som kommer från överkanten av skärmen
-        Slåss mot bossar
+        Du ï¿½r ett rymdskepp
+        Sjut fiender som kommer frï¿½n ï¿½verkanten av skï¿½rmen
+        Slï¿½ss mot bossar
