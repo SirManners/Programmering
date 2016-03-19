@@ -1,25 +1,24 @@
 TO DO:
 
+A:
 Gör en utförlig planering och lämna in till läraren
-
 Fixa stjärnornas latemanslösning
-
-Gör en generell formel i form av klass/funktion som kan fixa mobs?
-
 Integrera Meny i game p� n�got snyggt s�tt, som lvl -1
+Lägg till projektillistor för bossens skott, gör att de skadar spelaren
 
+B:
 Powerups som gör att man skjuter mer saker / får missiler
-
-Menyikonen ska vara spelarskeppet
-
-Lägg till projektillistor för bossen skott, gör att de skadar spelaren
-
 Fixa boss 2 så att den också skjuter och resetas normalt
+Astereoider?
+Spara in highscore i gameklassen efter att det har blivit game over
+Skott ska skjutas ifrån mitten av figuren istället för kanten?
 
+C:
+Menyikonen ska vara spelarskeppet
 Gör om allting till trianglar? Snyggare så imo
-
-
-
+Ställerna där det är repeterad kod går att effektivisera.
+    Gör en generell formel i form av klass/funktion som kan fixa mobs?
+Ha planeter i bakrunden?
 
 
 Vektorer:

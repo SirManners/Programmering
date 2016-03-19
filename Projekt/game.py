@@ -8,24 +8,6 @@ import Intro
 ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = graphics.färger()
 
 # Latemanslösning, se grafik
-snow_list = []
-for i in range(50):
-    snow_x = random.randrange(0, 1366)
-    snow_y = random.randrange(-768, 0)
-    snow_list.append([snow_x, snow_y])
-
-def snow(screen):
-    for i in range(len(snow_list)):
-            pygame.draw.circle(screen, WHITE, snow_list[i], 2)
-            snow_list[i][1] += 5
-            # fixa så att stjärnorna åker snabbare när man åker uppåt, och långsammare när man åker nedåt
-            if snow_list[i][1] > 768:
-                y = random.randrange(-50, -10)
-                snow_list[i][1] = y
-                x = random.randrange(0, 1366)
-                snow_list[i][0] = x
-
-
 
 class Game(object):
 
@@ -34,7 +16,7 @@ class Game(object):
         # Attributes
         self.player_hp = 2
         self.immortality = False
-        self.level = 1
+        self.level = 0
         # Lägg till lvl -1 som är introskärm, lvl 0 som är meny??
         self.score = 0
         self.highscore = 0
@@ -44,14 +26,12 @@ class Game(object):
         self.time_death = 0
 
         ## Grafik
-        self.stjärnor = graphics.Stjärnor()
+        #self.stars = graphics.Stars()
 
         # Astereoider
         # HP markörer
 
-        # stjärnor = Grafik
-        # stjärnor.snö()
-        # när du fixat snön på riktigt. Ha planeter i bakrunden annars?
+        # när du fixat snön på riktigt.
 
         # Create sprites lists
         self.boss_list = pygame.sprite.Group()
@@ -78,11 +58,6 @@ class Game(object):
         self.player_list.add(self.player)
         self.all_sprites_list.add(self.player)
 
-        # projectileer:
-        # Skapa 4 eller 6 projectileer. Återanvänd dem hela tiden.
-
-        #self.bossprojectile = Bossprojectile()
-        #self.all_sprites_list
         # Create the sprites
 
         # Level 1:
@@ -110,7 +85,7 @@ class Game(object):
         # testis
         self.mobs1 = sprites.Enemies() # ta bort när du lägger till 20 st vanliga
         self.mobs1.rect.x = SCREEN_WIDTH / 2
-        self.mobs1.rect.y = 50
+        self.mobs1.rect.y = -50
         self.enemy_list.add(self.mobs1)
         self.enemy_list1.add(self.mobs1)
         self.all_sprites_list.add(self.mobs1)
@@ -275,12 +250,11 @@ class Game(object):
                             self.boss2.hp -= self.player_projectile.damage
                             print(self.boss2.hp)
 
-                    if self.player_projectile.rect.y <= 0:
-                        print("DELETED")
+                    if self.player_projectile.rect.y <= 0 or self.player_projectile.rect.y > SCREEN_HEIGHT:
                         self.projectile_list.remove(self.player_projectile)
                         self.all_sprites_list.remove(self.player_projectile)
 
-                # samma for loop fast för bossskott.
+                ### samma for loop fast för bossskott.
 
                 if not self.immortality:
                     for collision in enemy_hit_list:
@@ -294,7 +268,6 @@ class Game(object):
                 for collision in boss_hit_list:
                     self.game_over = True
 
-            #else:
                 if self.score > self.highscore:
                     self.highscore = self.score
 
@@ -334,22 +307,23 @@ class Game(object):
     def display_frame(self, screen):
 
 
-        #if self.level == 0: # Fixa senare... du måste omstrukturera menyn också och allt.
-        #    screen.fill(NIGHTBLUE)
-        #    snow(screen)
-        #    Intro.öppna_intro(screen)
 
         if self.level == -1:
             # Testnivå
             screen.fill(BLACK)
 
+        if self.level == 0: # Fixa senare... du måste omstrukturera menyn också och allt.
+            screen.fill(NIGHTBLUE)
+            graphics.stars(screen)
+            #Intro.öppna_intro(screen)
+
 
         if self.level == 1:
             screen.fill(NIGHTBLUE)
 
-            snow(screen)
+            graphics.stars(screen)
 
-            # self.stjärnor.draw_snow(screen) <- Av någon anledning funkar ej.
+            #self.stars.draw_star(screen) # <- Av någon anledning funkar ej.
             # AttributeError: 'Stjärnor' object has no attribute 'snow_list'
 
             self.enemy_list1.draw(screen)
@@ -359,7 +333,7 @@ class Game(object):
 #
         if self.level == 2:
             screen.fill(RED)
-            snow(screen)
+            graphics.stars(screen)
             # self.enemy_list1.draw(screen)
             self.enemy_list2.draw(screen)
             if len(self.enemy_list2) == 0:
