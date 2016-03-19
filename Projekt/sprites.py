@@ -21,6 +21,7 @@ class Mall(pygame.sprite.Sprite):
         self.hp = 0
         self.original_posx = 0
         self.original_posy = 0
+        self.shots = 2
 
     def reset_pos(self):
         self.rect.x = self.original_posx

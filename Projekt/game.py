@@ -183,8 +183,9 @@ class Game(object):
                             self.all_sprites_list.add(self.player_projectile)
                             self.projectile_list.add(self.player_projectile)
                         """
-                        self.player_projectile = sprites.Projectile()
-                        self.player.shoot(1, self.player_projectile, self.all_sprites_list, self.projectile_list, 0, 0)
+                        for i in range(self.player.shots): # Fixa flera skott
+                            self.player_projectile = sprites.Projectile()
+                            self.player.shoot(1, self.player_projectile, self.all_sprites_list, self.projectile_list, 0, 0)
 
                     if event.key == pygame.K_x:
 
