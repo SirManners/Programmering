@@ -24,6 +24,12 @@ def färger():
 
 ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = färger()
 
+snow_list = []
+for i in range(50):
+    snow_x = random.randrange(0, 1366)
+    snow_y = random.randrange(-768, 0)
+    snow_list.append([snow_x, snow_y])
+
 
 def text(screen, size, colour, message, x_offset, y_offset):
     font = pygame.font.SysFont("system bold", size)
@@ -32,12 +38,6 @@ def text(screen, size, colour, message, x_offset, y_offset):
     center_y = (SCREEN_HEIGHT // 2) - (text.get_height() // 2) + y_offset
     screen.blit(text, [center_x, center_y])
 
-
-snow_list = []
-for i in range(50):
-    snow_x = random.randrange(0, 1366)
-    snow_y = random.randrange(-768, 0)
-    snow_list.append([snow_x, snow_y])
 
 def stars(screen):
     for i in range(len(snow_list)):
@@ -99,6 +99,7 @@ class Stars(): # Fungerar ej...
                 self.star_list[i][1] = y
                 x = random.randrange(0, 1366)
                 self.star_list[i][0] = x
+
 
 """
 class Grafik:
