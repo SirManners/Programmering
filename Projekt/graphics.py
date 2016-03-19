@@ -23,6 +23,15 @@ def färger():
 
 ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = färger()
 
+
+def text(screen, size, colour, message, x_offset, y_offset):
+    font = pygame.font.SysFont("system bold", size)
+    text = font.render(message, True, colour)
+    center_x = (SCREEN_WIDTH // 2) - (text.get_width() // 2) + x_offset
+    center_y = (SCREEN_HEIGHT // 2) - (text.get_height() // 2) + y_offset
+    screen.blit(text, [center_x, center_y])
+
+
 """
 class Grafik:
     def __init_(self):
@@ -61,12 +70,7 @@ class Stjärnor():
                 self.snow_list[i][0] = x
 
 
-def text(screen, size, colour, message, x_offset, y_offset):
-    font = pygame.font.SysFont("system bold", size)
-    text = font.render(message, True, colour)
-    center_x = (SCREEN_WIDTH // 2) - (text.get_width() // 2) + x_offset
-    center_y = (SCREEN_HEIGHT // 2) - (text.get_height() // 2) + y_offset
-    screen.blit(text, [center_x, center_y])
+
 
 
 class Text(): # TRASIG, istället bara göra en Text funktion?

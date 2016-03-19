@@ -15,8 +15,8 @@ class Mall(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 0
         self.rect.y = 0
-        self.move_x = 0
-        self.move_y = 0
+        self.move_x = 4
+        self.move_y = 4
         self.level = 0
         self.hp = 0
         self.original_posx = 0
@@ -49,8 +49,6 @@ class Mall(pygame.sprite.Sprite):
 
             list1.add(name)
             list2.add(name)
-
-
 
 class Player(Mall):
     def __init__(self):
@@ -118,15 +116,15 @@ class Enemies(Mall):
                         self.move_x = -3
 
         else:
-            self.x_move, self.y_move = trig.vector_movement(
+            self.x_track, self.y_track = trig.vector_movement(
                 self.rect.x,
                 self.rect.y,
                 self.target_x,
                 self.target_y,
                 self.move_y
             )
-            self.rect.x -= self.x_move
-            self.rect.y -= self.y_move
+            self.rect.x -= self.x_track
+            self.rect.y -= self.y_track
             if self.rect.y > (SCREEN_HEIGHT + 20):
                 self.reset_pos()
 
@@ -138,6 +136,7 @@ class Boss(Enemies):
         self.rect = self.image.get_rect()
         self.image.fill(BLACK)
         self.active = 0
+
     def update(self):
         self.rect.y += 1 + 2*math.sin(math.radians(self.rect.x))
         self.rect.x += 1 + 2*math.sin(math.radians(self.rect.y))
@@ -179,20 +178,22 @@ class Bossprojectile(Enemyprojectile): # Sen ska denna ärva Missile - klassen.
         self.target_x = -1
         self.target_y = -1
         self.track = True
-        self.x_move = 0
-        self.y_move = 0
+        self.x_track = 0
+        self.y_track = 15
 
     def update(self):
-        if self.rect.x - self.target_x > 3 or self.rect.y - self.target_y > 3:
-            self.x_move, self.y_move = trig.vector_movement(
-                self.rect.x,
-                self.rect.y,
-                self.target_x,
-                self.target_y,
-                self.move_y
-            )
-        self.rect.x -= self.x_move
-        self.rect.y -= self.y_move
+        # if (self.rect.x - self.target_x) > 1 or (self.rect.y - self.target_y) > 1:
+        if self.track:
+            self.x_track, self.y_track = trig.vector_movement(
+            self.rect.x,
+            self.rect.y,
+            self.target_x,
+            self.target_y,
+            self.move_y
+        )
+            self.track = False
+        self.rect.x -= self.x_track
+        self.rect.y -= self.y_track
 
 
 

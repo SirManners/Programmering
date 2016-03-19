@@ -43,11 +43,12 @@ class Game(object):
         self.current_time = 0
         self.time_death = 0
 
-        # Grafik
+        ## Grafik
         self.stjärnor = graphics.Stjärnor()
 
         # Astereoider
         # HP markörer
+
         # stjärnor = Grafik
         # stjärnor.snö()
         # när du fixat snön på riktigt. Ha planeter i bakrunden annars?
@@ -85,6 +86,7 @@ class Game(object):
         # Create the sprites
 
         # Level 1:
+        """
         for  i in range(21): # 20 st
             self.mobs1 = sprites.Enemies()
             if (i+1) < 11:
@@ -104,8 +106,9 @@ class Game(object):
             self.enemy_list1.add(self.mobs1)
             self.all_sprites_list.add(self.mobs1)
             i += 1
-
+        """
         # testis
+        self.mobs1 = sprites.Enemies() # ta bort när du lägger till 20 st vanliga
         self.mobs1.rect.x = SCREEN_WIDTH / 2
         self.mobs1.rect.y = 50
         self.enemy_list.add(self.mobs1)
@@ -117,8 +120,6 @@ class Game(object):
         self.boss1.rect.x = SCREEN_WIDTH / 2 - self.boss1.image.get_width()
         self.boss1.rect.y = -500
         self.boss1.active = 0
-
-        # ha den i update funk för att gå i kurva
         #boss1.rect.y = 200 + 100*math.sin(math.radians(boss.rect.x))
 
         self.boss_list.add(self.boss1)
@@ -127,8 +128,6 @@ class Game(object):
 
 
         # Level 2:
-
-        i = 0
         for x in range(21):
             mobs2 = sprites.Enemies()
             mobs2.rect.y = 0 - x * 30
@@ -353,9 +352,8 @@ class Game(object):
             # self.stjärnor.draw_snow(screen) <- Av någon anledning funkar ej.
             # AttributeError: 'Stjärnor' object has no attribute 'snow_list'
 
-
             self.enemy_list1.draw(screen)
-            if self.score > 2:
+            if len(self.enemy_list1) == 0:
                 self.boss_list1.draw(screen)
             # Grafik.draw_snow(screen)
 #
@@ -364,7 +362,7 @@ class Game(object):
             snow(screen)
             # self.enemy_list1.draw(screen)
             self.enemy_list2.draw(screen)
-            if self.score > 3:
+            if len(self.enemy_list2) == 0:
                 self.boss_list2.draw(screen)
 #
         if self.level == 3:
@@ -387,21 +385,5 @@ class Game(object):
 
             graphics.text(screen, 150, WHITE, "Game Over", 0, 0)
             graphics.text(screen, 150, STARBLUE, "NEW HIGH SCORE", 0, 200)
-
-            # self.gameover_message.skriv()
-            """
-            # Latemanslösning
-            font = pygame.font.SysFont("system bold", 150)
-            text = font.render("Game Over", True, WHITE)
-            center_x = (SCREEN_WIDTH // 2) - (text.get_width() // 2)
-            center_y = (SCREEN_HEIGHT // 2) - (text.get_height() // 2)
-            screen.blit(text, [center_x, center_y])
-            if self.highscore_message:
-                font = pygame.font.SysFont("system bold", 150)
-                text = font.render("NEW HIGHSCORE", True, STARBLUE)
-                center_x = (SCREEN_WIDTH // 2) - (text.get_width() // 2)
-                center_y = (SCREEN_HEIGHT // 2) - (text.get_height() // 2) - 250
-                screen.blit(text, [center_x, center_y])
-"""
 
         pygame.display.flip()

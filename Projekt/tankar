@@ -1,13 +1,25 @@
 TO DO:
 
+Gör en utförlig planering och lämna in till läraren
+
+Fixa stjärnornas latemanslösning
+
+Gör en generell formel i form av klass/funktion som kan fixa mobs?
+
 Integrera Meny i game p� n�got snyggt s�tt, som lvl -1
 
-Fixa s� att alla sprites r�r sig lite mot spelaren
-
-Fixa s� att man skjuter fr�n Player klassen snanare �n fr�n process events, allts� hur jag skapar listor i Game-
-klassen ifr�n Player klassen.
-
 Powerups som gör att man skjuter mer saker / får missiler
+
+Menyikonen ska vara spelarskeppet
+
+Lägg till projektillistor för bossen skott, gör att de skadar spelaren
+
+Fixa boss 2 så att den också skjuter och resetas normalt
+
+Gör om allting till trianglar? Snyggare så imo
+
+
+
 
 
 Vektorer:

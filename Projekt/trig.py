@@ -8,10 +8,10 @@ def vector_movement(current_pos_x, current_pos_y, goal_pos_x, goal_pos_y, moveme
 
     angle = math.atan2(x_diff, y_diff)
 
-    x_move = math.sin(angle) * movement #* t
-    y_move = math.cos(angle) * movement #* t då blir det sträckor, går snabbare på snabba datorer
+    move_x = math.sin(angle) * movement #* t
+    move_y = math.cos(angle) * movement #* t då blir det sträckor, går snabbare på snabba datorer
 
     #current_pos_x -= x_move
     #current_pos_y -= y_move
 
-    return x_move, y_move
+    return move_x, move_y
