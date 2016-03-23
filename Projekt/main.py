@@ -34,6 +34,7 @@ def main():
             done_game = session.process_events
 
             session.run_logic()
+
             if session.highscore > highscore:
                 highscore = session.highscore
                 # print("Detta är den nya highscoren", highscore)
