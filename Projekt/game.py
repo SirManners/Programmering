@@ -61,7 +61,7 @@ class Game(object):
         # Create the sprites
 
         # Level 1:
-        """
+
         for  i in range(21): # 20 st
             self.mobs1 = sprites.Enemies()
             if (i+1) < 11:
@@ -76,14 +76,14 @@ class Game(object):
                 self.mobs1.rect.y = 300 + (-30 * i)
             self.mobs1.original_posx = self.mobs1.rect.x
             self.mobs1.original_posy = self.mobs1.rect.y
-            #self.mobs1.choose_target(self.player.rect.x, self.player.rect.y)
+            # self.mobs1.choose_target(self.player.rect.x, self.player.rect.y)
             self.enemy_list.add(self.mobs1)
             self.enemy_list1.add(self.mobs1)
             self.all_sprites_list.add(self.mobs1)
             i += 1
-        """
+
         # testis
-        self.mobs1 = sprites.Enemies() # ta bort när du lägger till 20 st vanliga
+        #self.mobs1 = sprites.Enemies() # ta bort när du lägger till 20 st vanliga
         self.mobs1.rect.x = SCREEN_WIDTH / 2
         self.mobs1.rect.y = -50
         self.enemy_list.add(self.mobs1)
@@ -218,9 +218,7 @@ class Game(object):
                 self.projectile_list.update()
 
                 # Fungerar inte med flera sprites. Du måste få in player.pos i fiendeklassen.
-
-                self.mobs1.target_x = self.player.rect.x
-                self.mobs1.target_y = self.player.rect.y
+                self.mobs1.choose_target(self.player.rect.x, self.player.rect.y)
 
                 if self.immortality:
                     enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, False)

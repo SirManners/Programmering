@@ -97,10 +97,9 @@ class Enemies(Mall):
         self.target_x = -1
         self.target_y = -1
 
-    #def choose_target(self, target_x, target_y):
-    #    self.target_x = target_x
-    #    self.target_y = target_y
-    #    print(self.target_x, self.target_y)
+    def choose_target(self, target_x, target_y):
+        self.target_x = target_x
+        self.target_y = target_y
 
     def update(self):
         if self.target_x == -1 and self.target_y == -1:
@@ -117,6 +116,7 @@ class Enemies(Mall):
                         self.move_x = -3
 
         else:
+
             self.x_track, self.y_track = trig.vector_movement(
                 self.rect.x,
                 self.rect.y,
@@ -179,8 +179,8 @@ class Bossprojectile(Enemyprojectile): # Sen ska denna ärva Missile - klassen.
         self.target_x = -1
         self.target_y = -1
         self.track = True
-        self.x_track = 0
-        self.y_track = 15
+        self.x_track = 0 # otydligt namn
+        self.y_track = 15 # otydligt namn
 
     def update(self):
         # if (self.rect.x - self.target_x) > 1 or (self.rect.y - self.target_y) > 1:

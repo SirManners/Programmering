@@ -5,6 +5,7 @@ Gör en utförlig planering och lämna in till läraren
 Fixa stjärnornas latemanslösning
 Integrera Meny i game p� n�got snyggt s�tt, som lvl -1
 Lägg till projektillistor för bossens skott, gör att de skadar spelaren o skjuts automatiskt
+Olika klasser för varje nivå? Som alla är barn till en game-klass men har olika inits? Kanske?
 
 B:
 Powerups som gör att man skjuter mer saker / får missiler
@@ -19,25 +20,6 @@ Gör om allting till trianglar? Snyggare så imo
 Ställerna där det är repeterad kod går att effektivisera.
     Gör en generell formel i form av klass/funktion som kan fixa mobs?
 Ha planeter i bakrunden?
-
-
-Vektorer:
-movement = 3
-x_move = cos v * movement * t
-y_move = sin v * movement * t (str�ckor)
-x_pos = x_pos + x_move
-
-R�relse med vektorer:
-
-import Vektorer
-current_pos_x, current_pos_y = vector_movement(current_pos_x, current_pos_y, player_x, player_y, 3)
-
-
-Fixa GIT s� att import-pathen blir samma som p� skoldatorn
-L�gg till en game-class? http://programarcadegames.com/python_examples/show_file.php?file=game_class_example.py
-!!! G�r s� att spelet kan k�ras, endast en stor boll i mitten som man vinner n�r man skjuter
-
-Koncept: Mobs som �ker i m�nster, skjuta f�r att d�da. Bossar som skjuter tillbaka.
 Kanske astereoider? Kanske fixa bakrund?
 
 
