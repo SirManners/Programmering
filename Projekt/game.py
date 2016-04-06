@@ -141,7 +141,7 @@ class Game(object):
         self.boss_list2.add(self.boss2)
         self.all_sprites_list.add(self.boss2)
 
-    @property
+    @property # Vad gör detta?
     def process_events(self):
 
         self.current_time = pygame.time.get_ticks()
@@ -218,7 +218,7 @@ class Game(object):
                 self.projectile_list.update()
 
                 # Fungerar inte med flera sprites. Du måste få in player.pos i fiendeklassen.
-                self.mobs1.choose_target(self.player.rect.x, self.player.rect.y)
+                # self.mobs1.choose_target(self.player.rect.x, self.player.rect.y) # effektivisera
 
                 if self.immortality:
                     enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, False)
@@ -227,31 +227,35 @@ class Game(object):
 
                 boss_hit_list = pygame.sprite.spritecollide(self.player, self.boss_list, False)
 
-                for self.player_projectile in self.projectile_list:
-                    self.projectile_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.enemy_list, True)
-                    self.projectile_boss_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.boss_list, False)
+                # groupcollide(group1, group2, dokill1, dokill2) -> dictionary
 
-                    for enemy in self.projectile_hit_list:
-                        self.projectile_list.remove(self.player_projectile)
-                        self.all_sprites_list.remove(self.player_projectile)
-                        self.score += 1
-                        print(self.score)
-
-                    for boss in self.projectile_boss_hit_list:
-                        self.projectile_list.remove(self.player_projectile)
-                        self.all_sprites_list.remove(self.player_projectile)
-
-                        if self.level == 1:
-                            self.boss1.hp -= self.player_projectile.damage
-                            print(self.boss1.hp)
-
-                        if self.level == 2:
-                            self.boss2.hp -= self.player_projectile.damage
-                            print(self.boss2.hp)
-
-                    if self.player_projectile.rect.y <= 0 or self.player_projectile.rect.y > SCREEN_HEIGHT:
-                        self.projectile_list.remove(self.player_projectile)
-                        self.all_sprites_list.remove(self.player_projectile)
+                self.projectile_hit_list = pygame.sprite.groupcollide(self.projectile_list, self.enemy_list, True, True)
+                self.projectile_boss_hit_list = pygame.sprite.groupcollide(self.projectile_list, self.boss_list, True, False)
+                #for self.player_projectile in self.projectile_list:
+                #    self.projectile_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.enemy_list, True)
+                #    self.projectile_boss_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.boss_list, False)
+#
+                #    for enemy in self.projectile_hit_list:
+                #        self.projectile_list.remove(self.player_projectile)
+                #        self.all_sprites_list.remove(self.player_projectile)
+                #        self.score += 1
+                #        print(self.score)
+#
+                #    for boss in self.projectile_boss_hit_list:
+                #        self.projectile_list.remove(self.player_projectile)
+                #        self.all_sprites_list.remove(self.player_projectile)
+#
+                #        if self.level == 1:
+                #            self.boss1.hp -= self.player_projectile.damage
+                #            print(self.boss1.hp)
+#
+                #        if self.level == 2:
+                #            self.boss2.hp -= self.player_projectile.damage
+                #            print(self.boss2.hp)
+#
+                #    if self.player_projectile.rect.y <= 0 or self.player_projectile.rect.y > SCREEN_HEIGHT:
+                #        self.projectile_list.remove(self.player_projectile)
+                #        self.all_sprites_list.remove(self.player_projectile)
 
                 ### samma for loop fast för bossskott.
 
@@ -285,6 +289,7 @@ class Game(object):
                         self.level += 1
                         self.boss_list.remove(self.boss1)
                 else:
+                    # self.enemy_list1.choose_target(self.player.rect.x, self.player.rect.y)
                     self.enemy_list1.update()
 
 

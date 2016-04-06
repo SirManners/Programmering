@@ -7,6 +7,8 @@ import graphics
 
 ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = graphics.färger()
 
+# göra en till klass som är barn till grupp och ändra den så att jag kan ha choose target o sånt?
+
 class Mall(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -97,16 +99,17 @@ class Enemies(Mall):
         self.target_x = -1
         self.target_y = -1
 
-    def choose_target(self, target_x, target_y):
+    def choose_target(self, target_x, target_y): # Egentligen onödig
         self.target_x = target_x
         self.target_y = target_y
 
     def update(self):
+        if self.rect.y > SCREEN_HEIGHT + 20:
+                self.reset_pos()
+
         if self.target_x == -1 and self.target_y == -1:
             self.rect.x += self.move_x
             self.rect.y += self.move_y
-            if self.rect.y > SCREEN_HEIGHT + 20:
-                self.reset_pos()
 
             if self.level == 2:
                 if self.rect.y > (SCREEN_HEIGHT // 5):
@@ -116,18 +119,15 @@ class Enemies(Mall):
                         self.move_x = -3
 
         else:
-
-            self.x_track, self.y_track = trig.vector_movement(
+            self.x_track_move, self.y_track_move = trig.vector_movement(
                 self.rect.x,
                 self.rect.y,
                 self.target_x,
                 self.target_y,
                 self.move_y
             )
-            self.rect.x -= self.x_track
-            self.rect.y -= self.y_track
-            if self.rect.y > (SCREEN_HEIGHT + 20):
-                self.reset_pos()
+            self.rect.x -= self.x_track_move
+            self.rect.y -= self.y_track_move
 
 class Boss(Enemies):
     def __init__(self):
