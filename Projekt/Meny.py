@@ -18,7 +18,8 @@ def öppna_meny(screen, resume):
         screen.blit(text, [200, 500])
         text = font.render("Quit", True, WHITE)
         screen.blit(text, [200, 600])
-        if resume is False:
+
+        if not resume:
             text = font.render("Play", True, WHITE)
             screen.blit(text, [200, 300])
 

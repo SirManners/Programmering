@@ -332,14 +332,12 @@ class Game(object):
 
     def display_frame(self, screen):
 
-        if self.level == -1:
-            # Testnivå
+        if self.level == -1: # Intro
             screen.fill(BLACK)
 
-        if self.level == 0: # Fixa senare... du måste omstrukturera menyn också och allt.
+        if self.level == 0: # Meny
             screen.fill(NIGHTBLUE)
             graphics.stars(screen)
-            #Intro.öppna_intro(screen)
 
 
         if self.level == 1:
@@ -367,13 +365,14 @@ class Game(object):
             screen.fill(GREEN)
 
         # Overlay
-        graphics.text(screen, 50, WHITE, str(self.score), 0, -300)
-        graphics.text(screen, 50, WHITE, "HP", 550, -300)
-        graphics.text(screen, 50, YELLOW, str(self.player_hp), 600, -300)
-        graphics.text(screen, 50, WHITE, "Level", -600, -300)
-        graphics.text(screen, 50, YELLOW, str(self.level), -500, -300)
-        graphics.text(screen, 50, YELLOW, str(round(self.current_time / 1000, 1)) , -500, 300)
-        graphics.text(screen, 50, WHITE, "Time", -600, 300)
+        if self.level > 0:
+            graphics.text(screen, 50, WHITE, str(self.score), 0, -300)
+            graphics.text(screen, 50, WHITE, "HP", 550, -300)
+            graphics.text(screen, 50, YELLOW, str(self.player_hp), 600, -300)
+            graphics.text(screen, 50, WHITE, "Level", -600, -300)
+            graphics.text(screen, 50, YELLOW, str(self.level), -500, -300)
+            graphics.text(screen, 50, YELLOW, str(round(self.current_time / 1000, 1)) , -500, 300)
+            graphics.text(screen, 50, WHITE, "Time", -600, 300)
 
         if not self.game_over:
             self.player_list.draw(screen)
