@@ -33,7 +33,7 @@ class Game(object):
 
         # när du fixat snön på riktigt.
 
-        # Create sprites lists
+        # Create sprites lists, subklasser
         self.boss_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
         self.boss_list1 = pygame.sprite.Group()
@@ -43,6 +43,9 @@ class Game(object):
         self.all_sprites_list = pygame.sprite.Group()
         self.projectile_list = pygame.sprite.Group()
         self.player_list = pygame.sprite.Group()
+        # två olika objekt i en spritegrupp och ifall de använder rätt update
+        # göra en spritegroup i en spritegroup?
+        # inte skapa allting i init, all_sprites innehåller bara det som används nu, och finns bara en lista
 
         # Player
         self.player = sprites.Player()
@@ -143,8 +146,8 @@ class Game(object):
 
     @property # Vad gör detta?
     def process_events(self):
-
-        self.current_time = pygame.time.get_ticks()
+        passed_time = 0
+        self.current_time = pygame.time.get_ticks() - passed_time
 
         for event in pygame.event.get():
 
@@ -155,8 +158,9 @@ class Game(object):
                     return True
                 if event.key == pygame.K_SPACE:
                     if self.game_over:
+                        passed_time = self.current_time
                         self.__init__()
-                        self.score = 0
+
 
                 # För att testa lättare
                 if event.key == pygame.K_q:
@@ -231,6 +235,24 @@ class Game(object):
 
                 self.projectile_hit_list = pygame.sprite.groupcollide(self.projectile_list, self.enemy_list, True, True)
                 self.projectile_boss_hit_list = pygame.sprite.groupcollide(self.projectile_list, self.boss_list, True, False)
+
+                for self.player_projectile in self.projectile_list:
+                    for enemy in self.projectile_hit_list:
+                        self.score += 1
+                        print(self.score)
+
+                    for boss in self.projectile_boss_hit_list:
+                        if self.level == 1:
+                                self.boss1.hp -= self.player_projectile.damage
+                                print(self.boss1.hp)
+                        if self.level == 2:
+                                self.boss2.hp -= self.player_projectile.damage
+                                print(self.boss2.hp)
+
+                    if self.player_projectile.rect.y <= 0 or self.player_projectile.rect.y > SCREEN_HEIGHT:
+                        self.projectile_list.remove(self.player_projectile)
+                        self.all_sprites_list.remove(self.player_projectile)
+
                 #for self.player_projectile in self.projectile_list:
                 #    self.projectile_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.enemy_list, True)
                 #    self.projectile_boss_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.boss_list, False)
@@ -310,8 +332,6 @@ class Game(object):
 
     def display_frame(self, screen):
 
-
-
         if self.level == -1:
             # Testnivå
             screen.fill(BLACK)
@@ -362,6 +382,7 @@ class Game(object):
         if self.game_over:
 
             graphics.text(screen, 150, WHITE, "Game Over", 0, 0)
-            graphics.text(screen, 150, STARBLUE, "NEW HIGH SCORE", 0, 200)
+            if self.highscore_message:
+                graphics.text(screen, 150, STARBLUE, "NEW HIGH SCORE", 0, 200)
 
         pygame.display.flip()

@@ -1,8 +1,20 @@
 TO DO:
 
+Två olika objekt i en spritegrupp och ifall de använder rätt update
+Göra en spritegroup i en spritegroup?
+Inte skapa allting i init, all_sprites innehåller bara det som används nu, och finns bara en lista
+
+Göra så att man får score automatiskt när fiender dör, som en del av deras klass.
+
+HP bar
+
 En lista där det ligger en lista med alla saker, sen andra elementet i första listan är
 vad den ska följa efter och tredje är hur snabbt.
 Göra en till klass som är barn till grupp och ändra den så att jag kan ha choose target o sånt?
+
+Problem:
+Score från fiender läggs till flera gånger om ifall du skjuter snabbt nog
+
 
 
 A:

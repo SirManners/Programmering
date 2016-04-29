@@ -11,26 +11,20 @@ ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, 
 def öppna_meny(screen, resume):
 
     def menyn(screen):
+        font = pygame.font.SysFont("system bold", 36)
+        text = font.render("Highscore", True, WHITE)
+        screen.blit(text, [200, 400])
+        text = font.render("Help", True, WHITE)
+        screen.blit(text, [200, 500])
+        text = font.render("Quit", True, WHITE)
+        screen.blit(text, [200, 600])
         if resume is False:
-            font = pygame.font.SysFont("system bold", 36)
             text = font.render("Play", True, WHITE)
             screen.blit(text, [200, 300])
-            text = font.render("Highscore", True, WHITE)
-            screen.blit(text, [200, 400])
-            text = font.render("Help", True, WHITE)
-            screen.blit(text, [200, 500])
-            text = font.render("Quit", True, WHITE)
-            screen.blit(text, [200, 600])
+
         else:
-            font = pygame.font.SysFont("system bold", 36)
             text = font.render("Resume", True, WHITE)
             screen.blit(text, [200, 300])
-            text = font.render("Highscore", True, WHITE)
-            screen.blit(text, [200, 400])
-            text = font.render("Help", True, WHITE)
-            screen.blit(text, [200, 500])
-            text = font.render("Quit", True, WHITE)
-            screen.blit(text, [200, 600])
     # gör om till ett resultat av Text klassen, flytta ut ur öppna_meny
     # spara text utanför loopen
     # Gör en lista och kör igenom den och rita allting

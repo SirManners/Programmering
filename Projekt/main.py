@@ -39,6 +39,8 @@ def main():
                 highscore = session.highscore
                 # print("Detta är den nya highscoren", highscore)
                 session.highscore_message = True
+                print("Den nya highscoren är:", highscore)
+
             session.display_frame(screen)
 
             clock.tick(60)
