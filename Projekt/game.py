@@ -303,6 +303,8 @@ class Game(object):
 
             # Level 1
             if self.level == 1:
+                # create sprites of level one, add them to all_sprites.
+                # create function that creates levels of sprites
                 if len(self.enemy_list1) == 0:
                     if self.boss1.active == 0:
                         print("Boss has spawned")
