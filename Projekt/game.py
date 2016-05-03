@@ -17,7 +17,6 @@ class Game(object):
         self.player_hp = 2
         self.immortality = False
         self.level = 0
-        # Lägg till lvl -1 som är introskärm, lvl 0 som är meny??
         self.score = 0
         self.highscore = 0
         self.highscore_message = False
