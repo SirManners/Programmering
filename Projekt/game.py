@@ -24,6 +24,7 @@ class Game(object):
         self.game_over = False
         self.current_time = 0
         self.time_death = 0
+        self.cap = False
 
         ## Grafik
         #self.stars = graphics.Stars()
@@ -146,7 +147,7 @@ class Game(object):
 
     @property # Vad gör detta?
     def process_events(self):
-        passed_time = 0
+        passed_time = 0 # detta går inte
         self.current_time = pygame.time.get_ticks() - passed_time
 
         for event in pygame.event.get():
@@ -158,7 +159,8 @@ class Game(object):
                     return True
                 if event.key == pygame.K_SPACE:
                     if self.game_over:
-                        passed_time = self.current_time
+                        passed_time = self.current_time # måste spara det utanför game för att det ska fungera
+                        return self.highscore
                         self.__init__()
 
 
@@ -310,6 +312,20 @@ class Game(object):
                     if self.boss1.hp < 1:
                         self.level += 1
                         self.boss_list.remove(self.boss1)
+                    else:
+                        print("Cap?", self.cap)
+                        print(self.boss1.projectile_number)
+                        #if self.current_time % 5 == 1:
+                        if self.boss1.projectile_number < 50 and not self.cap:
+                            self.boss1.projectile_number += 1
+                            self.boss_projectile = sprites.Bossprojectile()
+                            self.boss1.shoot(1, self.boss_projectile, self.all_sprites_list, self.projectile_list, self.player.rect.x, self.player.rect.y)
+                        else:
+                            self.cap = True
+                            if self.boss1.projectile_number > 1:
+                                self.boss1.projectile_number -= 1
+                            else:
+                                self.cap = False
                 else:
                     # self.enemy_list1.choose_target(self.player.rect.x, self.player.rect.y)
                     self.enemy_list1.update()

@@ -137,6 +137,7 @@ class Boss(Enemies):
         self.rect = self.image.get_rect()
         self.image.fill(BLACK)
         self.active = 0
+        self.projectile_number = 0
 
     def update(self):
         self.rect.y += 1 + 2*math.sin(math.radians(self.rect.x))
