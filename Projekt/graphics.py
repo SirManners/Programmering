@@ -24,7 +24,7 @@ def färger():
 
 ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = färger()
 
-snow_list = []
+snow_list = [] #change name to stars?
 for i in range(50):
     snow_x = random.randrange(0, 1366)
     snow_y = random.randrange(-768, 0)

@@ -23,7 +23,7 @@ class Mall(pygame.sprite.Sprite):
         self.hp = 0
         self.original_posx = 0
         self.original_posy = 0
-        self.shots = 2
+        self.shots = 1
 
     def reset_pos(self):
         self.rect.x = self.original_posx
@@ -153,7 +153,7 @@ class Projectile(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.image.fill(YELLOW)
         self.move_y = -15
-        self.damage = 10
+        self.damage = 5
         self.track = False
 
     def update(self):

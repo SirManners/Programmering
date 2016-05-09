@@ -1,10 +1,10 @@
 TO DO:
 
+Allting ligger i all_sprites_list, och score räknas direkt när fiender dör.
+
 Två olika objekt i en spritegrupp och ifall de använder rätt update
 Göra en spritegroup i en spritegroup?
 Inte skapa allting i init, all_sprites innehåller bara det som används nu, och finns bara en lista
-
-Göra så att man får score automatiskt när fiender dör, som en del av deras klass.
 
 HP bar
 

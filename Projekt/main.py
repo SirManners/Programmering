@@ -17,21 +17,25 @@ def main():
     pygame.display.set_caption("Projekt 1")
 
     # Objekt och data
-    done = False
-    done_game = True
+
     clock = pygame.time.Clock()
+
+    done_meny = False
+    done_game = True
     resume = False
     session = game.Game()
+
     highscore = 0
 
     # Main loop
     # Intro.öppna_intro(screen)
-    while not done:
-        done = Meny.öppna_meny(screen, resume)
-        if not done:
+    while not done_meny:
+        done_meny = Meny.öppna_meny(screen, resume)
+        if not done_meny:
             done_game = False
+            passed_time = pygame.time.get_ticks()
         while not done_game:
-            done_game = session.process_events
+            done_game = session.process_events #(passed_time) #doesn't work for some reason
 
             session.run_logic()
 

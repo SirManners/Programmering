@@ -15,9 +15,9 @@ class Game(object):
 
         # Attributes
         self.player_hp = 2
-        self.immortality = False
-        self.level = 0
+        self.level = 0 # Lägg till lvl -1 som är introskärm, lvl 0 som är meny??
         self.score = 0
+        self.immortality = False
         self.highscore = 0
         self.highscore_message = False
         self.game_over = False
@@ -145,9 +145,9 @@ class Game(object):
         self.all_sprites_list.add(self.boss2)
 
     @property # Vad gör detta?
-    def process_events(self):
-        passed_time = 0 # detta går inte
-        self.current_time = pygame.time.get_ticks() - passed_time
+    def process_events(self): #(self, passed_time)
+
+        self.session_time = pygame.time.get_ticks() #- passed_time
 
         for event in pygame.event.get():
 
@@ -158,10 +158,8 @@ class Game(object):
                     return True
                 if event.key == pygame.K_SPACE:
                     if self.game_over:
-                        passed_time = self.current_time # måste spara det utanför game för att det ska fungera
-                        return self.highscore
+                        # passed_time = self.current_time # måste spara det utanför game för att det ska fungera
                         self.__init__()
-
 
                 # För att testa lättare
                 if event.key == pygame.K_q:
@@ -214,7 +212,7 @@ class Game(object):
             if self.player_hp < 1:
                 self.game_over = True
 
-            if self.current_time - self.time_death> 1500:
+            if self.session_time - self.time_death> 1500:
                 self.immortality = False
                 self.player.image.fill(WHITE)
 
@@ -223,7 +221,7 @@ class Game(object):
                 self.projectile_list.update()
 
                 # Fungerar inte med flera sprites. Du måste få in player.pos i fiendeklassen.
-                # self.mobs1.choose_target(self.player.rect.x, self.player.rect.y) # effektivisera
+                self.mobs1.choose_target(self.player.rect.x, self.player.rect.y) # effektivisera
 
                 if self.immortality:
                     enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, False)
@@ -232,41 +230,19 @@ class Game(object):
 
                 boss_hit_list = pygame.sprite.spritecollide(self.player, self.boss_list, False)
 
-                # groupcollide(group1, group2, dokill1, dokill2) -> dictionary
-
-                self.projectile_hit_list = pygame.sprite.groupcollide(self.projectile_list, self.enemy_list, True, True)
-                self.projectile_boss_hit_list = pygame.sprite.groupcollide(self.projectile_list, self.boss_list, True, False)
-
-                for self.player_projectile in self.projectile_list:
-                    for enemy in self.projectile_hit_list:
-                        self.score += 1
-                        print(self.score)
-
-                    for boss in self.projectile_boss_hit_list:
-                        if self.level == 1:
-                                self.boss1.hp -= self.player_projectile.damage
-                                print(self.boss1.hp)
-                        if self.level == 2:
-                                self.boss2.hp -= self.player_projectile.damage
-                                print(self.boss2.hp)
-
-                    if self.player_projectile.rect.y <= 0 or self.player_projectile.rect.y > SCREEN_HEIGHT:
-                        self.projectile_list.remove(self.player_projectile)
-                        self.all_sprites_list.remove(self.player_projectile)
-
+                #### Groupcollide is a bit weird, doesnt really work here.
+                #  groupcollide(group1, group2, dokill1, dokill2) -> dictionary
+#
+                #self.projectile_hit_list = pygame.sprite.groupcollide(self.projectile_list, self.enemy_list, True, True)
+                #self.projectile_boss_hit_list = pygame.sprite.groupcollide(self.projectile_list, self.boss_list, True, False)
+#
                 #for self.player_projectile in self.projectile_list:
-                #    self.projectile_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.enemy_list, True)
-                #    self.projectile_boss_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.boss_list, False)
 #
                 #    for enemy in self.projectile_hit_list:
-                #        self.projectile_list.remove(self.player_projectile)
-                #        self.all_sprites_list.remove(self.player_projectile)
                 #        self.score += 1
                 #        print(self.score)
 #
                 #    for boss in self.projectile_boss_hit_list:
-                #        self.projectile_list.remove(self.player_projectile)
-                #        self.all_sprites_list.remove(self.player_projectile)
 #
                 #        if self.level == 1:
                 #            self.boss1.hp -= self.player_projectile.damage
@@ -279,6 +255,34 @@ class Game(object):
                 #    if self.player_projectile.rect.y <= 0 or self.player_projectile.rect.y > SCREEN_HEIGHT:
                 #        self.projectile_list.remove(self.player_projectile)
                 #        self.all_sprites_list.remove(self.player_projectile)
+
+#############################################################################################
+
+                for self.player_projectile in self.projectile_list:
+                    self.projectile_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.enemy_list, True)
+                    self.projectile_boss_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.boss_list, False)
+
+                    for enemy in self.projectile_hit_list:
+                        self.projectile_list.remove(self.player_projectile)
+                        self.all_sprites_list.remove(self.player_projectile)
+                        self.score += 1
+                        print(self.score)
+
+                    for boss in self.projectile_boss_hit_list:
+                        self.projectile_list.remove(self.player_projectile)
+                        self.all_sprites_list.remove(self.player_projectile)
+
+                        if self.level == 1:
+                            self.boss1.hp -= self.player_projectile.damage
+                            print(self.boss1.hp)
+
+                        if self.level == 2:
+                            self.boss2.hp -= self.player_projectile.damage
+                            print(self.boss2.hp)
+
+                    if self.player_projectile.rect.y <= 0 or self.player_projectile.rect.y > SCREEN_HEIGHT:
+                        self.projectile_list.remove(self.player_projectile)
+                        self.all_sprites_list.remove(self.player_projectile)
 
                 ### samma for loop fast för bossskott.
 
@@ -314,10 +318,10 @@ class Game(object):
                         self.level += 1
                         self.boss_list.remove(self.boss1)
                     else:
-                        print("Cap?", self.cap)
-                        print(self.boss1.projectile_number)
-                        #if self.current_time % 5 == 1:
-                        if self.boss1.projectile_number < 50 and not self.cap:
+                        #print("Cap?", self.cap)
+                        #print(self.boss1.projectile_number)
+
+                        if self.boss1.projectile_number < 50 and not self.cap: # use sinus instead?
                             self.boss1.projectile_number += 1
                             self.boss_projectile = sprites.Bossprojectile()
                             self.boss1.shoot(1, self.boss_projectile, self.all_sprites_list, self.projectile_list, self.player.rect.x, self.player.rect.y)
@@ -388,7 +392,7 @@ class Game(object):
             graphics.text(screen, 50, YELLOW, str(self.player_hp), 600, -300)
             graphics.text(screen, 50, WHITE, "Level", -600, -300)
             graphics.text(screen, 50, YELLOW, str(self.level), -500, -300)
-            graphics.text(screen, 50, YELLOW, str(round(self.current_time / 1000, 1)) , -500, 300)
+            graphics.text(screen, 50, YELLOW, str(round(self.session_time / 1000, 1)) , -500, 300)
             graphics.text(screen, 50, WHITE, "Time", -600, 300)
 
         if not self.game_over:
