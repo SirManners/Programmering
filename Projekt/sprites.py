@@ -5,7 +5,19 @@ import math
 import trig
 import graphics
 
-ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = graphics.färger()
+ROSA, BLACK, \
+WHITE, \
+GREEN, \
+RED, \
+BROWN, \
+YELLOW, \
+BLUE, \
+NIGHTBLUE, \
+STARBLUE, \
+GREY, \
+SCREEN_HEIGHT, \
+SCREEN_WIDTH = \
+    graphics.colour()
 
 # göra en till klass som är barn till grupp och ändra den så att jag kan ha choose target o sånt?
 
@@ -24,6 +36,7 @@ class Mall(pygame.sprite.Sprite):
         self.original_posx = 0
         self.original_posy = 0
         self.shots = 1
+        self.offset = 0
 
     def reset_pos(self):
         self.rect.x = self.original_posx
@@ -56,6 +69,15 @@ class Mall(pygame.sprite.Sprite):
 class Player(Mall):
     def __init__(self):
         super().__init__()
+        self.image = pygame.Surface([30, 30])
+        self.image.fill(WHITE)
+        self.rect = self.image.get_rect()
+        self.rect.x = SCREEN_WIDTH/2 - 15
+        self.rect.y = 300
+        self.move_x = 7
+        self.move_y = 8
+        self.original_posx = SCREEN_WIDTH/2 - 15
+        self.original_posy = 300
 
         self.up = False
         self.down = False
@@ -124,7 +146,8 @@ class Enemies(Mall):
                 self.rect.y,
                 self.target_x,
                 self.target_y,
-                self.move_y
+                self.move_y,
+                self.offset
             )
             self.rect.x -= self.x_track_move
             self.rect.y -= self.y_track_move
@@ -182,6 +205,7 @@ class Bossprojectile(Enemyprojectile): # Sen ska denna ärva Missile - klassen.
         self.track = True
         self.x_track = 0 # otydligt namn
         self.y_track = 15 # otydligt namn
+        self.offset = 0
 
     def update(self):
         # if (self.rect.x - self.target_x) > 1 or (self.rect.y - self.target_y) > 1:
@@ -191,7 +215,8 @@ class Bossprojectile(Enemyprojectile): # Sen ska denna ärva Missile - klassen.
             self.rect.y,
             self.target_x,
             self.target_y,
-            self.move_y
+            self.move_y,
+            self.offset
         )
             self.track = False
         self.rect.x -= self.x_track

@@ -3,7 +3,7 @@ import random
 import main
 import math
 
-def färger():
+def colour():
 
     ROSA      = ( 255,   0, 132)
     BLACK     = (   0,   0,   0)
@@ -22,7 +22,20 @@ def färger():
 
     return ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH
 
-ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = färger()
+ROSA, \
+BLACK, \
+WHITE, \
+GREEN, \
+RED, \
+BROWN, \
+YELLOW, \
+BLUE, \
+NIGHTBLUE, \
+STARBLUE, \
+GREY, \
+SCREEN_HEIGHT, \
+SCREEN_WIDTH = \
+    colour()
 
 snow_list = [] #change name to stars?
 for i in range(50):
@@ -51,32 +64,22 @@ def stars(screen):
                 snow_list[i][0] = x
 
 
-class Rektangel():
+class Rectangle():
     def __init__(self):
         self.x = 0
-        self.y = 0
+        self.y = -500
         self.change_x = 0
-        self.change_y = 0
-        self.bredd = 0
-        self.höjd = 0
-        self.färg = [255, 255, 255]
+        self.change_y = 3
+        self.width = 1000
+        self.height = 1300
+        self.colour = BLACK
 
-    def rörelse(self):
+    def update(self):
         self.x += self.change_x
         self.y += self.change_y
 
-    def rita(self, screen):
-        pygame.draw.rect(screen, self.färg, [self.x, self.y, self.bredd, self.höjd])
-
-
-class Ridå(Rektangel):
-        def __init__(self):
-            super().__init__()
-
-        def rörelse(self):
-            self.x += self.change_x
-            if self.y >= -769:
-                self.y += self.change_y
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.colour, [self.x, self.y, self.width, self.height])
 
 
 class Stars(): # Fungerar ej...

@@ -1,10 +1,22 @@
 import pygame
-import Meny
 import sprites
 import game
 import graphics
 
-ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = graphics.färger()
+ROSA, \
+BLACK, \
+WHITE, \
+GREEN, \
+RED, \
+BROWN, \
+YELLOW, \
+BLUE, \
+NIGHTBLUE, \
+STARBLUE, \
+GREY, \
+SCREEN_HEIGHT, \
+SCREEN_WIDTH = \
+    graphics.colour()
 
 
 def main():
@@ -21,7 +33,7 @@ def main():
     clock = pygame.time.Clock()
 
     done_meny = False
-    done_game = True
+    done_game = False
     resume = False
     session = game.Game()
 
@@ -29,23 +41,24 @@ def main():
 
     # Main loop
     # Intro.öppna_intro(screen)
-    while not done_meny:
-        done_meny = Meny.öppna_meny(screen, resume)
-        if not done_meny:
-            done_game = False
-            passed_time = pygame.time.get_ticks()
-        while not done_game:
-            done_game = session.process_events #(passed_time) #doesn't work for some reason
+    #while not done_meny:
+    #    done_meny = Meny.öppna_meny(screen, resume)
+    #    if not done_meny:
+    #        done_game = False
+    #        passed_time = pygame.time.get_ticks()
 
-            session.run_logic()
+    while not done_game:
+        done_game = session.process_events
 
-            if session.highscore > highscore:
-                highscore = session.highscore
-                session.highscore_message = True
+        session.run_logic()
 
-            session.display_frame(screen)
+        if session.highscore > highscore:
+            highscore = session.highscore
+            session.highscore_message = True
 
-            clock.tick(60)
+        session.display_frame(screen)
+
+        clock.tick(60)
     pygame.quit()
 
 

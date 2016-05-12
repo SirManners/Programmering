@@ -2,7 +2,19 @@ import sprites
 import trig
 import graphics
 
-ROSA, BLACK, WHITE, GREEN, RED, BROWN, YELLOW, BLUE, NIGHTBLUE, STARBLUE, GREY, SCREEN_HEIGHT, SCREEN_WIDTH = graphics.färger()
+ROSA, \
+BLACK, \
+WHITE, \
+GREEN, \
+RED, \
+BROWN, \
+YELLOW, \
+BLUE, \
+NIGHTBLUE, \
+STARBLUE, GREY, \
+SCREEN_HEIGHT, \
+SCREEN_WIDTH = \
+    graphics.colour()
 
 
 class Level():
