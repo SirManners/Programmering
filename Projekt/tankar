@@ -1,56 +1,61 @@
 TO DO:
 
-Gör så att pos printas när man klickar?
-Gör så att bossen skapas först när man dödat alla fiender
-Effektivisera skapandet av nivåer?
+!!! Gör en utförlig planering och lämna in till läraren !!!
+!!! Förbered presentationen !!!
 
-annan skit:
+
+!!! Problem !!!
+Score från fiender läggs till flera gånger om ifall du skjuter snabbt nog
+^ samma som ovan, du tar för mycket skada ifall du krockar tillräckligt snabbt
+
+
+### Förbättringar på Programmet: ###
+
+
+### A: ###
+Gör så att bossen skapas först när man dödat alla fiender
+
+Ställerna där det är repeterad kod går att effektivisera.
+    - Olika klasser för varje nivå? Som alla är barn till en game-klass men har olika inits? Effektivisera skapandet av nivåer?
+    - Gör en generell formel i form av klass/funktion som kan fixa mobs och nivåer?
+
+Kommentera klart programmet
+
+
+
+### B: ###
+Powerups som gör att man skjuter mer saker / får missiler
+
+Fixa boss 2 så att den också skjuter och resetas normalt
+
+Astereoider?
+
+HP bar
+
+Import colours?
+
+
+
+### C: ###
+Gör så att pos printas när man klickar?
+
+Gör om allting till trianglar? Snyggare så imo
+
+Kanske astereoider? Kanske fixa bakrund?
+
+
+
+
+
+
+#############################################################################################
+
+för att fixa så att allting i en lista gör något:
 
 for enemies in range 20:
     enemies.rect.x osv...
 
-
-
-Allting ligger i all_sprites_list, och score räknas direkt när fiender dör. <-  Går inte tror jag
-
-Två olika objekt i en spritegrupp och ifall de använder rätt update
-Göra en spritegroup i en spritegroup?
-Inte skapa allting i init, all_sprites innehåller bara det som används nu, och finns bara en lista
-
-HP bar
-
-En lista där det ligger en lista med alla saker, sen andra elementet i första listan är
-vad den ska följa efter och tredje är hur snabbt.
-Göra en till klass som är barn till grupp och ändra den så att jag kan ha choose target o sånt?
-
-Problem:
-Score från fiender läggs till flera gånger om ifall du skjuter snabbt nog
-
-
-
-A:
-Gör en utförlig planering och lämna in till läraren
-Fixa stjärnornas latemanslösning
-Integrera Meny i game p� n�got snyggt s�tt, som lvl -1
-Lägg till projektillistor för bossens skott, gör att de skadar spelaren o skjuts automatiskt
-Olika klasser för varje nivå? Som alla är barn till en game-klass men har olika inits? Kanske?
-
-B:
-Powerups som gör att man skjuter mer saker / får missiler
-Fixa boss 2 så att den också skjuter och resetas normalt
-Astereoider?
-Spara in highscore i gameklassen efter att det har blivit game over
-Skott ska skjutas ifrån mitten av figuren istället för kanten?
-
-C:
-Menyikonen ska vara spelarskeppet
-Gör om allting till trianglar? Snyggare så imo
-Ställerna där det är repeterad kod går att effektivisera.
-    Gör en generell formel i form av klass/funktion som kan fixa mobs?
-Ha planeter i bakrunden?
-Kanske astereoider? Kanske fixa bakrund?
-
-
+#############################################################################################
 
 Groupcollide:
 
@@ -93,5 +98,28 @@ for x in range(2):
     self.player_projectile.rect.y = self.player.rect.y
     self.all_sprites_list.add(self.player_projectile)
     self.projectile_list.add(self.player_projectile)
+
+#############################################################################################
+
+random skit annanstansifrån:
+
+"""    for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        done_game = True
+                        # resume = True
+                        # gör så att man får upp en resumeknapp
+                if event.type == pygame.QUIT:
+                    print("User has asked to quit.")
+                    done_game = True
+
+            screen.fill(NIGHTBLUE)
+            pygame.draw.rect(screen, WHITE, [100, 100, 50, 200])
+
+            pygame.display.flip()
+
+            clock.tick(60)
+
+        pygame.quit()"""
 
 #############################################################################################

@@ -62,10 +62,9 @@ class Game(object):
         self.player_list.add(self.player)
         self.all_sprites_list.add(self.player)
 
-
         ### Enemies setup
 
-#########################################################################################################
+        #########################################################################################################
 
     @property # Vad gör detta?
     def process_events(self): #(self, passed_time)
