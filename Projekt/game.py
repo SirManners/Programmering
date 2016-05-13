@@ -369,6 +369,7 @@ class Game(object):
             screen.fill(NIGHTBLUE)
             graphics.stars(screen)
             self.intro.draw(screen) # Piffa upp introt
+            # Add the name of the game
 
         if self.level == 0: # Meny
             screen.fill(NIGHTBLUE)

@@ -37,11 +37,11 @@ SCREEN_HEIGHT, \
 SCREEN_WIDTH = \
     colour()
 
-snow_list = [] #change name to stars?
+star_list = [] #change name to stars?
 for i in range(50):
-    snow_x = random.randrange(0, 1366)
-    snow_y = random.randrange(-768, 0)
-    snow_list.append([snow_x, snow_y])
+    star_x = random.randrange(0, 1366)
+    star_y = random.randrange(-768, 0)
+    star_list.append([star_x, star_y])
 
 
 def text(screen, size, colour, message, x_offset, y_offset):
@@ -53,15 +53,15 @@ def text(screen, size, colour, message, x_offset, y_offset):
 
 
 def stars(screen):
-    for i in range(len(snow_list)):
-            pygame.draw.circle(screen, WHITE, snow_list[i], 2)
-            snow_list[i][1] += 5
+    for i in range(len(star_list)):
+            pygame.draw.circle(screen, WHITE, star_list[i], 2)
+            star_list[i][1] += 5
             # fixa så att stjärnorna åker snabbare när man åker uppåt, och långsammare när man åker nedåt
-            if snow_list[i][1] > 768:
+            if star_list[i][1] > 768:
                 y = random.randrange(-50, -10)
-                snow_list[i][1] = y
+                star_list[i][1] = y
                 x = random.randrange(0, 1366)
-                snow_list[i][0] = x
+                star_list[i][0] = x
 
 
 class Rectangle():
@@ -102,47 +102,3 @@ class Stars(): # Fungerar ej...
                 self.star_list[i][1] = y
                 x = random.randrange(0, 1366)
                 self.star_list[i][0] = x
-
-
-"""
-class Grafik:
-    def __init_(self):
-        self.färg = WHITE
-        self.
-
-    def draw(self, screen):
-
-
-
-class Stjärnor(Grafik):
-    def __init__(self):
-        super().__init__()
-
-"""
-
-"""class Text(): # TRASIG, istället bara göra en Text funktion?
-    def __init__(self):
-        self.size = 150
-        self.font = pygame.font.SysFont("system bold", self.font)
-        self.title = ""
-        self.bold = True
-        self.colour = WHITE
-
-        # self.x = (SCREEN_WIDTH // 2) - (self.text.get_width() // 2)
-        # self.y = (SCREEN_HEIGHT // 2) - (self.text.get_height() // 2)
-        self.x = 0
-        self.y = 0
-
-    def render(self):
-        self.text = self.font.render(self.title, self.bold, self.colour)
-
-    def skriv(self, screen):
-
-        screen.blit(self.text, [self.x, self.y])
-
-        #self.gameover_message = graphics.Text
-        #self.gameover_message.title = "Game Over"
-        #self.gameover_message.render()
-        #self.gameover_message.x = (SCREEN_WIDTH // 2) - (self.gameover_message.text.get_width() // 2)
-        #wwself.gameover_message.y = (SCREEN_HEIGHT // 2) - (self.gameover_message.text.get_height() // 2)
-"""

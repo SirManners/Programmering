@@ -19,8 +19,6 @@ SCREEN_HEIGHT, \
 SCREEN_WIDTH = \
     graphics.colour()
 
-# göra en till klass som är barn till grupp och ändra den så att jag kan ha choose target o sånt?
-
 class Mall(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -221,7 +219,3 @@ class Bossprojectile(Enemyprojectile): # Sen ska denna ärva Missile - klassen.
             self.track = False
         self.rect.x -= self.x_track
         self.rect.y -= self.y_track
-
-
-
-# Asteroider
