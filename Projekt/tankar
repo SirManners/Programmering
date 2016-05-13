@@ -1,6 +1,8 @@
 TO DO:
 
 Gör så att pos printas när man klickar?
+Gör så att bossen skapas först när man dödat alla fiender
+Effektivisera skapandet av nivåer?
 
 annan skit:
 
@@ -77,5 +79,19 @@ Groupcollide:
             #    if self.player_projectile.rect.y <= 0 or self.player_projectile.rect.y > SCREEN_HEIGHT:
             #        self.projectile_list.remove(self.player_projectile)
             #        self.all_sprites_list.remove(self.player_projectile)
+
+#############################################################################################
+
+Alternativ skjutsak:
+
+for x in range(2):
+    self.player_projectile = sprites.Projectile()
+    self.player_projectile.rect.x = self.player.rect.x + self.player.image.get_width() // 2\
+                                    - self.player_projectile.image.get_width() // 2 + -1^(x)\
+                                    * self.player.image.get_width() // (x+1)
+    #x * self.player.image.get_width() + -1^(x+1)*self.player_projectile.image.get_width()
+    self.player_projectile.rect.y = self.player.rect.y
+    self.all_sprites_list.add(self.player_projectile)
+    self.projectile_list.add(self.player_projectile)
 
 #############################################################################################

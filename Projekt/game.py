@@ -20,16 +20,14 @@ SCREEN_HEIGHT, \
 SCREEN_WIDTH = \
     graphics.colour()
 
-# Latemanslösning, se grafik
-
 class Game(object):
 
     def __init__(self):
 
-        # Attributes
+        ### Attributes
         self.player_hp = 2
         self.difficulty = 4
-        self.level = -1 # Lägg till lvl -1 som är introskärm, lvl 0 som är meny??
+        self.level = -1
         self.score = 0
         self.highscore = 0
         self.time_death = 0
@@ -40,42 +38,41 @@ class Game(object):
         self.highscore_message = False
         self.game_over = False
 
-        ## Grafik
+        ### Graphics
         self.intro = graphics.Rectangle() # lägg in cool bild här
+        # More fancy intro
         #self.stars = graphics.Stars()
-
         # Astereoider
-        # HP markörer
+        # HP bar for boss <---------------------------------------------------------!!!!!!!!!!!!!!!!!!!!!!!
 
-        # när du fixat snön på riktigt.
 
-        # Create sprites lists, subklasser
+        ### Create sprites lists, subklasser
         self.boss_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
         self.all_sprites_list = pygame.sprite.Group()
         self.projectile_list = pygame.sprite.Group()
         self.enemy_projectile_list = pygame.sprite.Group()
         self.player_list = pygame.sprite.Group()
-        # Could remove 1/2 by simply spawning the enemies at the correct levels
         # två olika objekt i en spritegrupp och ifall de använder rätt update
         # göra en spritegroup i en spritegroup?
         # inte skapa allting i init, all_sprites innehåller bara det som används nu, och finns bara en lista
 
-        # Player
+        ### Player
         self.player = sprites.Player()
         self.player_list.add(self.player)
         self.all_sprites_list.add(self.player)
 
 
-        # Enemies setup
+        ### Enemies setup
+
+#########################################################################################################
 
     @property # Vad gör detta?
     def process_events(self): #(self, passed_time)
 
-        self.session_time = pygame.time.get_ticks() #- passed_time
+        self.session_time = pygame.time.get_ticks()
 
         for event in pygame.event.get():
-
             if event.type == pygame.QUIT:
                 return True
 
@@ -83,6 +80,7 @@ class Game(object):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         return True
+
                     if event.key == pygame.K_UP:
                         if self.player.rect.y > 300:
                             self.player.rect.y -= 100
@@ -94,59 +92,55 @@ class Game(object):
                     if event.key == pygame.K_RETURN:
                         if self.player.rect.y == 300:
                             self.level += 1
+
                         if self.player.rect.y == 600:
                             return True
+
             elif self.level != -1:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         return True
+
                     if event.key == pygame.K_SPACE:
                         if self.game_over:
                             # passed_time = self.current_time # måste spara det utanför game för att det ska fungera
                             self.__init__()
-                    # För att testa lättare
+
                     if event.key == pygame.K_q:
                         self.game_over = True
+
                     if event.key == pygame.K_1:
                         self.level += 1
+
                     if event.key == pygame.K_2:
                         self.level -= 1
 
                     if not self.game_over:
-
                         self.player.movement(event, True)
 
+                        ### Player shooting
                         if event.key == pygame.K_z:
-                            #if len(self.projectile_list) < 10:
-                            """
-                            for x in range(2):
-                                self.player_projectile = sprites.Projectile()
-                                self.player_projectile.rect.x = self.player.rect.x + self.player.image.get_width() // 2\
-                                                                - self.player_projectile.image.get_width() // 2 + -1^(x)\
-                                                                * self.player.image.get_width() // (x+1)
-                                #x * self.player.image.get_width() + -1^(x+1)*self.player_projectile.image.get_width()
-                                self.player_projectile.rect.y = self.player.rect.y
-                                self.all_sprites_list.add(self.player_projectile)
-                                self.projectile_list.add(self.player_projectile)
-                            """
+                            #if len(self.projectile_list) < 10: Limit the amount of shots?
                             for i in range(self.player.shots): # Fixa flera skott
                                 self.player_projectile = sprites.Projectile()
                                 self.player.shoot(1, self.player_projectile, self.all_sprites_list, self.projectile_list, 0, 0)
 
+                        # testis
                         if event.key == pygame.K_x:
-
                             self.enemy_projectile = sprites.Enemyprojectile()
                             self.mobs1.shoot(1, self.enemy_projectile, self.all_sprites_list, self.projectile_list, 0, 0)
 
+                        # testis
                         if event.key == pygame.K_y:
-
                             self.boss_projectile = sprites.Bossprojectile()
                             self.boss1.shoot(1, self.boss_projectile, self.all_sprites_list, self.projectile_list, self.player.rect.x, self.player.rect.y)
-                            # bomb
+
+                        ############### BOMB ###############
 
                 if event.type == pygame.KEYUP:
-
                     self.player.movement(event, False)
+
+#########################################################################################################
 
     def run_logic(self):
 
@@ -167,6 +161,8 @@ class Game(object):
                 enemy_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, True)
 
             boss_hit_list = pygame.sprite.spritecollide(self.player, self.boss_list, False)
+
+            ############### Player projectile hit registration ###############
 
             for self.player_projectile in self.projectile_list:
                 self.projectile_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.enemy_list, True)
@@ -194,7 +190,8 @@ class Game(object):
                     self.projectile_list.remove(self.player_projectile)
                     self.all_sprites_list.remove(self.player_projectile)
 
-            ### samma for loop fast för bossskott.
+            ############### Boss projectile hit registration ###############
+
             for self.boss_projectile in self.enemy_projectile_list:
                 self.boss_projectile_hit_list = pygame.sprite.spritecollide(self.boss_projectile, self.player_list, False)
 
@@ -217,31 +214,33 @@ class Game(object):
             if self.score > self.highscore:
                 self.highscore = self.score
 
-        # Level 0
-        # if self.level == 0:
+        ############### Level -1, Intro ###############
         if self.level == -1:
             self.intro.update()
             if self.intro.y > 1500:
                 self.level += 1
-        # Level 1
-        if self.level == 1:
-            # create sprites of level one, add them to all_sprites.
-            # create function that creates levels of sprites
 
+        ############### Level 1 ###############
+        if self.level == 1:
+            # create function that creates levels of sprites
             if self.enemy_spawn == 1:
 
+                ### Create enemy sprites
                 for  i in range(self.difficulty + 1): # 20 st
                     self.mobs1 = sprites.Enemies()
+
                     if i < self.difficulty / 2:
                         self.mobs1.rect.x = SCREEN_WIDTH
                         self.mobs1.move_x = -4
                         self.mobs1.move_y = 4
                         self.mobs1.rect.y = 0 + (-30 * i)
+
                     if i >= self.difficulty / 2:
                         self.mobs1.rect.x = 0
                         self.mobs1.move_x = 4
                         self.mobs1.move_y = 4
                         self.mobs1.rect.y = 300 + (-30 * i)
+
                     self.mobs1.original_posx = self.mobs1.rect.x
                     self.mobs1.original_posy = self.mobs1.rect.y
                     # self.mobs1.choose_target(self.player.rect.x, self.player.rect.y)
@@ -249,36 +248,36 @@ class Game(object):
                     self.all_sprites_list.add(self.mobs1)
                     i += 1
 
-                # testis
-                #self.mobs1 = sprites.Enemies() # ta bort när du lägger till 20 st vanliga
+                ### Testis, rörelsen fungerar inte med flera sprites.
+                # Köra igenom sprite_listen med spritsen i för att få flera att göra det.
                 self.mobs1.rect.x = SCREEN_WIDTH / 2
                 self.mobs1.rect.y = -50
                 self.enemy_list.add(self.mobs1)
                 self.all_sprites_list.add(self.mobs1)
 
+                ### Create boss sprites
                 self.boss1 = sprites.Boss()
                 self.boss1.rect.x = SCREEN_WIDTH / 2 - self.boss1.image.get_width()
                 self.boss1.rect.y = -500
                 self.boss1.active = 0
-                #boss1.rect.y = 200 + 100*math.sin(math.radians(boss.rect.x))
                 self.boss_list.add(self.boss1)
                 self.all_sprites_list.add(self.boss1)
 
                 self.enemy_spawn += 1
 
-            # Fungerar inte med flera sprites. Köra igenom sprite_listen med spritsen i för att få flera att göra det.
-            #self.mobs1.choose_target(self.player.rect.x, self.player.rect.y) # effektivisera
-
+            ### Spawns boss when all enemies are dead
             if len(self.enemy_list) == 0:
                 if self.boss1.active == 0:
-                    print("Boss has spawned")
                     if self.boss1.active == 0:
                         self.boss1.active += 1
                 self.boss_list.update()
+
+                ### Proceeds to next level when boss dies
                 if self.boss1.hp < 1:
                     self.level += 1
                     self.boss_list.remove(self.boss1)
 
+                ### Makes the boss shoot while it's alive
                 else:
                     if self.boss1.projectile_number < 50 and not self.cap: # use sinus instead?
                         self.boss1.projectile_number += 1
@@ -299,11 +298,12 @@ class Game(object):
                             self.boss1.projectile_number -= 1
                         else:
                             self.cap = False
+
             else:
-                # self.enemy_list1.choose_target(self.player.rect.x, self.player.rect.y)
+                # self.enemy_list1.choose_target(self.player.rect.x, self.player.rect.y) <- lägg till ifall de ska söka
                 self.enemy_list.update()
 
-        # Level 2
+        ############### Level 2 ###############
         if self.level == 2:
             if self.enemy_spawn == 2:
                 for x in range(21):
@@ -332,6 +332,7 @@ class Game(object):
                     self.enemy_list.add(mobs2)
                     self.all_sprites_list.add(mobs2)
 
+                # Skapa den inte först när alla fiender dött
                 self.boss2 = sprites.Boss()
                 self.boss2.image = pygame.Surface([500,500])
                 self.boss2.rect = self.boss2.image.get_rect()
@@ -353,13 +354,15 @@ class Game(object):
                     print("Boss has spawned")
                     self.boss2.active += 1
                 self.boss_list.update()
+
                 if self.boss2.hp < 1:
                     self.level += 1
                     self.boss_list.remove(self.boss2)
+
             else:
                 self.enemy_list.update()
 
-        # Level 3
+#########################################################################################################
 
     def display_frame(self, screen):
 
@@ -380,23 +383,21 @@ class Game(object):
         if self.level == 1:
             screen.fill(NIGHTBLUE)
             graphics.stars(screen)
-
             #self.stars.draw_star(screen) # <- Av någon anledning funkar ej.
             # AttributeError: 'Stjärnor' object has no attribute 'snow_list'
 
             self.enemy_list.draw(screen)
             if len(self.enemy_list) == 0:
                 self.boss_list.draw(screen)
-            # Grafik.draw_snow(screen)
-#
+
         if self.level == 2:
             screen.fill(RED)
             graphics.stars(screen)
-            # self.enemy_list1.draw(screen)
+
             self.enemy_list.draw(screen)
             if len(self.enemy_list) == 0:
                 self.boss_list.draw(screen)
-#
+
         if self.level == 3:
             screen.fill(GREEN)
 
@@ -415,9 +416,10 @@ class Game(object):
             self.projectile_list.draw(screen)
 
         if self.game_over:
-
             graphics.text(screen, 150, WHITE, "Game Over", 0, 0)
             if self.highscore_message:
                 graphics.text(screen, 150, STARBLUE, "NEW HIGH SCORE", 0, 200)
 
         pygame.display.flip()
+
+#########################################################################################################
