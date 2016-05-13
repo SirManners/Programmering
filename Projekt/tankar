@@ -5,43 +5,43 @@ TO DO:
 
 
 !!! Problem !!!
-Score från fiender läggs till flera gånger om ifall du skjuter snabbt nog
-^ samma som ovan, du tar för mycket skada ifall du krockar tillräckligt snabbt
+    Score från fiender läggs till flera gånger om ifall du skjuter snabbt nog
+    ^ samma som ovan, du tar för mycket skada ifall du krockar tillräckligt snabbt
 
 
 ### Förbättringar på Programmet: ###
 
 
-### A: ###
-Gör så att bossen skapas först när man dödat alla fiender
+    ### A: ###
+        Gör så att bossen skapas först när man dödat alla fiender
+        Kommentera klart programmet
 
-Ställerna där det är repeterad kod går att effektivisera.
-    - Olika klasser för varje nivå? Som alla är barn till en game-klass men har olika inits? Effektivisera skapandet av nivåer?
-    - Gör en generell formel i form av klass/funktion som kan fixa mobs och nivåer?
-
-Kommentera klart programmet
-
-
-
-### B: ###
-Powerups som gör att man skjuter mer saker / får missiler
-
-Fixa boss 2 så att den också skjuter och resetas normalt
-
-Astereoider?
-
-HP bar
-
-Import colours?
+        Ställerna där det är repeterad kod går att effektivisera.
+            - Olika klasser för varje nivå? Som alla är barn till en game-klass men har olika inits?
+            - Effektivisera skapandet av nivåer?
+            - Gör en generell formel i form av klass/funktion som kan fixa mobs och nivåer?
 
 
 
-### C: ###
-Gör så att pos printas när man klickar?
+    ### B: ###
+        Powerups som gör att man skjuter mer saker / får missiler
 
-Gör om allting till trianglar? Snyggare så imo
+        Fixa boss 2 så att den också skjuter och resetas normalt
 
-Kanske astereoider? Kanske fixa bakrund?
+        Astereoider?
+
+        HP bar
+
+        Import colours?
+
+
+
+    ### C: ###
+        Gör så att pos printas när man klickar?
+
+        Gör om allting till trianglar? Snyggare så imo
+
+        Kanske astereoider? Kanske fixa bakrund?
 
 
 
