@@ -34,7 +34,6 @@ class Mall(pygame.sprite.Sprite):
         self.original_posx = 0
         self.original_posy = 0
         self.shots = 1
-        self.offset = 0
 
     def reset_pos(self):
         self.rect.x = self.original_posx
@@ -47,7 +46,7 @@ class Mall(pygame.sprite.Sprite):
             self.reset_pos()
 
     def shoot(self, amount, name, list1, list2, target_x, target_y):
-        for x in range(amount): # funkar ej då bara en instans skapas i Game klassen
+        for x in range(amount): # range funkar ej då bara en instans skapas i Game klassen
             self.image.get_rect()
             name.rect.x = self.rect.x + self.image.get_width()// 2\
                         - name.image.get_width() // 2 + -1^(x)\
@@ -145,7 +144,6 @@ class Enemies(Mall):
                 self.target_x,
                 self.target_y,
                 self.move_y,
-                self.offset
             )
             self.rect.x -= self.x_track_move
             self.rect.y -= self.y_track_move
@@ -195,7 +193,7 @@ class Bossprojectile(Enemyprojectile): # Sen ska denna ärva Missile - klassen.
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface([20, 20])
-        self.image.fill(RED)
+        self.image.fill(ROSA)
         self.move_y = 15
         self.damage = 1
         self.target_x = -1
@@ -214,7 +212,6 @@ class Bossprojectile(Enemyprojectile): # Sen ska denna ärva Missile - klassen.
             self.target_x,
             self.target_y,
             self.move_y,
-            self.offset
         )
             self.track = False
         self.rect.x -= self.x_track

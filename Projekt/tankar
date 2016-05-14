@@ -16,8 +16,9 @@ TO DO:
         Gör så att bossen skapas först när man dödat alla fiender
         Kommentera klart programmet
         Lägg till fiender som åker snabbt rakt och som spawnar x-slumpmässigt
+        Svårighetsgrad i options
         Göra att bossen bara skjuter fiendesprites? Inte projektiler? Listor då
-        Current_level, current_boss osv
+        Skjut mot mouse.pos? Fiender kommer från alla håll?
 
         Ställerna där det är repeterad kod går att effektivisera.
             - Olika klasser för varje nivå? Som alla är barn till en game-klass men har olika inits?
