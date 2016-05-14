@@ -14,6 +14,7 @@ TO DO:
 
     ### A: ###
         Gör så att bossen skapas först när man dödat alla fiender
+        Ta bort bossprojektiler utanför skärmen
         Kommentera klart programmet
         Lägg till fiender som åker snabbt rakt och som spawnar x-slumpmässigt
         Svårighetsgrad i options

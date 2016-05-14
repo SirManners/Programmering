@@ -157,6 +157,8 @@ class Game(object):
 
     def run_logic(self):
 
+        print(len(self.all_sprites_list))
+
         if self.player_hp <= 0 :
             self.game_over = True
 
@@ -205,6 +207,9 @@ class Game(object):
             if self.score > self.highscore:
                 self.highscore = self.score
 
+            ############### Boss bullet removal ###############
+            # if boss.projectile.rect.y > SCREEN HEIGHT:
+                # self.all_sprites_list.remove ....
 
             ############### Player projectile hit registration ###############
             for self.player_projectile in self.projectile_list:
@@ -328,6 +333,7 @@ class Game(object):
                 if self.current_boss.hp < 1:
                     self.level += 1
                     self.boss_list.remove(self.current_boss)
+                    self.all_sprites_list.remove(self.current_boss)
 
                 ### Makes the boss shoot while it's alive
                 else:
