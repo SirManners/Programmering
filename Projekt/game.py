@@ -27,7 +27,7 @@ class Game(object):
         ### Attributes
         self.player_hp = 2
         self.difficulty = 4
-        self.level = -1
+        self.level = 0
         self.score = 0
         self.highscore = 0
         self.time_death = 0
@@ -37,6 +37,10 @@ class Game(object):
         self.cap = False
         self.highscore_message = False
         self.game_over = False
+
+        ### Menu
+        self.menu_highscore =  False
+        self.menu_help = False
 
         ### Graphics
         self.intro = graphics.Rectangle() # lägg in cool bild här
@@ -92,6 +96,14 @@ class Game(object):
                         if self.player.rect.y == 300:
                             self.level += 1
 
+                        if self.menu_help or self.menu_highscore:
+                            self.menu_help = False
+                            self.menu_highscore = False
+
+                        if self.player.rect.y == 400:
+                            self.menu_highscore == True
+                            print(self.menu_highscore)
+
                         if self.player.rect.y == 600:
                             return True
 
@@ -104,6 +116,7 @@ class Game(object):
                         if self.game_over:
                             # passed_time = self.current_time # måste spara det utanför game för att det ska fungera
                             self.__init__()
+                            self.level = 0
 
                     if event.key == pygame.K_q:
                         self.game_over = True
@@ -164,14 +177,16 @@ class Game(object):
             ############### Player projectile hit registration ###############
 
             for self.player_projectile in self.projectile_list:
-                self.projectile_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.enemy_list, True)
-                self.projectile_boss_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.boss_list, False)
+                self.projectile_hit_list = pygame.sprite.groupcollide(self.projectile_list, self.enemy_list, True, True)
+                self.projectile_boss_hit_list = pygame.sprite.groupcollide(self.projectile_list, self.boss_list, True, False)
+                #self.projectile_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.enemy_list, True)
+                #self.projectile_boss_hit_list = pygame.sprite.spritecollide(self.player_projectile, self.boss_list, False)
+
+                print(len(self.projectile_list))
 
                 for enemy in self.projectile_hit_list:
-                    self.projectile_list.remove(self.player_projectile)
-                    self.all_sprites_list.remove(self.player_projectile)
                     self.score += 1
-                    print(self.score)
+
 
                 for boss in self.projectile_boss_hit_list:
                     self.projectile_list.remove(self.player_projectile)
@@ -281,7 +296,6 @@ class Game(object):
                     if self.boss1.projectile_number < 50 and not self.cap: # use sinus instead?
                         self.boss1.projectile_number += 1
                         self.boss_projectile = sprites.Bossprojectile()
-                        self.enemy_projectile_list.add(self.boss_projectile)
                         self.boss1.shoot(
                             1,
                             self.boss_projectile,
@@ -301,6 +315,7 @@ class Game(object):
             else:
                 # self.enemy_list1.choose_target(self.player.rect.x, self.player.rect.y) <- lägg till ifall de ska söka
                 self.enemy_list.update()
+                self.enemy_projectile_list.update()
 
         ############### Level 2 ###############
         if self.level == 2:
@@ -375,10 +390,13 @@ class Game(object):
             screen.fill(NIGHTBLUE)
             graphics.stars(screen)
 
-            graphics.text(screen, 70, WHITE, str("PLAY"), 200, -27)
-            graphics.text(screen, 70, WHITE, str("HIGHSCORE"), 200, 73)
-            graphics.text(screen, 70, WHITE, str("HELP"), 200, 173)
-            graphics.text(screen, 70, WHITE, str("QUIT"), 200, 273)
+            if not self.menu_highscore and not self.menu_help:
+                graphics.text(screen, 70, WHITE, str("PLAY"), 200, -27)
+                graphics.text(screen, 70, WHITE, str("HIGHSCORE"), 200, 73)
+                graphics.text(screen, 70, WHITE, str("HELP"), 200, 173)
+                graphics.text(screen, 70, WHITE, str("QUIT"), 200, 273)
+            else:
+                graphics.text(screen, 70, WHITE, str("BACK"), 200, self.player.rect.y)
 
         if self.level == 1:
             screen.fill(NIGHTBLUE)
