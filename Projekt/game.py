@@ -189,10 +189,8 @@ class Game(object):
 
 
                 for boss in self.projectile_boss_hit_list:
-                    self.projectile_list.remove(self.player_projectile)
-                    self.all_sprites_list.remove(self.player_projectile)
 
-                    if self.level == 1:
+                    if self.level == 1: # current_boss osv
                         self.boss1.hp -= self.player_projectile.damage
                         print(self.boss1.hp)
 

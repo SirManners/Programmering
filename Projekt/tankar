@@ -17,6 +17,7 @@ TO DO:
         Kommentera klart programmet
         Lägg till fiender som åker snabbt rakt och som spawnar x-slumpmässigt
         Göra att bossen bara skjuter fiendesprites? Inte projektiler? Listor då
+        Current_level, current_boss osv
 
         Ställerna där det är repeterad kod går att effektivisera.
             - Olika klasser för varje nivå? Som alla är barn till en game-klass men har olika inits?
