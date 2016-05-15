@@ -119,7 +119,7 @@ class Enemies(Mall):
         self.rect = self.image.get_rect()
         self.grupp = 0
         self.rect.x = random.randrange(SCREEN_WIDTH)
-        self.rect.y = random.randrange(-500, 0)
+        self.rect.y = random.randrange(-900, 0)
         self.hit = False
         self.target_x = -1
         self.target_y = -1

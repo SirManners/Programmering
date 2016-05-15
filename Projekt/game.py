@@ -97,11 +97,17 @@ class Game(object):
 
                     if event.key == pygame.K_RETURN:
 
-                        if self.player.rect.y == 300:
+                        if self.game_mode_picker:
+                            if self.player.rect.y == 300:
+                                self.infinite = False
+                            if self.player.rect.y == 400:
+                                self.infinite = True
+                            self.level += 1
+                            self.game_mode_picker = False
 
+                        if self.player.rect.y == 300:
                             self.game_mode_picker = True
 
-                            self.level += 1
 
                         if self.menu_help or self.menu_highscore:
                             self.menu_help = False
@@ -442,14 +448,14 @@ class Game(object):
         if self.level == 0: # Meny
 
             if self.menu_highscore:
-                graphics.text(screen, 70, WHITE, str("BACK"), 200, self.player.rect.y)
+                graphics.text(screen, 70, WHITE, str("BACK"), 200, 73)
 
             elif self.menu_help:
-                graphics.text(screen, 70, WHITE, str("BACK"), 200, self.player.rect.y)
+                graphics.text(screen, 70, WHITE, str("BACK"), 200, 173)
 
             elif self.game_mode_picker:
-                graphics.text(screen, 70, WHITE, str("INFINITE"), 200, self.player.rect.y)
-                graphics.text(screen, 70, WHITE, str("CLASSIC"), 300, self.player.rect.y)
+                graphics.text(screen, 70, WHITE, str("INFINITE"), 200, 73)
+                graphics.text(screen, 70, WHITE, str("CLASSIC"), 200, -27)
 
             else:
                 graphics.text(screen, 70, WHITE, str("PLAY"), 200, -27)
