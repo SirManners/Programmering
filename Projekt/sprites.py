@@ -27,10 +27,10 @@ class Mall(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 0
         self.rect.y = 0
-        self.move_x = 4
+        self.move_x = 0
         self.move_y = 4
         self.level = 0
-        self.hp = 0
+        self.hp = 1
         self.original_posx = 0
         self.original_posy = 0
         self.shots = 1
@@ -48,9 +48,13 @@ class Mall(pygame.sprite.Sprite):
     def shoot(self, amount, name, list1, list2, target_x, target_y):
         for x in range(amount): # range funkar ej då bara en instans skapas i Game klassen
             self.image.get_rect()
-            name.rect.x = self.rect.x + self.image.get_width()// 2\
+            name.rect.x = self.rect.x + self.image.get_width() / 2 - name.image.get_width() / 2
+
+            """self.rect.x + self.image.get_width()// 2\
                         - name.image.get_width() // 2 + -1^(x)\
-                        * self.image.get_width() // (x+1)
+                        * self.image.get_width() // (x+1)"""
+
+            # So you you dont shoot yourself
             if name.move_y < 0:
                 name.rect.y = self.rect.y
             else:
@@ -114,9 +118,14 @@ class Enemies(Mall):
         self.image.fill(GREEN)
         self.rect = self.image.get_rect()
         self.grupp = 0
+        self.rect.x = random.randrange(SCREEN_WIDTH)
+        self.rect.y = random.randrange(-500, 0)
         self.hit = False
         self.target_x = -1
         self.target_y = -1
+        self.move_x = 0
+        self.move_y = 2
+        self.infinite = True
 
     def choose_target(self, target_x, target_y): # Egentligen onödig
         self.target_x = target_x
@@ -124,6 +133,9 @@ class Enemies(Mall):
 
     def update(self):
         if self.rect.y > SCREEN_HEIGHT + 20:
+            if self.infinite:
+                self.kill() # self.reset_pos()
+            else:
                 self.reset_pos()
 
         if self.target_x == -1 and self.target_y == -1:
@@ -151,29 +163,28 @@ class Enemies(Mall):
 class Boss(Enemies):
     def __init__(self):
         super().__init__()
-        self.hp = 100
+        self.hp = 10
         self.image = pygame.Surface([200, 200])
         self.rect = self.image.get_rect()
         self.image.fill(BLACK)
-        self.active = 0
         self.projectile_number = 0
+        self.rect.x = SCREEN_WIDTH / 2 - self.image.get_width()
+        self.rect.y = -500
 
     def update(self):
         self.rect.y += 1 + 2*math.sin(math.radians(self.rect.x))
         self.rect.x += 1 + 2*math.sin(math.radians(self.rect.y))
 
-    # HP bar?
-
 class Projectile(pygame.sprite.Sprite):
     def __init__(self):
         # Lägg till spelare här????
         super().__init__()
-        self.image = pygame.Surface([200, 7])
+        self.image = pygame.Surface([50, 10])
         self.rect = self.image.get_rect()
         self.image.fill(YELLOW)
         self.move_y = -15
         self.damage = 5
-        self.track = False
+        self.track = True
 
     def update(self):
         self.rect.y += self.move_y
@@ -181,9 +192,14 @@ class Projectile(pygame.sprite.Sprite):
 class Enemyprojectile(Projectile):
     def __init__(self):
         super().__init__()
-        self.image.fill(GREEN)
-        self.move_y = 15
+        self.image = pygame.Surface([10, 5])
+        self.rect = self.image.get_rect()
+        self.image.fill([31, 209, 191])
+        self.move_y = 5
 
+    def update(self):
+        self.rect.y += self.move_y
+        #self.image.fill([random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255)])
 
 #class Missile(Projectile):
     # Tänker mig att den ska använda trig mot sin position och vara helt målsökande. Hur ska den välja vem den
@@ -205,6 +221,8 @@ class Bossprojectile(Enemyprojectile): # Sen ska denna ärva Missile - klassen.
 
     def update(self):
         # if (self.rect.x - self.target_x) > 1 or (self.rect.y - self.target_y) > 1:
+        self.image.fill([random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255)])
+
         if self.track:
             self.x_track, self.y_track = trig.vector_movement(
             self.rect.x,

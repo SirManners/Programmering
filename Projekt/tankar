@@ -5,7 +5,7 @@ TO DO:
 
 !!! Problem !!!
     Boss skotten träffar mig även fast de inte kolliderar
-    Score från fiender läggs till flera gånger om ifall du skjuter snabbt nog
+    X Score från fiender läggs till flera gånger om ifall du skjuter snabbt nog
     ^ samma som ovan, du tar för mycket skada ifall du krockar tillräckligt snabbt
 
 
@@ -14,12 +14,12 @@ TO DO:
 
     ### A: ###
         Gör så att bossen skapas först när man dödat alla fiender
-        Ta bort bossprojektiler utanför skärmen
         Kommentera klart programmet
         Lägg till fiender som åker snabbt rakt och som spawnar x-slumpmässigt
         Svårighetsgrad i options
         Göra att bossen bara skjuter fiendesprites? Inte projektiler? Listor då
         Skjut mot mouse.pos? Fiender kommer från alla håll?
+        Fixa klockan
 
         Ställerna där det är repeterad kod går att effektivisera.
             - Olika klasser för varje nivå? Som alla är barn till en game-klass men har olika inits?
@@ -173,5 +173,27 @@ class Stjärnor(Grafik):
         #self.gameover_message.x = (SCREEN_WIDTH // 2) - (self.gameover_message.text.get_width() // 2)
         #wwself.gameover_message.y = (SCREEN_HEIGHT // 2) - (self.gameover_message.text.get_height() // 2)
 """
+
+#############################################################################################
+
+old boss shoot
+                    if self.current_boss.projectile_number < 50 and not self.cap: # use sinus instead?
+                        self.current_boss.projectile_number += 1
+                        self.boss_projectile = sprites.Bossprojectile()
+                        self.current_boss.shoot(
+                            1,
+                            self.boss_projectile,
+                            self.all_sprites_list,
+                            self.enemy_projectile_list,
+                            self.player.rect.x,
+                            self.player.rect.y
+                            )
+
+                    else:
+                        self.cap = True
+                        if self.current_boss.projectile_number > 1:
+                            self.current_boss.projectile_number -= 1
+                        else:
+                            self.cap = False
 
 #############################################################################################

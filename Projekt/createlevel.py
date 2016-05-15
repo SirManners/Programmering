@@ -25,7 +25,8 @@ class Level():
         self.level_background = NIGHTBLUE
 
     def set_level(self, screen):
-        screen.fill(self.level_background)
+        if self.level == 1:
+            screen.fill(self.level_background)
 
     def create_enemies(self, name):
         name = sprites.Enemies()

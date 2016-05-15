@@ -34,7 +34,8 @@ def main():
     resume = False
     session = game.Game()
     highscore = 0
-
+    #pygame.mouse.set_visible(False)
+    pygame.cursors.diamond
     ### Main pygame loop
     while not done_game:
 

@@ -64,7 +64,7 @@ def stars(screen):
                 star_list[i][0] = x
 
 
-class Rectangle():
+class Rectangle(object):
     def __init__(self):
         self.x = 0
         self.y = -500
