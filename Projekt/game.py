@@ -96,7 +96,7 @@ class Game(object):
                             self.player.rect.y += 100
 
                     if event.key == pygame.K_RETURN:
-
+                    # Fixa en menyfunktion som förenklar allt
                         if self.game_mode_picker:
                             if self.player.rect.y == 300:
                                 self.infinite = False
@@ -108,14 +108,17 @@ class Game(object):
                         if self.player.rect.y == 300:
                             self.game_mode_picker = True
 
-
-                        if self.menu_help or self.menu_highscore:
-                            self.menu_help = False
-                            self.menu_highscore = False
+                        if self.menu_highscore or self.menu_help:
+                            if self.player.rect.y == 400:
+                                self.menu_highscore = False
+                            if self.player.rect.y == 500:
+                                self.menu_help = False
 
                         if self.player.rect.y == 400:
-                            self.menu_highscore == True
-                            print(self.menu_highscore)
+                            self.menu_highscore = True
+
+                        if self.player.rect.y == 500:
+                            self.menu_help = True
 
                         if self.player.rect.y == 600:
                             return True
@@ -134,12 +137,6 @@ class Game(object):
                     if event.key == pygame.K_q:
                         self.game_over = True
 
-                    if event.key == pygame.K_1:
-                        self.level += 1
-
-                    if event.key == pygame.K_2:
-                        self.level -= 1
-
                     if not self.game_over:
                         self.player.movement(event, True)
 
@@ -156,16 +153,6 @@ class Game(object):
                                     self.mouse_x,
                                     self.mouse_y
                                     )
-
-                        # testis
-                        if event.key == pygame.K_x:
-                            self.enemy_projectile = sprites.Enemyprojectile()
-                            self.current_mobs.shoot(1, self.enemy_projectile, self.all_sprites_list, self.projectile_list, 0, 0)
-
-                        # testis
-                        if event.key == pygame.K_y:
-                            self.boss_projectile = sprites.Bossprojectile()
-                            self.current_boss.shoot(1, self.boss_projectile, self.all_sprites_list, self.projectile_list, self.player.rect.x, self.player.rect.y)
 
                         ############### BOMB ###############
 
@@ -221,10 +208,11 @@ class Game(object):
 
             if self.trigger_immortality:
                 self.time_death = pygame.time.get_ticks()
-                self.player.reset_pos()
+                #self.player.reset_pos()
                 self.player.image.fill(GREY)
                 self.trigger_immortality = False
                 self.immortality = True
+
 
             for collision in boss_hit_list:
                 self.game_over = True

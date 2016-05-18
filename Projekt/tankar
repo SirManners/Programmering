@@ -7,6 +7,7 @@ TO DO:
     Boss skotten träffar mig även fast de inte kolliderar
     X Score från fiender läggs till flera gånger om ifall du skjuter snabbt nog
     ^ samma som ovan, du tar för mycket skada ifall du krockar tillräckligt snabbt
+        Lösning: Skjuter när resten är 0 när tiden delas med två?
 
 
 ### Förbättringar på Programmet: ###
