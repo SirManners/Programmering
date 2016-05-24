@@ -14,12 +14,13 @@ TO DO:
 
 
     ### A: ###
+        Gör så att bossen skjuter snabbare när den har lågt HP
         Gör så att bossen skapas först när man dödat alla fiender
         Kommentera klart programmet
         Lägg till fiender som åker snabbt rakt och som spawnar x-slumpmässigt
         Svårighetsgrad i options
         Göra att bossen bara skjuter fiendesprites? Inte projektiler? Listor då
-        Skjut mot mouse.pos? Fiender kommer från alla håll?
+        Fiender kommer från alla håll?
         Fixa klockan
 
         Ställerna där det är repeterad kod går att effektivisera.

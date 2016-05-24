@@ -64,7 +64,10 @@ def stars(screen):
                 star_list[i][0] = x
 
 
-class Rectangle(object):
+def rect(screen, x, y, width, height, colour):
+    pygame.draw.rect(screen, colour, [x, y, width, height])
+
+class Rectangle():
     def __init__(self):
         self.x = 0
         self.y = -500

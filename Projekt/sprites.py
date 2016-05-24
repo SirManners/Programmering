@@ -164,16 +164,21 @@ class Boss(Enemies):
     def __init__(self):
         super().__init__()
         self.hp = 10
+        self.total_hp = 10
         self.image = pygame.Surface([200, 200])
         self.rect = self.image.get_rect()
         self.image.fill(BLACK)
         self.projectile_number = 0
         self.rect.x = SCREEN_WIDTH / 2 - self.image.get_width()
         self.rect.y = -500
+        self.frenzy = False
 
     def update(self):
         self.rect.y += 1 + 2*math.sin(math.radians(self.rect.x))
         self.rect.x += 1 + 2*math.sin(math.radians(self.rect.y))
+        if self.hp / self.total_hp <= 0.5:
+            self.frenzy = True
+            self.image.fill([94, 11, 11])
 
 class Projectile(pygame.sprite.Sprite):
     def __init__(self):
