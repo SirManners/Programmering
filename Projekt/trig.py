@@ -13,10 +13,3 @@ def vector_movement(current_pos_x, current_pos_y, goal_pos_x, goal_pos_y, moveme
 
 
     return move_x, move_y
-
-def count(start, finish):
-
-    if start < finish:
-            start += 1
-    else:
-        return True
