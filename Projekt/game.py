@@ -248,7 +248,7 @@ class Game(object):
                 self.enemy_spawn -= 1
 
 
-        ############## Classic ############## (more gritty code)
+        ############## Classic ############## very inefficient coding, prefer Infinte
         if not self.infinite:
 
         ############### Level 1 ###############
