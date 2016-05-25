@@ -94,6 +94,8 @@ class Game(object):
         if self.player.rect.y == 600:
             option_4 = True
 
+        print(self.highscore)
+        #print(self.menu_help)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return True
@@ -113,36 +115,21 @@ class Game(object):
 
                     if event.key == pygame.K_RETURN:
                     # Fixa en menyfunktion som förenklar allt
-                        #if self.difficulty_picker:
-#
-                        #    self.game_mode_picker = True
-                        #    self.difficulty_picker = False
+
                         if self.game_mode_picker:
                             if self.player.rect.y == 300:
                                 self.infinite = False
                             if self.player.rect.y == 400:
                                 self.infinite = True
                             self.level += 1
-                            self.game_mode_picker = False
+
 
                         if self.player.rect.y == 300:
                             self.game_mode_picker = True
                             #self.difficulty_picker = True
 
 
-                        if self.menu_highscore or self.menu_help:
-                            if self.player.rect.y == 400:
-                                self.menu_highscore = False
-                            if self.player.rect.y == 500:
-                                self.menu_help = False
-
-                        if self.player.rect.y == 400:
-                            self.menu_highscore = True
-
-                        if self.player.rect.y == 500:
-                            self.menu_help = True
-
-                        if self.player.rect.y == 600:
+                        if not self.game_mode_picker and self.player.rect.y == 400:
                             return True
 
             elif self.level != -1:
@@ -472,21 +459,13 @@ class Game(object):
 
         if self.level == 0: # Meny
 
-            if self.menu_highscore:
-                graphics.text(screen, 70, WHITE, str("BACK"), 200, 73)
-
-            elif self.menu_help:
-                graphics.text(screen, 70, WHITE, str("BACK"), 200, 173)
-
-            elif self.game_mode_picker:
-                graphics.text(screen, 70, WHITE, str("INFINITE"), 200, 73)
+            if self.game_mode_picker:
                 graphics.text(screen, 70, WHITE, str("CLASSIC"), 200, -27)
+                graphics.text(screen, 70, WHITE, str("INFINITE"), 200, 73)
 
             else:
                 graphics.text(screen, 70, WHITE, str("PLAY"), 200, -27)
-                graphics.text(screen, 70, WHITE, str("HIGHSCORE"), 200, 73)
-                graphics.text(screen, 70, WHITE, str("HELP"), 200, 173)
-                graphics.text(screen, 70, WHITE, str("QUIT"), 200, 273)
+                graphics.text(screen, 70, WHITE, str("QUIT"), 200, 73)
 
             #self.stars.draw_star(screen) # <- Av någon anledning funkar ej.
             # AttributeError: 'Stjärnor' object has no attribute 'snow_list'
