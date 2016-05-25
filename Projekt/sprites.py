@@ -50,10 +50,6 @@ class Mall(pygame.sprite.Sprite):
             self.image.get_rect()
             name.rect.x = self.rect.x + self.image.get_width() / 2 - name.image.get_width() / 2
 
-            """self.rect.x + self.image.get_width()// 2\
-                        - name.image.get_width() // 2 + -1^(x)\
-                        * self.image.get_width() // (x+1)"""
-
             # So you you dont shoot yourself
             if name.move_y < 0:
                 name.rect.y = self.rect.y
@@ -85,21 +81,15 @@ class Player(Mall):
         self.left = False
         self.right = False
 
-        # self.shoot = False
-
     def update(self):
-        # tills vidare
-        if self.up:
+        if self.up and self.rect.y > 0:
             self.rect.y -= self.move_y
-        if self.down:
+        if self.down and self.rect.y < SCREEN_HEIGHT - self.image.get_height():
             self.rect.y += self.move_y
-        if self.left:
+        if self.left and self.rect.x > 0:
             self.rect.x -= self.move_x
-        if self.right:
+        if self.right and self.rect.x < SCREEN_WIDTH - self.image.get_width():
             self.rect.x += self.move_x
-       # if self.shoot:
-
-    #def shoot(self, projectile_list):
 
     def movement(self, event, boolean):
         if event.key == pygame.K_w or event.key == pygame.K_UP:
@@ -120,21 +110,20 @@ class Enemies(Mall):
         self.grupp = 0
         self.rect.x = random.randrange(SCREEN_WIDTH)
         self.rect.y = random.randrange(-900, 0)
-        self.hit = False
         self.target_x = -1
         self.target_y = -1
         self.move_x = 0
         self.move_y = 2
         self.infinite = True
 
-    def choose_target(self, target_x, target_y): # Egentligen onödig
+    def choose_target(self, target_x, target_y):
         self.target_x = target_x
         self.target_y = target_y
 
     def update(self):
         if self.rect.y > SCREEN_HEIGHT + 20:
             if self.infinite:
-                self.kill() # self.reset_pos()
+                self.kill()
             else:
                 self.reset_pos()
 
@@ -176,56 +165,38 @@ class Boss(Enemies):
     def update(self):
         self.rect.y += 1 + 2*math.sin(math.radians(self.rect.x))
         self.rect.x += 1 + 2*math.sin(math.radians(self.rect.y))
-        if self.hp / self.total_hp <= 0.5:
+        if self.hp / self.total_hp <= 0.25:
             self.frenzy = True
             self.image.fill([94, 11, 11])
 
 class Projectile(pygame.sprite.Sprite):
     def __init__(self):
-        # Lägg till spelare här????
         super().__init__()
         self.image = pygame.Surface([50, 10])
         self.rect = self.image.get_rect()
         self.image.fill(YELLOW)
         self.move_y = -15
-        self.damage = 5
+        self.damage = 1
         self.track = True
 
     def update(self):
         self.rect.y += self.move_y
 
-class Enemyprojectile(Projectile):
-    def __init__(self):
-        super().__init__()
-        self.image = pygame.Surface([10, 5])
-        self.rect = self.image.get_rect()
-        self.image.fill([31, 209, 191])
-        self.move_y = 5
-
-    def update(self):
-        self.rect.y += self.move_y
-        #self.image.fill([random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255)])
-
-#class Missile(Projectile):
-    # Tänker mig att den ska använda trig mot sin position och vara helt målsökande. Hur ska den välja vem den
-    # siktar emot?
-
-class Bossprojectile(Enemyprojectile): # Sen ska denna ärva Missile - klassen.
+class Bossprojectile(Projectile):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface([20, 20])
         self.image.fill(ROSA)
-        self.move_y = 15
+        self.move_y = 10
         self.damage = 1
         self.target_x = -1
         self.target_y = -1
         self.track = True
-        self.x_track = 0 # otydligt namn
-        self.y_track = 15 # otydligt namn
+        self.x_track = 0
+        self.y_track = 15
         self.offset = 0
 
     def update(self):
-        # if (self.rect.x - self.target_x) > 1 or (self.rect.y - self.target_y) > 1:
         self.image.fill([random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255)])
 
         if self.track:

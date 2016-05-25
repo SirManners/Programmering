@@ -37,12 +37,11 @@ SCREEN_HEIGHT, \
 SCREEN_WIDTH = \
     colour()
 
-star_list = [] #change name to stars?
+star_list = []
 for i in range(50):
     star_x = random.randrange(0, 1366)
     star_y = random.randrange(-768, 0)
     star_list.append([star_x, star_y])
-
 
 def text(screen, size, colour, message, x_offset, y_offset):
     font = pygame.font.SysFont("system bold", size)
@@ -50,7 +49,6 @@ def text(screen, size, colour, message, x_offset, y_offset):
     center_x = (SCREEN_WIDTH // 2) - (text.get_width() // 2) + x_offset
     center_y = (SCREEN_HEIGHT // 2) - (text.get_height() // 2) + y_offset
     screen.blit(text, [center_x, center_y])
-
 
 def stars(screen):
     for i in range(len(star_list)):
@@ -63,45 +61,5 @@ def stars(screen):
                 x = random.randrange(0, 1366)
                 star_list[i][0] = x
 
-
 def rect(screen, x, y, width, height, colour):
     pygame.draw.rect(screen, colour, [x, y, width, height])
-
-class Rectangle():
-    def __init__(self):
-        self.x = 0
-        self.y = -500
-        self.change_x = 0
-        self.change_y = 3
-        self.width = 1000
-        self.height = 1300
-        self.colour = BLACK
-
-    def update(self):
-        self.x += self.change_x
-        self.y += self.change_y
-
-    def draw(self, screen):
-        pygame.draw.rect(screen, self.colour, [self.x, self.y, self.width, self.height])
-
-
-class Stars(): # Fungerar ej...
-    def __init_(self):
-        self.star_list = []
-
-        # AttributeError: 'Stjärnor' object has no attribute 'snow_list'
-
-        for i in range(50):
-            snow_x = random.randrange(0, 1366)
-            snow_y = random.randrange(-768, 0)
-            self.star_list.append([snow_x, snow_y])
-
-    def draw_star(self, screen):
-        for i in range(len(self.star_list)):
-            pygame.draw.circle(screen, self.färg, self.star_list[i], 2)
-            self.star_list[i][1] += 5
-            if self.star_list[i][1] > 768:
-                y = random.randrange(-50, -10)
-                self.star_list[i][1] = y
-                x = random.randrange(0, 1366)
-                self.star_list[i][0] = x

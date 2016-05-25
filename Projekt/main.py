@@ -25,7 +25,6 @@ def main():
     pygame.init()
     size = (1366, 688)
     screen = pygame.display.set_mode(size)
-    # pygame.display.set_mode((1366, 768), pygame.FULLSCREEN)
     pygame.display.set_caption("Projekt 1")
 
     ### Objects and data
@@ -34,8 +33,8 @@ def main():
     resume = False
     session = game.Game()
     highscore = 0
-    #pygame.mouse.set_visible(False)
-    pygame.cursors.diamond
+    pygame.mouse.set_visible(False)
+
     ### Main pygame loop
     while not done_game:
 
