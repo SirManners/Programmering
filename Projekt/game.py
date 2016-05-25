@@ -368,12 +368,13 @@ class Game(object):
                         self.player.rect.y
                     )
 
-            ### Proceeds to next level when boss dies
+            ### Deletes boss and proceeds to next level when boss reaches 0 hp
             if self.boss_active:
                 if self.current_boss.hp < 1:
                     self.level += 1
                     self.boss_active = False
                     self.current_boss.kill()
+                    self.score += 15
 
             ### Makes the boss shoot while it's alive
                 else:

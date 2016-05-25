@@ -46,11 +46,11 @@ class Sprite_Mall(pygame.sprite.Sprite):
             self.reset_pos()
 
     def shoot(self, amount, name, list1, list2, target_x, target_y):
-        for x in range(amount): # range funkar ej då bara en instans skapas i Game klassen
+        for x in range(amount): # i'm not really using this but it's a bother to remove
             self.image.get_rect()
             name.rect.x = self.rect.x + self.image.get_width() / 2 - name.image.get_width() / 2
 
-            # So you you dont shoot yourself
+            # Chooses which side of the sprite the bullets come from depending on movement
             if name.move_y < 0:
                 name.rect.y = self.rect.y
             else:
@@ -82,6 +82,7 @@ class Player(Sprite_Mall):
         self.right = False
 
     def update(self):
+        # Player movement and limitations so you cant leave the screen
         if self.up and self.rect.y > 0:
             self.rect.y -= self.move_y
         if self.down and self.rect.y < SCREEN_HEIGHT - self.image.get_height():
@@ -192,15 +193,16 @@ class Bossprojectile(Projectile):
         self.image = pygame.Surface([20, 20])
         self.image.fill(ROSA)
         self.move_y = 10
-        self.damage = 1
         self.target_x = -1
         self.target_y = -1
         self.track = True
+
+        # Projectile movement
         self.x_track = 0
         self.y_track = 15
-        self.offset = 0
 
     def update(self):
+        # makes the sprite shift in colour
         self.image.fill([random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255)])
 
         if self.track:
@@ -214,8 +216,3 @@ class Bossprojectile(Projectile):
             self.track = False
         self.rect.x -= self.x_track
         self.rect.y -= self.y_track
-
-class Powerup(pygame.sprite.Sprite):
-
-    def __init__(self):
-        super().__init__()
