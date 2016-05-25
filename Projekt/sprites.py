@@ -19,7 +19,7 @@ SCREEN_HEIGHT, \
 SCREEN_WIDTH = \
     graphics.colour()
 
-class Mall(pygame.sprite.Sprite):
+class Sprite_Mall(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface([100, 100])
@@ -63,7 +63,7 @@ class Mall(pygame.sprite.Sprite):
             list1.add(name)
             list2.add(name)
 
-class Player(Mall):
+class Player(Sprite_Mall):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface([30, 30])
@@ -101,7 +101,7 @@ class Player(Mall):
         if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
             self.right = boolean
 
-class Enemies(Mall):
+class Enemies(Sprite_Mall):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface([20, 20])
@@ -214,3 +214,8 @@ class Bossprojectile(Projectile):
             self.track = False
         self.rect.x -= self.x_track
         self.rect.y -= self.y_track
+
+class Powerup(pygame.sprite.Sprite):
+
+    def __init__(self):
+        super().__init__()

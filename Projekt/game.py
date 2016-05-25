@@ -144,6 +144,9 @@ class Game(object):
             self.player.kill()
             self.game_over = True
 
+        if self.score > self.highscore:
+            self.highscore = self.score
+
         # Makes the player blink before becoming mortal again
         if self.session_time - self.time_death> 500:
             if self.session_time % 2 == 0:
@@ -395,7 +398,7 @@ class Game(object):
 
 #########################################################################################################
 
-    def display_frame(self, screen):
+    def display_frame(self, screen, highscore):
 
         screen.fill(NIGHTBLUE)
         graphics.stars(screen)
@@ -405,6 +408,10 @@ class Game(object):
             self.intro.draw(screen)
 
         if self.level == 0: # Meny
+
+            graphics.text(screen, 40, WHITE, str(highscore), -200, -27)
+
+            graphics.text(screen, 40, WHITE, str("HIGHSCORE:"), -400, -27)
 
             if self.game_mode_picker:
                 graphics.text(screen, 70, WHITE, str("CLASSIC"), 200, -27)

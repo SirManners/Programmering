@@ -45,7 +45,7 @@ def main():
             highscore = session.highscore
             session.highscore_message = True
 
-        session.display_frame(screen)
+        session.display_frame(screen, highscore)
 
         clock.tick(60)
 
