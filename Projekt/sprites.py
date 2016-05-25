@@ -127,10 +127,13 @@ class Enemies(Mall):
             else:
                 self.reset_pos()
 
+        # Normal movement
         if self.target_x == -1 and self.target_y == -1:
+
             self.rect.x += self.move_x
             self.rect.y += self.move_y
 
+            # For classic mode, preprogrammed moving pattern
             if self.level == 2:
                 if self.rect.y > (SCREEN_HEIGHT // 5):
                     if self.grupp == 1:
@@ -138,6 +141,7 @@ class Enemies(Mall):
                     if self.grupp == 2:
                         self.move_x = -3
 
+        # Track movement
         else:
             self.x_track_move, self.y_track_move = trig.vector_movement(
                 self.rect.x,

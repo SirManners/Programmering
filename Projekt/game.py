@@ -230,7 +230,6 @@ class Game(object):
 
                 self.enemy_spawn += 1
 
-
             if not self.boss_active and len(self.enemy_list) == 0:
                 self.boss_active = True
                 self.current_boss = sprites.Boss()
