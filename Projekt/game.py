@@ -26,8 +26,8 @@ class Game(object):
 
         ### Attributes
         self.player_hp = 10
-        self.difficulty = 2 # recommended between 5-30
-        self.level = 0
+        self.difficulty = 20 # recommended between 5-30
+        self.level = -1
         self.score = 0
         self.highscore = 0
         self.time_death = 0
@@ -46,6 +46,10 @@ class Game(object):
         self.menu_help = False
         self.game_mode_picker = False
         self.difficulty_picker = False
+
+        ### Intro
+
+        self.intro = graphics.Rectangle()
 
         ### Create sprites lists, subklasser
         self.all_sprites_list = pygame.sprite.Group()

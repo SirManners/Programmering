@@ -63,3 +63,20 @@ def stars(screen):
 
 def rect(screen, x, y, width, height, colour):
     pygame.draw.rect(screen, colour, [x, y, width, height])
+
+class Rectangle(): # denna klass gav mig felmeddelanden när jag ville använda funktionen draw
+    def __init__(self):
+        self.x = 0
+        self.y = -500
+        self.change_x = 0
+        self.change_y = 3
+        self.width = 1000
+        self.height = 1300
+        self.colour = BLACK
+
+    def update(self):
+        self.x += self.change_x
+        self.y += self.change_y
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.colour, [self.x, self.y, self.width, self.height])
